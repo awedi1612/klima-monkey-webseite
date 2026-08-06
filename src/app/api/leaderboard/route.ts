@@ -1,4 +1,9 @@
 import { NextResponse } from "next/server";
+import { isNameAllowed } from "@/lib/name-filter";
+
+// Theoretical max for a flawless 45s run is ~550-600 points; 1000 leaves generous
+// headroom for lucky spawns without allowing obviously spoofed scores through.
+const MAX_PLAUSIBLE_SCORE = 1000;
 
 type LeaderboardEntry = { name: string; score: number };
 
@@ -46,8 +51,12 @@ export async function POST(request: Request) {
   const name = typeof data.name === "string" ? data.name.trim().slice(0, 24) : "";
   const score = Number(data.score);
 
-  if (!name || !Number.isInteger(score) || score < 0 || score > 2000) {
+  if (!name || !Number.isInteger(score) || score < 0 || score > MAX_PLAUSIBLE_SCORE) {
     return NextResponse.json({ error: "Ungültiger Name oder Punktestand." }, { status: 400 });
+  }
+
+  if (!isNameAllowed(name)) {
+    return NextResponse.json({ error: "Bitte einen anderen Namen wählen." }, { status: 400 });
   }
 
   const webhookUrl = process.env.N8N_LEADERBOARD_SUBMIT_WEBHOOK_URL;

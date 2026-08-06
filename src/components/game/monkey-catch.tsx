@@ -1,8 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AirVent, RotateCcw, Send, Trophy } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { AirVent, RotateCcw, Send, Share2, Trophy, Volume2, VolumeX } from "lucide-react";
 import { Leaderboard } from "@/components/game/leaderboard";
+import { WhatsAppIcon } from "@/components/whatsapp-button";
+import {
+  isSoundEnabled,
+  playCatchBad,
+  playCatchBonus,
+  playCatchGood,
+  playGameOver,
+  primeAudio,
+  setSoundEnabled,
+} from "@/lib/game-sound";
 
 const GAME_SECONDS = 45;
 const COMMON_GOOD_ITEMS = ["❄️", "🍌", "🌀", "🥥"];
@@ -28,6 +39,8 @@ type FallingItem = {
 
 type Phase = "idle" | "playing" | "over";
 
+type Popup = { id: number; x: number; text: string; bad: boolean };
+
 function loadHighscore() {
   if (typeof window === "undefined") return 0;
   return Number(window.localStorage.getItem("km-monkey-catch-highscore") || 0);
@@ -42,7 +55,11 @@ export function MonkeyCatch() {
   const [items, setItems] = useState<FallingItem[]>([]);
   const [playerName, setPlayerName] = useState("");
   const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [submitError, setSubmitError] = useState("");
   const [leaderboardKey, setLeaderboardKey] = useState(0);
+  const [popups, setPopups] = useState<Popup[]>([]);
+  const [soundOn, setSoundOn] = useState(true);
+  const [shareStatus, setShareStatus] = useState<"idle" | "copied">("idle");
 
   const areaRef = useRef<HTMLDivElement>(null);
   const playerXRef = useRef(50);
@@ -52,10 +69,20 @@ export function MonkeyCatch() {
   const lastSpawnRef = useRef(0);
   const rafRef = useRef<number | null>(null);
   const startedAtRef = useRef(0);
+  const popupIdRef = useRef(0);
 
   useEffect(() => {
     setHighscore(loadHighscore());
     setPlayerName(window.localStorage.getItem(NAME_STORAGE_KEY) || "");
+    setSoundOn(isSoundEnabled());
+  }, []);
+
+  const toggleSound = useCallback(() => {
+    setSoundOn((prev) => {
+      const next = !prev;
+      setSoundEnabled(next);
+      return next;
+    });
   }, []);
 
   const movePlayer = useCallback((clientX: number) => {
@@ -77,6 +104,8 @@ export function MonkeyCatch() {
     stopLoop();
     setPhase("over");
     setSubmitStatus("idle");
+    setShareStatus("idle");
+    playGameOver();
     const finalScore = scoreRef.current;
     const currentHigh = loadHighscore();
     if (finalScore > currentHigh) {
@@ -86,11 +115,13 @@ export function MonkeyCatch() {
   }, [stopLoop]);
 
   const startGame = useCallback(() => {
+    primeAudio();
     setScore(0);
     scoreRef.current = 0;
     setTimeLeft(GAME_SECONDS);
     setItems([]);
     itemsRef.current = [];
+    setPopups([]);
     nextIdRef.current = 0;
     lastSpawnRef.current = 0;
     playerXRef.current = 50;
@@ -98,6 +129,28 @@ export function MonkeyCatch() {
     startedAtRef.current = performance.now();
     setPhase("playing");
   }, []);
+
+  async function shareScore() {
+    const text = `Ich habe gerade ${score} Punkte bei Monkey Catch von Klima-Monkey erreicht! 🐒 Schaffst du mehr?`;
+    const url = typeof window !== "undefined" ? `${window.location.origin}/spiel` : "https://klima-monkey.de/spiel";
+
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({ text, url });
+      } catch {
+        // user cancelled share sheet, nothing to do
+      }
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(`${text} ${url}`);
+      setShareStatus("copied");
+      setTimeout(() => setShareStatus("idle"), 2000);
+    } catch {
+      // clipboard unavailable, silently ignore
+    }
+  }
 
   async function submitScore(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -111,10 +164,16 @@ export function MonkeyCatch() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: trimmedName, score: scoreRef.current }),
       });
-      if (!response.ok) throw new Error("Request failed");
+      if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        setSubmitError(body?.error || "Eintragen hat nicht geklappt, versuch's nochmal.");
+        setSubmitStatus("error");
+        return;
+      }
       setSubmitStatus("done");
       setLeaderboardKey((k) => k + 1);
     } catch {
+      setSubmitError("Eintragen hat nicht geklappt, versuch's nochmal.");
       setSubmitStatus("error");
     }
   }
@@ -181,6 +240,7 @@ export function MonkeyCatch() {
       }
 
       const survivors: FallingItem[] = [];
+      const caughtItems: FallingItem[] = [];
       let delta = 0;
       for (const item of itemsRef.current) {
         const nextY = item.y + item.speed * dt;
@@ -190,6 +250,7 @@ export function MonkeyCatch() {
           const caught = dx < PLAYER_WIDTH_PCT / 2 + 4;
           if (caught) {
             delta += item.points;
+            caughtItems.push(item);
           }
           continue;
         }
@@ -200,6 +261,23 @@ export function MonkeyCatch() {
       if (delta !== 0) {
         scoreRef.current = Math.max(0, scoreRef.current + delta);
         setScore(scoreRef.current);
+      }
+      if (caughtItems.length > 0) {
+        const newPopups: Popup[] = caughtItems.map((item) => ({
+          id: popupIdRef.current++,
+          x: item.x,
+          text: item.points > 0 ? `+${item.points}` : `${item.points}`,
+          bad: item.points < 0,
+        }));
+        setPopups((prev) => [...prev, ...newPopups]);
+        newPopups.forEach((p) => {
+          setTimeout(() => setPopups((prev) => prev.filter((pp) => pp.id !== p.id)), 700);
+        });
+        for (const item of caughtItems) {
+          if (item.kind === "bonus") playCatchBonus();
+          else if (item.points > 0) playCatchGood();
+          else playCatchBad();
+        }
       }
 
       rafRef.current = requestAnimationFrame(tick);
@@ -240,6 +318,34 @@ export function MonkeyCatch() {
         onTouchMove={(e) => phase === "playing" && movePlayer(e.touches[0].clientX)}
         className="relative aspect-[3/4] w-full touch-none overflow-hidden rounded-3xl border border-border bg-gradient-to-b from-background-soft to-background-card sm:aspect-[4/3]"
       >
+        <button
+          type="button"
+          onClick={toggleSound}
+          aria-label={soundOn ? "Ton ausschalten" : "Ton einschalten"}
+          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-background-card/90 text-foreground-muted shadow-sm transition-colors hover:text-brand-primary cursor-pointer"
+        >
+          {soundOn ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+        </button>
+
+        {/* Points popups */}
+        <AnimatePresence>
+          {popups.map((popup) => (
+            <motion.span
+              key={popup.id}
+              initial={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 0, y: -36 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className={`pointer-events-none absolute z-10 text-lg font-bold ${
+                popup.bad ? "text-red-500" : "text-brand-primary"
+              }`}
+              style={{ left: `${popup.x}%`, top: `${CATCH_LINE_PCT}%`, transform: "translate(-50%, -50%)" }}
+            >
+              {popup.text}
+            </motion.span>
+          ))}
+        </AnimatePresence>
+
         {/* HUD */}
         {phase === "playing" && (
           <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 py-3 text-sm font-bold">
@@ -346,18 +452,42 @@ export function MonkeyCatch() {
                 </button>
               </form>
             )}
-            {submitStatus === "error" && (
-              <p className="text-xs text-red-500">Eintragen hat nicht geklappt, versuch's nochmal.</p>
-            )}
+            {submitStatus === "error" && <p className="text-xs text-red-500">{submitError}</p>}
 
-            <button
-              type="button"
-              onClick={startGame}
-              className="mt-1 inline-flex items-center gap-2 rounded-full bg-brand-primary px-8 py-3 text-sm font-bold text-brand-dark transition-colors hover:bg-brand-primary-hover cursor-pointer"
-            >
-              <RotateCcw className="h-4 w-4" />
-              Nochmal spielen
-            </button>
+            <div className="mt-1 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={startGame}
+                className="inline-flex items-center gap-2 rounded-full bg-brand-primary px-8 py-3 text-sm font-bold text-brand-dark transition-colors hover:bg-brand-primary-hover cursor-pointer"
+              >
+                <RotateCcw className="h-4 w-4" />
+                Nochmal spielen
+              </button>
+              <button
+                type="button"
+                onClick={shareScore}
+                aria-label="Ergebnis teilen"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-foreground-muted transition-colors hover:border-brand-primary hover:text-brand-primary cursor-pointer"
+              >
+                <Share2 className="h-4 w-4" />
+              </button>
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(
+                  `Ich habe gerade ${score} Punkte bei Monkey Catch von Klima-Monkey erreicht! 🐒 Schaffst du mehr? ${
+                    typeof window !== "undefined" ? window.location.origin : "https://klima-monkey.de"
+                  }/spiel`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Ergebnis über WhatsApp teilen"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-foreground-muted transition-colors hover:border-brand-primary hover:text-brand-primary"
+              >
+                <WhatsAppIcon className="h-4 w-4" />
+              </a>
+            </div>
+            {shareStatus === "copied" && (
+              <p className="text-xs text-brand-primary">Ergebnis in die Zwischenablage kopiert!</p>
+            )}
 
             <div className="mt-2 w-full max-w-xs border-t border-border pt-4">
               <Leaderboard refreshKey={leaderboardKey} compact />
