@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { FadeIn } from "@/components/fade-in";
 import { MonkeyCatch } from "@/components/game/monkey-catch";
+import { Leaderboard } from "@/components/game/leaderboard";
 
 export const metadata: Metadata = {
   title: "Monkey Catch – das Klima-Monkey Spiel",
@@ -29,6 +30,10 @@ export default function SpielPage() {
 
         <FadeIn delay={0.1} className="mt-12">
           <MonkeyCatch />
+        </FadeIn>
+
+        <FadeIn delay={0.12} className="mx-auto mt-8 max-w-xs rounded-3xl border border-border bg-background-card p-5">
+          <Leaderboard />
         </FadeIn>
 
         <FadeIn delay={0.15} className="mx-auto mt-14 max-w-lg text-center">

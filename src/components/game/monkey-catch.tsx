@@ -1,19 +1,27 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { RotateCcw, Trophy } from "lucide-react";
+import { AirVent, RotateCcw, Send, Trophy } from "lucide-react";
+import { Leaderboard } from "@/components/game/leaderboard";
 
 const GAME_SECONDS = 45;
-const GOOD_ITEMS = ["❄️", "🍌", "🌀", "🥥"];
+const COMMON_GOOD_ITEMS = ["❄️", "🍌", "🌀", "🥥"];
 const BAD_ITEMS = ["🔥", "☀️"];
+const COMMON_POINTS = 10;
+const BONUS_POINTS = 25;
+const BAD_POINTS = -5;
+const BONUS_CHANCE = 0.16;
 const PLAYER_WIDTH_PCT = 14;
 const CATCH_LINE_PCT = 88;
+const NAME_STORAGE_KEY = "km-monkey-catch-name";
 
 type FallingItem = {
   id: number;
   x: number;
   y: number;
-  emoji: string;
+  kind: "emoji" | "bonus";
+  emoji?: string;
+  points: number;
   good: boolean;
   speed: number;
 };
@@ -32,6 +40,9 @@ export function MonkeyCatch() {
   const [highscore, setHighscore] = useState(0);
   const [playerX, setPlayerX] = useState(50);
   const [items, setItems] = useState<FallingItem[]>([]);
+  const [playerName, setPlayerName] = useState("");
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [leaderboardKey, setLeaderboardKey] = useState(0);
 
   const areaRef = useRef<HTMLDivElement>(null);
   const playerXRef = useRef(50);
@@ -44,6 +55,7 @@ export function MonkeyCatch() {
 
   useEffect(() => {
     setHighscore(loadHighscore());
+    setPlayerName(window.localStorage.getItem(NAME_STORAGE_KEY) || "");
   }, []);
 
   const movePlayer = useCallback((clientX: number) => {
@@ -64,6 +76,7 @@ export function MonkeyCatch() {
   const endGame = useCallback(() => {
     stopLoop();
     setPhase("over");
+    setSubmitStatus("idle");
     const finalScore = scoreRef.current;
     const currentHigh = loadHighscore();
     if (finalScore > currentHigh) {
@@ -85,6 +98,26 @@ export function MonkeyCatch() {
     startedAtRef.current = performance.now();
     setPhase("playing");
   }, []);
+
+  async function submitScore(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const trimmedName = playerName.trim().slice(0, 24);
+    if (!trimmedName) return;
+    window.localStorage.setItem(NAME_STORAGE_KEY, trimmedName);
+    setSubmitStatus("loading");
+    try {
+      const response = await fetch("/api/leaderboard", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: trimmedName, score: scoreRef.current }),
+      });
+      if (!response.ok) throw new Error("Request failed");
+      setSubmitStatus("done");
+      setLeaderboardKey((k) => k + 1);
+    } catch {
+      setSubmitStatus("error");
+    }
+  }
 
   useEffect(() => {
     if (phase !== "playing") return;
@@ -109,18 +142,42 @@ export function MonkeyCatch() {
       if (now - lastSpawnRef.current > spawnInterval) {
         lastSpawnRef.current = now;
         const good = Math.random() > 0.32;
-        const pool = good ? GOOD_ITEMS : BAD_ITEMS;
-        itemsRef.current = [
-          ...itemsRef.current,
-          {
+        let newItem: FallingItem;
+        if (good) {
+          const isBonus = Math.random() < BONUS_CHANCE;
+          newItem = isBonus
+            ? {
+                id: nextIdRef.current++,
+                x: 6 + Math.random() * 88,
+                y: -5,
+                kind: "bonus",
+                points: BONUS_POINTS,
+                good: true,
+                speed: (0.018 + Math.random() * 0.012) * difficulty,
+              }
+            : {
+                id: nextIdRef.current++,
+                x: 6 + Math.random() * 88,
+                y: -5,
+                kind: "emoji",
+                emoji: COMMON_GOOD_ITEMS[Math.floor(Math.random() * COMMON_GOOD_ITEMS.length)],
+                points: COMMON_POINTS,
+                good: true,
+                speed: (0.018 + Math.random() * 0.012) * difficulty,
+              };
+        } else {
+          newItem = {
             id: nextIdRef.current++,
             x: 6 + Math.random() * 88,
             y: -5,
-            emoji: pool[Math.floor(Math.random() * pool.length)],
-            good,
+            kind: "emoji",
+            emoji: BAD_ITEMS[Math.floor(Math.random() * BAD_ITEMS.length)],
+            points: BAD_POINTS,
+            good: false,
             speed: (0.018 + Math.random() * 0.012) * difficulty,
-          },
-        ];
+          };
+        }
+        itemsRef.current = [...itemsRef.current, newItem];
       }
 
       const survivors: FallingItem[] = [];
@@ -132,7 +189,7 @@ export function MonkeyCatch() {
           const dx = Math.abs(item.x - playerXRef.current);
           const caught = dx < PLAYER_WIDTH_PCT / 2 + 4;
           if (caught) {
-            delta += item.good ? 10 : -5;
+            delta += item.points;
           }
           continue;
         }
@@ -200,10 +257,16 @@ export function MonkeyCatch() {
           items.map((item) => (
             <div
               key={item.id}
-              className="pointer-events-none absolute text-3xl leading-none"
+              className="pointer-events-none absolute leading-none"
               style={{ left: `${item.x}%`, top: `${item.y}%`, transform: "translate(-50%, -50%)" }}
             >
-              {item.emoji}
+              {item.kind === "bonus" ? (
+                <span className="flex h-9 w-9 animate-pulse items-center justify-center rounded-full bg-brand-primary text-brand-dark shadow-md">
+                  <AirVent className="h-5 w-5" />
+                </span>
+              ) : (
+                <span className="text-3xl">{item.emoji}</span>
+              )}
             </div>
           ))}
 
@@ -227,8 +290,9 @@ export function MonkeyCatch() {
             <span className="text-6xl">🐒</span>
             <h3 className="font-display text-xl font-bold">Monkey Catch</h3>
             <p className="max-w-xs text-sm text-foreground-muted">
-              Fang Schneeflocken, Bananen &amp; Kokosnüsse – weich Hitzewellen und Sonnen aus. Bewege
-              den Monkey mit Maus, Finger oder Pfeiltasten.
+              Fang Schneeflocken, Bananen &amp; Kokosnüsse – weich Hitzewellen und Sonnen aus. Die
+              seltene Klimaanlage <AirVent className="inline h-3.5 w-3.5 align-[-2px]" /> bringt
+              Bonuspunkte. Bewege den Monkey mit Maus, Finger oder Pfeiltasten.
             </p>
             {highscore > 0 && (
               <p className="flex items-center gap-1.5 text-xs font-semibold text-brand-primary">
@@ -248,21 +312,56 @@ export function MonkeyCatch() {
 
         {/* Game over screen */}
         {phase === "over" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background-card/95 p-8 text-center backdrop-blur">
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 overflow-y-auto bg-background-card/95 p-6 text-center backdrop-blur sm:p-8">
             <span className="text-5xl">{score >= highscore && score > 0 ? "🏆" : "🐒"}</span>
             <h3 className="font-display text-xl font-bold">
               {score >= highscore && score > 0 ? "Neuer Highscore!" : "Zeit abgelaufen!"}
             </h3>
             <p className="text-3xl font-display font-bold text-brand-primary">{score} Punkte</p>
             <p className="text-xs text-foreground-muted">Highscore: {highscore}</p>
+
+            {submitStatus === "done" ? (
+              <p className="flex items-center gap-1.5 text-xs font-semibold text-brand-primary">
+                <Trophy className="h-3.5 w-3.5" />
+                In der Bestenliste eingetragen!
+              </p>
+            ) : (
+              <form onSubmit={submitScore} className="mt-1 flex w-full max-w-xs items-center gap-2">
+                <input
+                  type="text"
+                  value={playerName}
+                  onChange={(e) => setPlayerName(e.target.value)}
+                  placeholder="Dein Name"
+                  maxLength={24}
+                  required
+                  className="w-full rounded-full border border-border bg-background px-4 py-2 text-sm outline-none focus:border-brand-primary"
+                />
+                <button
+                  type="submit"
+                  disabled={submitStatus === "loading"}
+                  aria-label="Für Bestenliste eintragen"
+                  className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-primary text-brand-dark transition-colors hover:bg-brand-primary-hover disabled:opacity-60 cursor-pointer"
+                >
+                  <Send className="h-4 w-4" />
+                </button>
+              </form>
+            )}
+            {submitStatus === "error" && (
+              <p className="text-xs text-red-500">Eintragen hat nicht geklappt, versuch's nochmal.</p>
+            )}
+
             <button
               type="button"
               onClick={startGame}
-              className="mt-2 inline-flex items-center gap-2 rounded-full bg-brand-primary px-8 py-3 text-sm font-bold text-brand-dark transition-colors hover:bg-brand-primary-hover cursor-pointer"
+              className="mt-1 inline-flex items-center gap-2 rounded-full bg-brand-primary px-8 py-3 text-sm font-bold text-brand-dark transition-colors hover:bg-brand-primary-hover cursor-pointer"
             >
               <RotateCcw className="h-4 w-4" />
               Nochmal spielen
             </button>
+
+            <div className="mt-2 w-full max-w-xs border-t border-border pt-4">
+              <Leaderboard refreshKey={leaderboardKey} compact />
+            </div>
           </div>
         )}
       </div>
