@@ -3,8 +3,11 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   const data = await request.json();
 
-  if (!data.name || !data.email) {
-    return NextResponse.json({ error: "Name und E-Mail sind erforderlich." }, { status: 400 });
+  if (!data.name || (!data.email && !data.telefon)) {
+    return NextResponse.json(
+      { error: "Name und E-Mail oder Telefonnummer sind erforderlich." },
+      { status: 400 }
+    );
   }
 
   const webhookUrl = process.env.N8N_KONTAKT_WEBHOOK_URL;

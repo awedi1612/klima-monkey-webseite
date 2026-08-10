@@ -17,11 +17,6 @@ export default function DatenschutzPage() {
         <h1 className="font-display text-4xl font-bold tracking-tight">
           Datenschutzerklärung
         </h1>
-        <p className="mt-4 text-sm text-foreground-muted">
-          Diese Vorlage bietet einen soliden Ausgangspunkt, ersetzt aber keine
-          rechtliche Prüfung. Bitte vor Veröffentlichung von einem
-          Datenschutzbeauftragten / Anwalt gegenprüfen lassen.
-        </p>
 
         <div className="mt-10 flex flex-col gap-10 text-sm leading-relaxed text-foreground-muted">
           <div>

@@ -110,7 +110,9 @@ const faqItems = [
 ];
 
 const featuredServices = services.filter((service) => "featured" in service && service.featured);
-const secondaryServices = services.filter((service) => !("featured" in service && service.featured));
+const secondaryServices = services.filter(
+  (service) => !("featured" in service && service.featured) && service.slug !== "stromspeicher"
+);
 
 export default function HomePage() {
   return (

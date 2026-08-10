@@ -11,7 +11,6 @@ const N8N_WEBHOOK_URL =
 type Answers = {
   bereich?: string;
   flaeche?: string;
-  ziel?: string;
   zeitplan?: string;
 };
 
@@ -31,7 +30,6 @@ const QUESTIONS: Question[] = [
       { icon: "🛋️", label: "Wohnzimmer" },
       { icon: "🧸", label: "Kinderzimmer" },
       { icon: "💼", label: "Büro / Gewerbe" },
-      { icon: "🏗️", label: "Container (Büro/Schule)", wide: true },
       { icon: "🏠", label: "Mehrere Räume", wide: true },
     ],
   },
@@ -43,16 +41,6 @@ const QUESTIONS: Question[] = [
       { icon: "🔷", label: "ca. 30 m²", hint: "z. B. Wohnzimmer" },
       { icon: "🔵", label: "ca. 40 m²", hint: "z. B. großes Wohnzimmer" },
       { icon: "🏢", label: "Über 40 m²", hint: "Individuelles Angebot" },
-    ],
-  },
-  {
-    key: "ziel",
-    label: "Was ist Ihr Hauptziel?",
-    options: [
-      { icon: "❄️", label: "Nur kühlen" },
-      { icon: "🌡️", label: "Heizen & Kühlen" },
-      { icon: "💧", label: "Entfeuchten" },
-      { icon: "⭐", label: "Alles davon" },
     ],
   },
   {
@@ -69,7 +57,7 @@ const QUESTIONS: Question[] = [
 
 const TOTAL_STEPS = QUESTIONS.length;
 
-type Phase = "hero" | "quiz" | "contact" | "thanks";
+type Phase = "hero" | "quiz" | "contact" | "thanks" | "callback" | "callback-thanks";
 
 type ContactData = {
   name: string;
@@ -97,6 +85,12 @@ export function LeadFunnel() {
   const [errors, setErrors] = useState<Partial<Record<keyof ContactData, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(false);
+
+  const [callbackName, setCallbackName] = useState("");
+  const [callbackPhone, setCallbackPhone] = useState("");
+  const [callbackErrors, setCallbackErrors] = useState<{ name?: string; telefon?: string }>({});
+  const [callbackSubmitting, setCallbackSubmitting] = useState(false);
+  const [callbackSubmitError, setCallbackSubmitError] = useState(false);
 
   const progressPct =
     phase === "quiz" ? Math.round(((stepIndex + 1) / TOTAL_STEPS) * 100) : phase === "contact" ? 100 : 0;
@@ -134,7 +128,6 @@ export function LeadFunnel() {
     const payload = {
       bereich: answers.bereich || "–",
       flaeche: answers.flaeche || "–",
-      ziel: answers.ziel || "–",
       zeitplan: answers.zeitplan || "–",
       ...contact,
       timestamp: new Date().toISOString(),
@@ -154,6 +147,42 @@ export function LeadFunnel() {
       setSubmitError(true);
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  function validateCallback(): boolean {
+    const newErrors: { name?: string; telefon?: string } = {};
+    if (!callbackName.trim()) newErrors.name = "Bitte geben Sie Ihren Namen ein.";
+    if (!callbackPhone.trim()) newErrors.telefon = "Bitte geben Sie Ihre Telefonnummer ein.";
+    setCallbackErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
+
+  async function handleCallbackSubmit(event: FormEvent) {
+    event.preventDefault();
+    if (!validateCallback()) return;
+
+    setCallbackSubmitting(true);
+    setCallbackSubmitError(false);
+
+    try {
+      const response = await fetch("/api/kontakt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: callbackName,
+          telefon: callbackPhone,
+          interesse: "Rückruf gewünscht",
+          nachricht: "Bitte um Rückruf.",
+        }),
+      });
+      if (!response.ok) throw new Error(`Request fehlgeschlagen (${response.status})`);
+      setPhase("callback-thanks");
+    } catch (error) {
+      console.error("Rückruf-Anfrage fehlgeschlagen:", error);
+      setCallbackSubmitError(true);
+    } finally {
+      setCallbackSubmitting(false);
     }
   }
 
@@ -220,8 +249,98 @@ export function LeadFunnel() {
             >
               Jetzt kostenlos starten →
             </button>
+            <div>
+              <button
+                type="button"
+                onClick={() => setPhase("callback")}
+                className="mt-4 text-xs font-semibold text-brand-link underline underline-offset-2 cursor-pointer"
+              >
+                oder direkt Rückruf vereinbaren
+              </button>
+            </div>
             <p className="mt-4 text-xs text-foreground-muted">
               🔒 Kein Spam · Kein Verkaufsdruck · Antwort in 2 Minuten
+            </p>
+          </motion.div>
+        )}
+
+        {phase === "callback" && (
+          <motion.div
+            key="callback"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.25 }}
+            className="rounded-3xl border border-border bg-background-card p-8 sm:p-10"
+          >
+            <h2 className="text-balance font-display text-xl font-bold sm:text-2xl">
+              Rückruf vereinbaren
+            </h2>
+            <p className="mt-2 text-sm text-foreground-muted">
+              Name und Telefonnummer genügen – wir rufen Sie zeitnah zurück.
+            </p>
+
+            <form onSubmit={handleCallbackSubmit} noValidate className="mt-6 flex flex-col gap-4">
+              <ContactField
+                label="Ihr Name"
+                required
+                value={callbackName}
+                error={callbackErrors.name}
+                onChange={setCallbackName}
+                placeholder="Max Mustermann"
+              />
+              <ContactField
+                label="Telefon"
+                type="tel"
+                required
+                value={callbackPhone}
+                error={callbackErrors.telefon}
+                onChange={setCallbackPhone}
+                placeholder="+49 ..."
+              />
+
+              <button
+                type="submit"
+                disabled={callbackSubmitting}
+                className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-brand-primary px-6 py-3.5 text-sm font-bold text-brand-dark transition-colors hover:bg-brand-primary-hover disabled:opacity-70 cursor-pointer"
+              >
+                {callbackSubmitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  "Rückruf anfordern"
+                )}
+              </button>
+              {callbackSubmitError && (
+                <p role="status" aria-live="polite" className="text-center text-xs text-red-500">
+                  Leider ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns
+                  direkt an.
+                </p>
+              )}
+            </form>
+
+            <button
+              type="button"
+              onClick={() => setPhase("hero")}
+              className="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-foreground-muted hover:text-brand-link cursor-pointer"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              Zurück
+            </button>
+          </motion.div>
+        )}
+
+        {phase === "callback-thanks" && (
+          <motion.div
+            key="callback-thanks"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-3xl border border-border bg-background-card p-8 text-center sm:p-10"
+          >
+            <div className="text-5xl">✅</div>
+            <h2 className="mt-4 font-display text-2xl font-bold">Vielen Dank!</h2>
+            <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
+              Ihre Rückruf-Anfrage ist bei Klima-Monkey eingegangen. Wir melden uns zeitnah unter{" "}
+              <strong className="text-foreground">{callbackPhone}</strong>.
             </p>
           </motion.div>
         )}
@@ -402,7 +521,6 @@ export function LeadFunnel() {
               </div>
               <SummaryRow label="Bereich" value={answers.bereich} />
               <SummaryRow label="Fläche" value={answers.flaeche} />
-              <SummaryRow label="Ziel" value={answers.ziel} />
               <SummaryRow label="Zeitplan" value={answers.zeitplan} />
               <SummaryRow label="Name" value={contact.name} />
               <SummaryRow label="E-Mail" value={contact.email} />

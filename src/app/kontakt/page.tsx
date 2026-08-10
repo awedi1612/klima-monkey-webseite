@@ -25,7 +25,7 @@ export default function KontaktPage() {
             <SectionHeading
               eyebrow="Kontakt"
               title="Lassen Sie uns sprechen"
-              description="Beantworten Sie 4 kurze Fragen und Sie erhalten innerhalb von zwei Minuten ein persönliches Angebot."
+              description="Beantworten Sie 3 kurze Fragen und Sie erhalten innerhalb von zwei Minuten ein persönliches Angebot."
               align="center"
               className="mx-auto"
             />
