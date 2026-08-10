@@ -110,9 +110,9 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-border">
-        <Container className="flex flex-col items-center justify-between gap-3 py-6 text-xs text-foreground-muted md:flex-row">
+        <Container className="flex flex-col items-center justify-between gap-3 py-6 pb-24 text-xs text-foreground-muted sm:pb-6 md:flex-row">
           <span>© {year} Klima-Monkey. Alle Rechte vorbehalten.</span>
-          <div className="flex gap-5">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             <Link href="/spiel" className="hover:text-brand-link">
               🐒 Spiel
             </Link>

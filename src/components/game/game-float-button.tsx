@@ -5,18 +5,22 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-// Sichere Zonen (in vh/vw-Prozent), die Header, Footer und den WhatsApp-Button
-// unten rechts nicht überdecken.
+// Sichere Zonen (in vh/vw-Prozent). Bewusst unterhalb der typischen
+// Hero-Ueberschrift/-Textzone (oberste ~35% der Seite) gehalten, damit der
+// Button auf keiner Seite direkt Titel oder Fliesstext ueberdeckt.
 const SPOTS = [
-  { top: "22%", left: "6%" },
-  { top: "18%", left: "88%" },
-  { top: "55%", left: "4%" },
-  { top: "62%", left: "90%" },
-  { top: "40%", left: "50%" },
-  { top: "75%", left: "12%" },
+  { top: "45%", left: "5%" },
+  { top: "38%", left: "90%" },
+  { top: "60%", left: "4%" },
+  { top: "65%", left: "90%" },
+  { top: "72%", left: "50%" },
+  { top: "78%", left: "10%" },
 ];
 
 const JUMP_INTERVAL_MS = 14000;
+// Kurze Verzoegerung vor dem ersten Erscheinen, damit der Button beim
+// Laden nicht sofort ueber dem Hero-Inhalt aufploppt.
+const INITIAL_DELAY_MS = 2500;
 
 export function GameFloatButton() {
   const pathname = usePathname();
@@ -25,12 +29,15 @@ export function GameFloatButton() {
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    setVisible(true);
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(media.matches);
     const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
+    const timeout = setTimeout(() => setVisible(true), INITIAL_DELAY_MS);
+    return () => {
+      media.removeEventListener("change", onChange);
+      clearTimeout(timeout);
+    };
   }, []);
 
   useEffect(() => {

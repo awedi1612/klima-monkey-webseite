@@ -159,7 +159,7 @@ export default function HomePage() {
                 )
               )}
             </div>
-            <div className="mt-8 flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-background-card px-4 py-3 w-fit">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-border bg-background-card px-4 py-3 sm:w-fit sm:justify-start">
               <span className="rounded-lg bg-white px-3 py-1.5">
                 <Image
                   src="/images/bosch-partner-logo.png"
@@ -169,7 +169,6 @@ export default function HomePage() {
                   className="h-5 w-auto object-contain"
                 />
               </span>
-              <span className="h-5 w-px bg-border" aria-hidden="true" />
               <span className="rounded-lg bg-white px-3 py-1.5">
                 <Image
                   src="/images/mitsubishi-heavy-industries-logo.png"
@@ -179,7 +178,6 @@ export default function HomePage() {
                   className="h-5 w-auto object-contain"
                 />
               </span>
-              <span className="h-5 w-px bg-border" aria-hidden="true" />
               <span className="rounded-lg bg-white px-3 py-1.5">
                 <Image
                   src="/images/daikin-logo.png"
