@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, User } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -53,8 +53,8 @@ export default function MonkeysPage() {
             {team.map((member, index) => (
               <FadeIn key={member.name + index} delay={index * 0.05}>
                 <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-background-card">
-                  <div className="flex aspect-square items-center justify-center bg-gradient-to-br from-brand-primary/15 to-brand-secondary/15 text-5xl">
-                    🐒
+                  <div className="flex aspect-square items-center justify-center bg-gradient-to-br from-brand-primary/15 to-brand-secondary/15">
+                    <User className="h-14 w-14 text-brand-link/40" strokeWidth={1.5} />
                   </div>
                   <div className="p-6">
                     <div className="font-display text-lg font-bold">{member.name}</div>
