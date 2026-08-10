@@ -12,27 +12,27 @@ export const metadata: Metadata = {
   alternates: { canonical: "/monkeys" },
 };
 
-// TODO: echte Teammitglieder mit Namen, Rolle und Foto eintragen
+// TODO: echte Fotos ergänzen, sobald vorhanden (aktuell Monkey-Icon als Platzhalter)
 const team = [
   {
-    name: "[Name einfügen]",
-    role: "Klimaanlagen-Monkey",
-    bio: "Zuständig für Planung und Installation von Klimaanlagen.",
+    name: "André Weber",
+    role: "CEO",
+    bio: "Verantwortlich für die strategische Ausrichtung und Weiterentwicklung von Klima-Monkey.",
   },
   {
-    name: "[Name einfügen]",
-    role: "Solar-Monkey",
-    bio: "Experte für Photovoltaik und Stromspeicher.",
+    name: "Martin Nowak",
+    role: "CTO",
+    bio: "Verantwortlich für Technik, Qualität und die Weiterentwicklung unserer Klimalösungen.",
   },
   {
-    name: "[Name einfügen]",
-    role: "Beratungs-Monkey",
-    bio: "Erste Anlaufstelle für Ihre Anfrage und individuelle Beratung.",
+    name: "Goran",
+    role: "Monteur",
+    bio: "Sorgt für saubere Montage und zuverlässigen Service bei Ihnen vor Ort.",
   },
   {
-    name: "[Name einfügen]",
-    role: "Service-Monkey",
-    bio: "Kümmert sich um Wartung, Service und Reparaturen.",
+    name: "Daniel",
+    role: "Monteur",
+    bio: "Kümmert sich um Installation und Wartung Ihrer Klimaanlage.",
   },
 ];
 
