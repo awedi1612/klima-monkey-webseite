@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, CheckCircle2, Loader2 } from "lucide-react";
 
@@ -96,6 +96,7 @@ export function LeadFunnel() {
   const [contact, setContact] = useState<ContactData>(emptyContact);
   const [errors, setErrors] = useState<Partial<Record<keyof ContactData, string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const progressPct =
     phase === "quiz" ? Math.round(((stepIndex + 1) / TOTAL_STEPS) * 100) : phase === "contact" ? 100 : 0;
@@ -129,6 +130,7 @@ export function LeadFunnel() {
     if (!validate()) return;
 
     setSubmitting(true);
+    setSubmitError(false);
     const payload = {
       bereich: answers.bereich || "–",
       flaeche: answers.flaeche || "–",
@@ -140,17 +142,19 @@ export function LeadFunnel() {
     };
 
     try {
-      await fetch(N8N_WEBHOOK_URL, {
+      const response = await fetch(N8N_WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+      if (!response.ok) throw new Error(`Webhook antwortete mit ${response.status}`);
+      setPhase("thanks");
     } catch (error) {
       console.error("Webhook-Fehler:", error);
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
     }
-
-    setSubmitting(false);
-    setPhase("thanks");
   }
 
   const currentQuestion = QUESTIONS[stepIndex];
@@ -185,12 +189,12 @@ export function LeadFunnel() {
             transition={{ duration: 0.3 }}
             className="rounded-3xl border border-border bg-background-card p-8 text-center sm:p-10"
           >
-            <span className="inline-flex items-center rounded-full border border-brand-primary/30 bg-brand-primary/10 px-4 py-1.5 text-xs font-bold text-brand-primary">
+            <span className="inline-flex items-center rounded-full border border-brand-primary/30 bg-brand-primary/10 px-4 py-1.5 text-xs font-bold text-brand-link">
               🐒 Kostenlos &amp; unverbindlich
             </span>
             <h2 className="mt-5 text-balance font-display text-2xl font-bold sm:text-3xl">
               Finden Sie Ihre{" "}
-              <span className="text-brand-primary">perfekte Klimaanlage</span>
+              <span className="text-brand-link">perfekte Klimaanlage</span>
             </h2>
             <p className="mt-3 text-balance text-sm leading-relaxed text-foreground-muted">
               In nur 3 Minuten zur persönlichen Empfehlung – professionell beraten von
@@ -204,7 +208,7 @@ export function LeadFunnel() {
                 "Bosch-Markenqualität",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2.5">
-                  <CheckCircle2 className="h-4 w-4 shrink-0 text-brand-primary" />
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-brand-link" />
                   {item}
                 </li>
               ))}
@@ -231,7 +235,7 @@ export function LeadFunnel() {
             transition={{ duration: 0.25 }}
             className="rounded-3xl border border-border bg-background-card p-8 sm:p-10"
           >
-            <p className="text-xs font-bold uppercase tracking-wide text-brand-primary">
+            <p className="text-xs font-bold uppercase tracking-wide text-brand-link">
               Frage {stepIndex + 1} von {TOTAL_STEPS}
             </p>
             <h2 className="mt-2 text-balance font-display text-xl font-bold sm:text-2xl">
@@ -263,7 +267,7 @@ export function LeadFunnel() {
               <button
                 type="button"
                 onClick={() => setStepIndex((i) => i - 1)}
-                className="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-foreground-muted hover:text-brand-primary cursor-pointer"
+                className="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-foreground-muted hover:text-brand-link cursor-pointer"
               >
                 <ArrowLeft className="h-3.5 w-3.5" />
                 Zurück
@@ -281,7 +285,7 @@ export function LeadFunnel() {
             transition={{ duration: 0.25 }}
             className="rounded-3xl border border-border bg-background-card p-8 sm:p-10"
           >
-            <div className="mb-4 w-fit rounded-full border border-brand-primary/30 bg-brand-primary/10 px-4 py-1.5 text-xs font-bold text-brand-primary">
+            <div className="mb-4 w-fit rounded-full border border-brand-primary/30 bg-brand-primary/10 px-4 py-1.5 text-xs font-bold text-brand-link">
               🎯 Wir haben die perfekte Lösung für Sie gefunden!
             </div>
             <h2 className="text-balance font-display text-xl font-bold sm:text-2xl">
@@ -347,7 +351,7 @@ export function LeadFunnel() {
                   value={contact.nachricht}
                   onChange={(e) => setContact((c) => ({ ...c, nachricht: e.target.value }))}
                   placeholder="z. B. Gebäudeart, besondere Wünsche, Fördermittel-Interesse ..."
-                  className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-brand-primary"
+                  className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 />
               </div>
               <button
@@ -361,9 +365,15 @@ export function LeadFunnel() {
                   "Kostenloses Angebot von Klima-Monkey anfordern →"
                 )}
               </button>
+              {submitError && (
+                <p role="status" aria-live="polite" className="text-center text-xs text-red-500">
+                  Leider ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns
+                  direkt an.
+                </p>
+              )}
               <p className="text-center text-xs text-foreground-muted">
                 🔒 Ihre Daten werden vertraulich behandelt. Weitere Infos in unserer{" "}
-                <a href="/datenschutz" className="text-brand-primary underline">
+                <a href="/datenschutz" className="text-brand-link underline">
                   Datenschutzerklärung
                 </a>
                 .
@@ -423,21 +433,35 @@ function ContactField({
   required?: boolean;
   placeholder?: string;
 }) {
+  const inputId = useId();
+  const errorId = `${inputId}-error`;
+
   return (
     <div>
-      <label className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-foreground-muted">
-        {label} {required && <span className="text-brand-primary">*</span>}
+      <label
+        htmlFor={inputId}
+        className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-foreground-muted"
+      >
+        {label} {required && <span className="text-brand-link">*</span>}
       </label>
       <input
+        id={inputId}
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className={`w-full rounded-xl border bg-background px-4 py-3 text-sm outline-none focus:border-brand-primary ${
-          error ? "border-red-500" : "border-border"
+        required={required}
+        aria-invalid={!!error}
+        aria-describedby={error ? errorId : undefined}
+        className={`w-full rounded-xl border bg-background px-4 py-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+          error ? "border-red-500" : "border-border focus-visible:border-brand-primary"
         }`}
       />
-      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
+      {error && (
+        <p id={errorId} className="mt-1 text-xs text-red-500">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

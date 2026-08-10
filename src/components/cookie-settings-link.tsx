@@ -8,7 +8,7 @@ export function CookieSettingsLink() {
     <button
       type="button"
       onClick={openSettings}
-      className="hover:text-brand-primary cursor-pointer"
+      className="hover:text-brand-link cursor-pointer"
     >
       Cookie-Einstellungen
     </button>

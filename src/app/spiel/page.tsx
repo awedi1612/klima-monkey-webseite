@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description:
     "Kleine Pause gefällig? Spiel Monkey Catch: Fang Schneeflocken und Kokosnüsse, weich Hitzewellen aus – powered by Klima-Monkey Heilbronn.",
   robots: { index: false, follow: true },
+  alternates: { canonical: "/spiel" },
 };
 
 export default function SpielPage() {

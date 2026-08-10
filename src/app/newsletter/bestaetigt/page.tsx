@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button";
 export const metadata: Metadata = {
   title: "Newsletter bestätigt",
   robots: { index: false, follow: true },
+  alternates: { canonical: "/newsletter/bestaetigt" },
 };
 
 export default function NewsletterBestaetigtPage() {
   return (
     <section className="py-24 lg:py-32">
       <Container className="flex flex-col items-center text-center">
-        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-primary/10 text-brand-link">
           <CheckCircle2 className="h-8 w-8" />
         </span>
         <h1 className="mt-6 font-display text-3xl font-bold tracking-tight sm:text-4xl">

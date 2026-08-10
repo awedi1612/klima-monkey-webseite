@@ -5,6 +5,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Impressum",
   robots: { index: false, follow: true },
+  alternates: { canonical: "/impressum" },
 };
 
 export default function ImpressumPage() {
@@ -83,7 +84,7 @@ export default function ImpressumPage() {
                 href="https://ec.europa.eu/consumers/odr/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-brand-primary underline"
+                className="text-brand-link underline"
               >
                 https://ec.europa.eu/consumers/odr/
               </a>

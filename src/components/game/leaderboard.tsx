@@ -58,7 +58,7 @@ export function Leaderboard({
   return (
     <div className={cn("text-left", compact ? "mt-3" : "mt-0")}>
       <p className="mb-2 flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-foreground-muted">
-        <Trophy className="h-3.5 w-3.5 text-brand-primary" />
+        <Trophy className="h-3.5 w-3.5 text-brand-link" />
         Bestenliste
       </p>
       <ol className="flex flex-col gap-1">
@@ -71,7 +71,7 @@ export function Leaderboard({
               <span className="w-4 shrink-0 text-xs font-bold text-foreground-muted">{i + 1}.</span>
               <span className="truncate">{entry.name}</span>
             </span>
-            <span className="shrink-0 font-semibold text-brand-primary">{entry.score}</span>
+            <span className="shrink-0 font-semibold text-brand-link">{entry.score}</span>
           </li>
         ))}
       </ol>

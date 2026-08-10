@@ -46,7 +46,7 @@ export function Faq({ items }: { items: FaqItem[] }) {
                 <span className="font-semibold">{item.question}</span>
                 <Plus
                   className={cn(
-                    "h-4 w-4 shrink-0 text-brand-primary transition-transform duration-200",
+                    "h-4 w-4 shrink-0 text-brand-link transition-transform duration-200",
                     isOpen && "rotate-45"
                   )}
                 />

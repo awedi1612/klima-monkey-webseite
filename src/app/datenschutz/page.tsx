@@ -5,6 +5,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Datenschutz",
   robots: { index: false, follow: true },
+  alternates: { canonical: "/datenschutz" },
 };
 
 export default function DatenschutzPage() {
@@ -154,7 +155,7 @@ export default function DatenschutzPage() {
                 href="https://policies.google.com/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-brand-primary underline"
+                className="text-brand-link underline"
               >
                 policies.google.com/privacy
               </a>

@@ -46,7 +46,11 @@ export function Newsletter() {
         </p>
 
         {status === "success" ? (
-          <div className="mt-2 flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-sm text-white">
+          <div
+            role="status"
+            aria-live="polite"
+            className="mt-2 flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-sm text-white"
+          >
             <CheckCircle2 className="h-4 w-4 text-brand-primary" />
             Danke! Bitte bestätigen Sie ggf. Ihre E-Mail-Adresse.
           </div>
@@ -65,7 +69,7 @@ export function Newsletter() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="ihre.email@beispiel.de"
-              className="w-full flex-1 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-brand-primary"
+              className="w-full flex-1 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm text-white placeholder:text-white/40 outline-none focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
             />
             <button
               type="submit"
@@ -81,7 +85,7 @@ export function Newsletter() {
           </form>
         )}
         {status === "error" && (
-          <p className="text-xs text-red-300">
+          <p role="status" aria-live="polite" className="text-xs text-red-300">
             Leider ist etwas schiefgelaufen. Bitte versuchen Sie es erneut.
           </p>
         )}

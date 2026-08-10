@@ -34,8 +34,12 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center gap-3 rounded-3xl border border-brand-primary/30 bg-brand-primary/5 p-8 text-center">
-        <CheckCircle2 className="h-9 w-9 text-brand-primary" />
+      <div
+        role="status"
+        aria-live="polite"
+        className="flex flex-col items-center gap-3 rounded-3xl border border-brand-primary/30 bg-brand-primary/5 p-8 text-center"
+      >
+        <CheckCircle2 className="h-9 w-9 text-brand-link" />
         <h3 className="font-display text-lg font-bold">Vielen Dank für Ihre Nachricht!</h3>
         <p className="text-sm text-foreground-muted">
           Wir haben Ihre Anfrage erhalten und melden uns in Kürze bei Ihnen.
@@ -61,7 +65,7 @@ export function ContactForm() {
         <select
           id="interesse"
           name="interesse"
-          className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-brand-primary"
+          className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <option>Klimaanlagen</option>
           <option>Vermietung (Container)</option>
@@ -81,7 +85,7 @@ export function ContactForm() {
           id="nachricht"
           name="nachricht"
           rows={4}
-          className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-brand-primary"
+          className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           placeholder="Erzählen Sie uns kurz von Ihrem Anliegen ..."
         />
       </div>
@@ -89,7 +93,7 @@ export function ContactForm() {
       <label className="flex items-start gap-2.5 text-xs text-foreground-muted">
         <input type="checkbox" required className="mt-0.5 accent-[var(--brand-primary)]" />
         Ich habe die{" "}
-        <a href="/datenschutz" className="underline hover:text-brand-primary">
+        <a href="/datenschutz" className="underline hover:text-brand-link">
           Datenschutzerklärung
         </a>{" "}
         gelesen und stimme der Verarbeitung meiner Daten zu.
@@ -110,7 +114,7 @@ export function ContactForm() {
       </Button>
 
       {status === "error" && (
-        <p className="text-sm text-red-500">
+        <p role="status" aria-live="polite" className="text-sm text-red-500">
           Leider ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder
           schreiben Sie uns direkt eine E-Mail.
         </p>
@@ -135,7 +139,7 @@ function Field({
   return (
     <div>
       <label htmlFor={name} className="mb-1.5 block text-sm font-medium">
-        {label} {required && <span className="text-brand-primary">*</span>}
+        {label} {required && <span className="text-brand-link">*</span>}
       </label>
       <input
         id={name}
@@ -143,7 +147,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-brand-primary"
+        className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       />
     </div>
   );

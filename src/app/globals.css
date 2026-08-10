@@ -12,6 +12,11 @@
   --brand-primary-hover: #33a813;
   --brand-secondary: #7ebb3e;
   --brand-dark: #181c14;
+  /* Darker green for text/links on light backgrounds - #3dc617 as text only
+     reaches ~2.3:1 contrast on white, well under WCAG AA's 4.5:1. Buttons/badges
+     keep using --brand-primary as a background since that pairing (dark text on
+     bright green) already passes. */
+  --brand-link: #237a0f;
 }
 
 .dark {
@@ -26,6 +31,8 @@
   --brand-primary-hover: #8fce4c;
   --brand-secondary: #3dc617;
   --brand-dark: #0d0f0a;
+  /* #7ebb3e as text already reaches ~7.8:1 on the dark background, no change needed. */
+  --brand-link: #7ebb3e;
 }
 
 @theme inline {
@@ -40,6 +47,7 @@
   --color-brand-primary-hover: var(--brand-primary-hover);
   --color-brand-secondary: var(--brand-secondary);
   --color-brand-dark: var(--brand-dark);
+  --color-brand-link: var(--brand-link);
 
   --font-sans: var(--font-manrope);
   --font-display: var(--font-space-grotesk);

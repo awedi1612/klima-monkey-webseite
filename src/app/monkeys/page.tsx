@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Monkeys – Unser Team",
   description:
     "Lernen Sie die Monkeys kennen: das Team hinter Klima-Monkey aus Heilbronn.",
+  alternates: { canonical: "/monkeys" },
 };
 
 // TODO: echte Teammitglieder mit Namen, Rolle und Foto eintragen
@@ -57,7 +58,7 @@ export default function MonkeysPage() {
                   </div>
                   <div className="p-6">
                     <div className="font-display text-lg font-bold">{member.name}</div>
-                    <div className="text-sm font-semibold text-brand-primary">
+                    <div className="text-sm font-semibold text-brand-link">
                       {member.role}
                     </div>
                     <p className="mt-2 text-sm leading-relaxed text-foreground-muted">

@@ -21,7 +21,7 @@ export function GoogleConsentGate({
     <div
       className={`flex flex-col items-center justify-center gap-4 rounded-3xl border border-border bg-background-soft p-10 text-center ${className ?? ""}`}
     >
-      <MapPin className="h-8 w-8 text-brand-primary" />
+      <MapPin className="h-8 w-8 text-brand-link" />
       <p className="max-w-sm text-sm text-foreground-muted">
         {label} wird von Google bereitgestellt. Zum Anzeigen müssen Sie
         Google-Diensten in unseren Cookie-Einstellungen zustimmen.

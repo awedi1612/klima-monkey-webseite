@@ -7,7 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { GameFloatButton } from "@/components/game/game-float-button";
 import { CookieConsentProvider } from "@/components/cookie-consent";
-import { siteConfig } from "@/lib/site-config";
+import { siteConfig, services } from "@/lib/site-config";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -75,6 +75,7 @@ const localBusinessSchema = {
   url: siteConfig.url,
   telephone: siteConfig.legal.phone,
   email: siteConfig.legal.email,
+  image: `${siteConfig.url}/images/klimaanlage-hero.jpg`,
   address: {
     "@type": "PostalAddress",
     streetAddress: siteConfig.legal.street,
@@ -85,7 +86,26 @@ const localBusinessSchema = {
     "@type": "City",
     name: city,
   })),
-  sameAs: [siteConfig.social.facebook, siteConfig.social.instagram],
+  sameAs: [
+    siteConfig.social.facebook,
+    siteConfig.social.instagram,
+    siteConfig.social.tiktok,
+    siteConfig.social.google,
+    siteConfig.social.elf1880,
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Leistungen",
+    itemListElement: services.map((service) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: service.title,
+        description: service.summary,
+        url: `${siteConfig.url}/leistungen/${service.slug}`,
+      },
+    })),
+  },
 };
 
 export default function RootLayout({

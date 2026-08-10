@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Shop – kommt bald",
   description: "Der Klima-Monkey Shop ist noch im Bau. Bald gibt es hier Klimaanlagen-Zubehör direkt online.",
   robots: { index: false, follow: true },
+  alternates: { canonical: "/shop" },
 };
 
 export default function ShopPage() {

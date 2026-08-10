@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -17,7 +18,13 @@ import { Faq } from "@/components/faq";
 import { GoogleReviews } from "@/components/google-reviews";
 import { GoogleConsentGate } from "@/components/google-consent-gate";
 import { Newsletter } from "@/components/newsletter";
-import { services } from "@/lib/site-config";
+import { services, siteConfig } from "@/lib/site-config";
+
+export const metadata: Metadata = {
+  title: `${siteConfig.name} – ${siteConfig.tagline}`,
+  description: siteConfig.description,
+  alternates: { canonical: "/" },
+};
 
 const benefits = [
   {
@@ -126,7 +133,7 @@ export default function HomePage() {
             </span>
             <h1 className="mt-6 text-balance font-display text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
               Ihr Klima ist{" "}
-              <span className="text-brand-primary">unsere Mission</span>
+              <span className="text-brand-link">unsere Mission</span>
             </h1>
             <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-foreground-muted">
               Verkauf, Installation, Wartung und Reparatur von Klimaanlagen –
@@ -146,7 +153,7 @@ export default function HomePage() {
               {["Kostenlose Erstberatung", "Zertifizierte Techniker", "Auch zur Langzeitmiete"].map(
                 (item) => (
                   <span key={item} className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-brand-primary" />
+                    <CheckCircle2 className="h-4 w-4 text-brand-link" />
                     {item}
                   </span>
                 )
@@ -247,13 +254,13 @@ export default function HomePage() {
                   )}
                   <div className="relative flex h-full flex-col">
                     <div className="flex items-center gap-3">
-                      <ServiceIcon name={service.icon} className="h-7 w-7 shrink-0 text-brand-primary" />
+                      <ServiceIcon name={service.icon} className="h-7 w-7 shrink-0 text-brand-link" />
                       <h3 className="font-display text-2xl font-bold">{service.title}</h3>
                     </div>
                     <p className="mt-3 flex-1 max-w-md text-sm leading-relaxed text-foreground-muted">
                       {service.summary}
                     </p>
-                    <span className="mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-brand-primary">
+                    <span className="mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-brand-link">
                       Mehr erfahren
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </span>
@@ -287,14 +294,14 @@ export default function HomePage() {
                     </div>
                   )}
                   <div className="relative flex h-full flex-col">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-link">
                       <ServiceIcon name={service.icon} className="h-5 w-5" />
                     </span>
                     <h3 className="mt-4 font-semibold">{service.title}</h3>
                     <p className="mt-1.5 flex-1 text-xs leading-relaxed text-foreground-muted">
                       {service.summary}
                     </p>
-                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-brand-primary">
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-brand-link">
                       Ansehen
                       <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
                     </span>
@@ -321,7 +328,7 @@ export default function HomePage() {
             {benefits.map((benefit, index) => (
               <FadeIn key={benefit.title} delay={index * 0.05}>
                 <div className="h-full rounded-3xl border border-border bg-background-card p-7">
-                  <CheckCircle2 className="h-6 w-6 text-brand-primary" />
+                  <CheckCircle2 className="h-6 w-6 text-brand-link" />
                   <h3 className="mt-4 font-semibold">{benefit.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
                     {benefit.description}
@@ -349,7 +356,7 @@ export default function HomePage() {
                 <div aria-hidden="true" className="text-5xl font-display font-bold text-foreground-muted/25">
                   {String(index + 1).padStart(2, "0")}
                 </div>
-                <span className="mt-3 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary">
+                <span className="mt-3 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-link">
                   <step.icon className="h-5 w-5" />
                 </span>
                 <h3 className="mt-4 font-semibold">{step.title}</h3>

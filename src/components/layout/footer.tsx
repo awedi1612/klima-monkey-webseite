@@ -40,7 +40,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Klima-Monkey auf ${label}`}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-border transition-colors hover:border-brand-primary hover:text-brand-primary"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-border transition-colors hover:border-brand-primary hover:text-brand-link"
               >
                 <Icon className="h-4 w-auto max-w-6" />
               </a>
@@ -53,7 +53,7 @@ export function Footer() {
           <ul className="mt-4 flex flex-col gap-2.5 text-sm text-foreground-muted">
             {navItems.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="transition-colors hover:text-brand-primary">
+                <Link href={item.href} className="transition-colors hover:text-brand-link">
                   {item.label}
                 </Link>
               </li>
@@ -68,7 +68,7 @@ export function Footer() {
               .find((i) => i.href === "/leistungen")
               ?.children?.map((child) => (
                 <li key={child.href}>
-                  <Link href={child.href} className="transition-colors hover:text-brand-primary">
+                  <Link href={child.href} className="transition-colors hover:text-brand-link">
                     {child.label}
                   </Link>
                 </li>
@@ -80,7 +80,7 @@ export function Footer() {
           <div className="text-sm font-semibold">Kontakt</div>
           <ul className="mt-4 flex flex-col gap-3 text-sm text-foreground-muted">
             <li className="flex items-start gap-2.5">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-primary" />
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-link" />
               <span>
                 {siteConfig.legal.street}
                 <br />
@@ -88,20 +88,20 @@ export function Footer() {
               </span>
             </li>
             <li className="flex items-center gap-2.5">
-              <Phone className="h-4 w-4 shrink-0 text-brand-primary" />
-              <a href={`tel:${siteConfig.legal.phone.replace(/\s+/g, "")}`} className="hover:text-brand-primary">
+              <Phone className="h-4 w-4 shrink-0 text-brand-link" />
+              <a href={`tel:${siteConfig.legal.phone.replace(/\s+/g, "")}`} className="hover:text-brand-link">
                 {siteConfig.legal.phone}
               </a>
             </li>
             <li className="flex items-center gap-2.5">
-              <Smartphone className="h-4 w-4 shrink-0 text-brand-primary" />
-              <a href={`tel:${siteConfig.legal.mobile.replace(/\s+/g, "")}`} className="hover:text-brand-primary">
+              <Smartphone className="h-4 w-4 shrink-0 text-brand-link" />
+              <a href={`tel:${siteConfig.legal.mobile.replace(/\s+/g, "")}`} className="hover:text-brand-link">
                 {siteConfig.legal.mobile}
               </a>
             </li>
             <li className="flex items-center gap-2.5">
-              <Mail className="h-4 w-4 shrink-0 text-brand-primary" />
-              <a href={`mailto:${siteConfig.legal.email}`} className="hover:text-brand-primary">
+              <Mail className="h-4 w-4 shrink-0 text-brand-link" />
+              <a href={`mailto:${siteConfig.legal.email}`} className="hover:text-brand-link">
                 {siteConfig.legal.email}
               </a>
             </li>
@@ -113,13 +113,13 @@ export function Footer() {
         <Container className="flex flex-col items-center justify-between gap-3 py-6 text-xs text-foreground-muted md:flex-row">
           <span>© {year} Klima-Monkey. Alle Rechte vorbehalten.</span>
           <div className="flex gap-5">
-            <Link href="/spiel" className="hover:text-brand-primary">
+            <Link href="/spiel" className="hover:text-brand-link">
               🐒 Spiel
             </Link>
-            <Link href="/impressum" className="hover:text-brand-primary">
+            <Link href="/impressum" className="hover:text-brand-link">
               Impressum
             </Link>
-            <Link href="/datenschutz" className="hover:text-brand-primary">
+            <Link href="/datenschutz" className="hover:text-brand-link">
               Datenschutz
             </Link>
             <CookieSettingsLink />

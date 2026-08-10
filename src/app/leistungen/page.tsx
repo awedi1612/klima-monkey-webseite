@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Leistungen",
   description:
     "Klimaanlagen, Photovoltaik, Stromspeicher, Finanzierung und Förderung – alle Leistungen von Klima-Monkey in Heilbronn auf einen Blick.",
+  alternates: { canonical: "/leistungen" },
 };
 
 export default function LeistungenPage() {
@@ -34,7 +35,7 @@ export default function LeistungenPage() {
                   href={`/leistungen/${service.slug}`}
                   className="group flex h-full flex-col gap-5 rounded-3xl border border-border bg-background-card p-8 transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary hover:shadow-xl sm:flex-row sm:items-start"
                 >
-                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-primary">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-link">
                     <ServiceIcon name={service.icon} className="h-7 w-7" />
                   </span>
                   <div>
@@ -42,7 +43,7 @@ export default function LeistungenPage() {
                     <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
                       {service.summary}
                     </p>
-                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary">
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-link">
                       Details ansehen
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </span>

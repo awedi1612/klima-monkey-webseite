@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   title: "Kontakt",
   description:
     "Kostenlose Beratung zu Klimaanlagen-Kauf, -Installation, -Wartung, -Reparatur und Langzeitmiete von Klima-Monkey in Heilbronn – in 3 Minuten zum persönlichen Angebot.",
+  alternates: { canonical: "/kontakt" },
 };
 
 export default function KontaktPage() {
@@ -38,7 +39,7 @@ export default function KontaktPage() {
             <div className="rounded-3xl border border-border bg-background-card p-6">
               <div className="flex flex-col gap-4">
                 <div className="flex items-start gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-link">
                     <MapPin className="h-4 w-4" />
                   </span>
                   <div className="text-sm">
@@ -48,26 +49,26 @@ export default function KontaktPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-link">
                     <Phone className="h-4 w-4" />
                   </span>
-                  <a href={`tel:${siteConfig.legal.phone.replace(/\s+/g, "")}`} className="text-sm text-foreground-muted hover:text-brand-primary">
+                  <a href={`tel:${siteConfig.legal.phone.replace(/\s+/g, "")}`} className="text-sm text-foreground-muted hover:text-brand-link">
                     {siteConfig.legal.phone}
                   </a>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-link">
                     <Smartphone className="h-4 w-4" />
                   </span>
-                  <a href={`tel:${siteConfig.legal.mobile.replace(/\s+/g, "")}`} className="text-sm text-foreground-muted hover:text-brand-primary">
+                  <a href={`tel:${siteConfig.legal.mobile.replace(/\s+/g, "")}`} className="text-sm text-foreground-muted hover:text-brand-link">
                     {siteConfig.legal.mobile}
                   </a>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-link">
                     <Mail className="h-4 w-4" />
                   </span>
-                  <a href={`mailto:${siteConfig.legal.email}`} className="text-sm text-foreground-muted hover:text-brand-primary">
+                  <a href={`mailto:${siteConfig.legal.email}`} className="text-sm text-foreground-muted hover:text-brand-link">
                     {siteConfig.legal.email}
                   </a>
                 </div>

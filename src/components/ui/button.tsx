@@ -22,8 +22,8 @@ const variantStyles = {
   primary:
     "bg-brand-primary text-brand-dark hover:bg-brand-primary-hover shadow-md shadow-black/10",
   secondary:
-    "bg-transparent border border-border text-foreground hover:border-brand-primary hover:text-brand-primary",
-  ghost: "bg-transparent text-foreground hover:text-brand-primary",
+    "bg-transparent border border-border text-foreground hover:border-brand-primary hover:text-brand-link",
+  ghost: "bg-transparent text-foreground hover:text-brand-link",
 };
 
 const sizeStyles = {

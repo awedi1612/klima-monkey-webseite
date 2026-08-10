@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Über uns",
   description:
     "Klima-Monkey ist Ihr regionaler Partner für Klimatechnik und Energie in Heilbronn – erfahren Sie mehr über unsere Mission und Werte.",
+  alternates: { canonical: "/ueber-uns" },
 };
 
 const values = [
@@ -105,7 +106,7 @@ export default function UeberUnsPage() {
             {values.map((value, index) => (
               <FadeIn key={value.title} delay={index * 0.05}>
                 <div className="h-full rounded-3xl border border-border bg-background-card p-7">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-link">
                     <value.icon className="h-5 w-5" />
                   </span>
                   <h3 className="mt-4 font-semibold">{value.title}</h3>

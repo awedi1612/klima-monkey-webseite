@@ -177,7 +177,7 @@ function ReviewCard({ review }: { review: GoogleReview }) {
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="ml-1 font-semibold text-brand-primary cursor-pointer"
+            className="ml-1 font-semibold text-brand-link cursor-pointer"
           >
             {expanded ? "Weniger anzeigen" : "Mehr anzeigen"}
           </button>

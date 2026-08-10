@@ -112,12 +112,12 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
             >
               <div className="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
                 <div className="flex items-start gap-3">
-                  <Cookie className="mt-0.5 h-5 w-5 shrink-0 text-brand-primary" />
+                  <Cookie className="mt-0.5 h-5 w-5 shrink-0 text-brand-link" />
                   <p className="text-sm text-foreground-muted">
                     Wir nutzen technisch notwendige Funktionen sowie optional{" "}
                     <strong className="text-foreground">Google-Dienste</strong> (Standortkarte &amp;
                     Google-Bewertungen), die eigene Cookies setzen. Details in unserer{" "}
-                    <a href="/datenschutz" className="text-brand-primary underline">
+                    <a href="/datenschutz" className="text-brand-link underline">
                       Datenschutzerklärung
                     </a>
                     .

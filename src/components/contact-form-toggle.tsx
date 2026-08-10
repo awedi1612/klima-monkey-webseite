@@ -18,7 +18,7 @@ export function ContactFormToggle() {
         className="flex w-full items-center justify-between gap-3 rounded-2xl border border-border bg-background-card px-6 py-4 text-left transition-colors hover:border-brand-primary cursor-pointer"
       >
         <span className="flex items-center gap-3 text-sm font-semibold">
-          <MessageSquareText className="h-4 w-4 text-brand-primary" />
+          <MessageSquareText className="h-4 w-4 text-brand-link" />
           Lieber direkt schreiben statt Quiz?
         </span>
         <ChevronDown className={cn("h-4 w-4 shrink-0 transition-transform", open && "rotate-180")} />

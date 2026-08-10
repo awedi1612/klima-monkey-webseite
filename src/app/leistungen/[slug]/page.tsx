@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -69,7 +70,7 @@ export default async function ServiceDetailPage({
       <section className="py-20 lg:py-28">
         <Container className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <FadeIn>
-            <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-primary">
+            <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-link">
               <ServiceIcon name={service.icon} className="h-7 w-7" />
             </span>
             <h1 className="mt-6 text-balance font-display text-4xl font-bold tracking-tight sm:text-5xl">
@@ -106,7 +107,7 @@ export default async function ServiceDetailPage({
               <ul className="mt-5 flex flex-col gap-3.5">
                 {service.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-primary" />
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-link" />
                     {feature}
                   </li>
                 ))}
@@ -142,16 +143,16 @@ export default async function ServiceDetailPage({
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {otherServices.map((other, index) => (
               <FadeIn key={other.slug} delay={index * 0.05}>
-                <a
+                <Link
                   href={`/leistungen/${other.slug}`}
                   className="group flex h-full flex-col rounded-2xl border border-border bg-background-card p-6 transition-all hover:-translate-y-1 hover:border-brand-primary"
                 >
-                  <ServiceIcon name={other.icon} className="h-5 w-5 text-brand-primary" />
+                  <ServiceIcon name={other.icon} className="h-5 w-5 text-brand-link" />
                   <span className="mt-3 font-semibold">{other.shortTitle}</span>
-                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-brand-primary">
+                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-brand-link">
                     Ansehen <ArrowRight className="h-3 w-3" />
                   </span>
-                </a>
+                </Link>
               </FadeIn>
             ))}
           </div>

@@ -316,13 +316,16 @@ export function MonkeyCatch() {
         ref={areaRef}
         onPointerMove={(e) => phase === "playing" && movePlayer(e.clientX)}
         onTouchMove={(e) => phase === "playing" && movePlayer(e.touches[0].clientX)}
-        className="relative aspect-[3/4] w-full touch-none overflow-hidden rounded-3xl border border-border bg-gradient-to-b from-background-soft to-background-card sm:aspect-[4/3]"
+        role="application"
+        aria-label="Monkey Catch Minispiel. Steuerung mit den Pfeiltasten links/rechts, Maus oder Finger."
+        tabIndex={0}
+        className="relative aspect-[3/4] w-full touch-none overflow-hidden rounded-3xl border border-border bg-gradient-to-b from-background-soft to-background-card outline-none focus-visible:ring-2 focus-visible:ring-brand-primary sm:aspect-[4/3]"
       >
         <button
           type="button"
           onClick={toggleSound}
           aria-label={soundOn ? "Ton ausschalten" : "Ton einschalten"}
-          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-background-card/90 text-foreground-muted shadow-sm transition-colors hover:text-brand-primary cursor-pointer"
+          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-background-card/90 text-foreground-muted shadow-sm transition-colors hover:text-brand-link cursor-pointer"
         >
           {soundOn ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
         </button>
@@ -337,7 +340,7 @@ export function MonkeyCatch() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
               className={`pointer-events-none absolute z-10 text-lg font-bold ${
-                popup.bad ? "text-red-500" : "text-brand-primary"
+                popup.bad ? "text-red-500" : "text-brand-link"
               }`}
               style={{ left: `${popup.x}%`, top: `${CATCH_LINE_PCT}%`, transform: "translate(-50%, -50%)" }}
             >
@@ -401,7 +404,7 @@ export function MonkeyCatch() {
               Bonuspunkte. Bewege den Monkey mit Maus, Finger oder Pfeiltasten.
             </p>
             {highscore > 0 && (
-              <p className="flex items-center gap-1.5 text-xs font-semibold text-brand-primary">
+              <p className="flex items-center gap-1.5 text-xs font-semibold text-brand-link">
                 <Trophy className="h-3.5 w-3.5" />
                 Highscore: {highscore}
               </p>
@@ -423,11 +426,11 @@ export function MonkeyCatch() {
             <h3 className="font-display text-xl font-bold">
               {score >= highscore && score > 0 ? "Neuer Highscore!" : "Zeit abgelaufen!"}
             </h3>
-            <p className="text-3xl font-display font-bold text-brand-primary">{score} Punkte</p>
+            <p className="text-3xl font-display font-bold text-brand-link">{score} Punkte</p>
             <p className="text-xs text-foreground-muted">Highscore: {highscore}</p>
 
             {submitStatus === "done" ? (
-              <p className="flex items-center gap-1.5 text-xs font-semibold text-brand-primary">
+              <p className="flex items-center gap-1.5 text-xs font-semibold text-brand-link">
                 <Trophy className="h-3.5 w-3.5" />
                 In der Bestenliste eingetragen!
               </p>
@@ -467,7 +470,7 @@ export function MonkeyCatch() {
                 type="button"
                 onClick={shareScore}
                 aria-label="Ergebnis teilen"
-                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-foreground-muted transition-colors hover:border-brand-primary hover:text-brand-primary cursor-pointer"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-foreground-muted transition-colors hover:border-brand-primary hover:text-brand-link cursor-pointer"
               >
                 <Share2 className="h-4 w-4" />
               </button>
@@ -480,13 +483,13 @@ export function MonkeyCatch() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Ergebnis über WhatsApp teilen"
-                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-foreground-muted transition-colors hover:border-brand-primary hover:text-brand-primary"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-foreground-muted transition-colors hover:border-brand-primary hover:text-brand-link"
               >
                 <WhatsAppIcon className="h-4 w-4" />
               </a>
             </div>
             {shareStatus === "copied" && (
-              <p className="text-xs text-brand-primary">Ergebnis in die Zwischenablage kopiert!</p>
+              <p className="text-xs text-brand-link">Ergebnis in die Zwischenablage kopiert!</p>
             )}
 
             <div className="mt-2 w-full max-w-xs border-t border-border pt-4">
