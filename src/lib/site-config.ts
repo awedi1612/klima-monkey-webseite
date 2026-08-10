@@ -148,6 +148,28 @@ export const services = [
       "Flexible Vertragslaufzeiten, planbare monatliche Kosten",
       "Rückbau & Abholung am Vertragsende inklusive",
     ],
+    specialConditions: {
+      title: "Sonderkonditionen für Kommunen & Schulen",
+      intro:
+        "Für Gemeinden, Schulträger und Behörden bieten wir spezielle Konditionen, damit Klimatisierung im öffentlichen Bereich unkompliziert bleibt.",
+      items: [
+        {
+          icon: "TrendingDown",
+          title: "Staffelpreise nach Laufzeit",
+          text: "Ob kurzfristiger Engpass oder mehrjährige Lösung – je länger die Mietdauer, desto günstiger der Monatspreis. Ihr individuelles Angebot erhalten Sie nach kurzer Bedarfsklärung.",
+        },
+        {
+          icon: "FileText",
+          title: "Rahmenvertrag möglich",
+          text: "Für wiederkehrenden Bedarf, etwa in der jährlichen Hitzeperiode, schließen wir gerne einen Rahmenvertrag ab – Sie rufen flexibel ab, ohne jedes Mal neu zu verhandeln.",
+        },
+        {
+          icon: "ShieldCheck",
+          title: "Keine Kaution für öffentliche Auftraggeber",
+          text: "Als bonitätssicherer Vertragspartner verzichten wir bei Kommunen, Schulen und Behörden auf eine Mietkaution.",
+        },
+      ],
+    },
     faq: [
       {
         question: "Für welche Objekte eignet sich die Vermietung?",
@@ -168,6 +190,16 @@ export const services = [
         question: "Was passiert am Ende der Mietzeit?",
         answer:
           "Wir übernehmen Demontage, Rückbau und Abholung der Anlage – für Sie entsteht kein zusätzlicher Aufwand.",
+      },
+      {
+        question: "Bietet ihr Kommunen und Schulen Rahmenverträge an?",
+        answer:
+          "Ja. Für wiederkehrenden Bedarf, etwa in den Sommermonaten, schließen wir gerne einen Rahmen- bzw. Abrufvertrag ab, aus dem Sie flexibel Klimaanlagen abrufen können, ohne jedes Mal neu zu verhandeln.",
+      },
+      {
+        question: "Ist bei Kommunen und Behörden eine Mietkaution erforderlich?",
+        answer:
+          "Nein. Öffentliche Auftraggeber sind bei uns von der sonst üblichen Mietkaution befreit.",
       },
     ],
   },

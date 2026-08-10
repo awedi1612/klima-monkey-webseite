@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, FileText, ShieldCheck, TrendingDown, type LucideIcon } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -10,6 +10,12 @@ import { ServiceIcon } from "@/components/service-icon";
 import { FadeIn } from "@/components/fade-in";
 import { Faq } from "@/components/faq";
 import { services, siteConfig } from "@/lib/site-config";
+
+const conditionIcons: Record<string, LucideIcon> = {
+  TrendingDown,
+  FileText,
+  ShieldCheck,
+};
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -116,6 +122,40 @@ export default async function ServiceDetailPage({
           </FadeIn>
         </Container>
       </section>
+
+      {"specialConditions" in service && service.specialConditions && (
+        <section className="py-20 lg:py-28">
+          <Container>
+            <FadeIn>
+              <SectionHeading
+                eyebrow="Öffentliche Auftraggeber"
+                title={service.specialConditions.title}
+                description={service.specialConditions.intro}
+                align="center"
+                className="mx-auto"
+              />
+            </FadeIn>
+            <div className="mt-12 grid gap-5 sm:grid-cols-3">
+              {service.specialConditions.items.map((item, index) => {
+                const Icon = conditionIcons[item.icon] ?? TrendingDown;
+                return (
+                  <FadeIn key={item.title} delay={index * 0.05}>
+                    <div className="h-full rounded-3xl border border-border bg-background-card p-7">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-link">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <h3 className="mt-4 font-semibold">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
+                        {item.text}
+                      </p>
+                    </div>
+                  </FadeIn>
+                );
+              })}
+            </div>
+          </Container>
+        </section>
+      )}
 
       {"faq" in service && service.faq && (
         <section className="bg-background-soft py-20 lg:py-28">
