@@ -149,6 +149,7 @@ export const services = [
       "Rückbau & Abholung am Vertragsende inklusive",
     ],
     specialConditions: {
+      eyebrow: "Öffentliche Auftraggeber",
       title: "Sonderkonditionen für Kommunen & Schulen",
       intro:
         "Für Gemeinden, Schulträger und Behörden bieten wir spezielle Konditionen, damit Klimatisierung im öffentlichen Bereich unkompliziert bleibt.",
@@ -248,6 +249,29 @@ export const services = [
       "Kombinierbar mit staatlichen Förderungen",
       "Persönliche Beratung statt Formular-Bürokratie",
     ],
+    specialConditions: {
+      eyebrow: "Ablauf",
+      title: "So funktioniert Ihre Finanzierung",
+      intro:
+        "Wir begleiten Sie von der ersten Beratung bis zur Umsetzung – transparent und ohne Formular-Bürokratie.",
+      items: [
+        {
+          icon: "FileText",
+          title: "Kostenlose Beratung & Kostenvoranschlag",
+          text: "Wir ermitteln gemeinsam den tatsächlichen Finanzierungsbedarf für Ihr Projekt – unverbindlich und ohne Kosten.",
+        },
+        {
+          icon: "Handshake",
+          title: "Individueller Finanzierungsvorschlag",
+          text: "Als Vermittler stimmen wir Sie mit etablierten Finanzierungspartnern zusammen und passen Ratenhöhe und Laufzeit an Ihr Budget an.",
+        },
+        {
+          icon: "BadgePercent",
+          title: "Kombination mit Förderung",
+          text: "Wo möglich, rechnen wir staatliche Zuschüsse wie BAFA oder KfW direkt in Ihre Finanzierung mit ein.",
+        },
+      ],
+    },
     faq: [
       {
         question: "Welche Finanzierungsmodelle bietet Klima-Monkey an?",
@@ -255,9 +279,19 @@ export const services = [
           "Wir vermitteln individuelle Ratenzahlungsmodelle passend zu Ihrem Projekt und Budget und beraten Sie transparent zu allen Konditionen.",
       },
       {
+        question: "Ist Klima-Monkey selbst der Kreditgeber?",
+        answer:
+          "Nein. Wir vermitteln an etablierte Finanzierungspartner und begleiten Sie durch den gesamten Prozess – die eigentliche Finanzierung läuft über den jeweiligen Partner.",
+      },
+      {
         question: "Lässt sich eine Finanzierung mit Förderungen kombinieren?",
         answer:
           "Ja, wir stimmen die Finanzierung so ab, dass mögliche Förderungen wie BAFA- oder KfW-Zuschüsse mit eingerechnet werden.",
+      },
+      {
+        question: "Welche Rate und Laufzeit sind möglich?",
+        answer:
+          "Das hängt von Ihrem Projekt und Ihrer persönlichen Situation ab. Nach einer kurzen Beratung erhalten Sie einen individuellen, unverbindlichen Finanzierungsvorschlag.",
       },
     ],
   },

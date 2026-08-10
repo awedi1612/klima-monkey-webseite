@@ -2,7 +2,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, FileText, ShieldCheck, TrendingDown, type LucideIcon } from "lucide-react";
+import {
+  ArrowRight,
+  BadgePercent,
+  CheckCircle2,
+  FileText,
+  Handshake,
+  ShieldCheck,
+  TrendingDown,
+  type LucideIcon,
+} from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -15,6 +24,8 @@ const conditionIcons: Record<string, LucideIcon> = {
   TrendingDown,
   FileText,
   ShieldCheck,
+  Handshake,
+  BadgePercent,
 };
 
 export function generateStaticParams() {
@@ -128,7 +139,7 @@ export default async function ServiceDetailPage({
           <Container>
             <FadeIn>
               <SectionHeading
-                eyebrow="Öffentliche Auftraggeber"
+                eyebrow={service.specialConditions.eyebrow}
                 title={service.specialConditions.title}
                 description={service.specialConditions.intro}
                 align="center"
