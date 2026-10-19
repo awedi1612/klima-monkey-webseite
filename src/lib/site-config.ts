@@ -8,7 +8,7 @@ export const siteConfig = {
     fullName: "Klima-Monkey UG (haftungsbeschränkt)",
     street: "Rosenbergstraße 31",
     zipCity: "74072 Heilbronn",
-    phone: "+49 7131 382 94 73",
+    phone: "+49 7131 640 69 53",
     mobile: "+49 1525 601 69 90",
     email: "info@klima-monkey.de",
     owner: "André Weber & Martin Nowak",
