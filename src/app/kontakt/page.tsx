@@ -3,8 +3,7 @@ import { Mail, MapPin, Phone, Smartphone } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { FadeIn } from "@/components/fade-in";
-import { LeadFunnel } from "@/components/lead-funnel";
-import { ContactFormToggle } from "@/components/contact-form-toggle";
+import { AnfrageFunnel } from "@/components/anfrage-funnel";
 import { LocationMap } from "@/components/location-map";
 import { GoogleConsentGate } from "@/components/google-consent-gate";
 import { siteConfig } from "@/lib/site-config";
@@ -24,8 +23,8 @@ export default function KontaktPage() {
           <FadeIn>
             <SectionHeading
               eyebrow="Kontakt"
-              title="Lassen Sie uns sprechen"
-              description="Beantworten Sie 3 kurze Fragen und Sie erhalten innerhalb von zwei Minuten ein persönliches Angebot."
+              title="Ihre Anfrage"
+              description="Klimaanlage, Wartung oder ein anderes Anliegen – in wenigen Schritten zu Ihrem persönlichen Angebot."
               align="center"
               className="mx-auto"
             />
@@ -35,7 +34,7 @@ export default function KontaktPage() {
 
       <section className="pb-20 lg:pb-28">
         <Container className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-          <FadeIn className="flex flex-col gap-6">
+          <FadeIn className="order-2 flex flex-col gap-6 lg:order-1">
             <div className="rounded-3xl border border-border bg-background-card p-6">
               <div className="flex flex-col gap-4">
                 <div className="flex items-start gap-3">
@@ -84,17 +83,12 @@ export default function KontaktPage() {
             </GoogleConsentGate>
           </FadeIn>
 
-          <FadeIn delay={0.1}>
-            <LeadFunnel />
+          <FadeIn delay={0.1} className="order-1 lg:order-2">
+            <AnfrageFunnel />
           </FadeIn>
         </Container>
       </section>
 
-      <section className="pb-24">
-        <Container>
-          <ContactFormToggle />
-        </Container>
-      </section>
     </>
   );
 }

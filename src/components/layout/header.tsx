@@ -92,7 +92,7 @@ export function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
-          <Button href="/kontakt">Kostenlos anfragen</Button>
+          <Button href="/kontakt">Ihre Anfrage</Button>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -145,7 +145,7 @@ export function Header() {
                 </div>
               ))}
               <Button href="/kontakt" className="mt-3">
-                Kostenlos anfragen
+                Ihre Anfrage
               </Button>
             </Container>
           </motion.div>
