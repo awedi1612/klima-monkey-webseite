@@ -14,11 +14,11 @@ export default function ImpressumPage() {
   return (
     <section className="py-20 lg:py-28">
       <Container className="max-w-3xl">
-        <h1 className="font-display text-4xl font-bold tracking-tight">Impressum</h1>
+        <h1 className="hyphens-auto break-words font-display text-3xl font-semibold tracking-tight sm:text-5xl">Impressum</h1>
 
         <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-foreground-muted">
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
               Angaben gemäß § 5 TMG
             </h2>
             <p>
@@ -31,17 +31,17 @@ export default function ImpressumPage() {
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">Registereintrag</h2>
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">Registereintrag</h2>
             <p>{legal.commercialRegister}</p>
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">Vertreten durch</h2>
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">Vertreten durch</h2>
             <p>{legal.owner}</p>
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">Kontakt</h2>
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">Kontakt</h2>
             <p>
               Telefon: {legal.phone}
               <br />
@@ -52,7 +52,7 @@ export default function ImpressumPage() {
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
               Umsatzsteuer-ID
             </h2>
             <p>
@@ -63,7 +63,7 @@ export default function ImpressumPage() {
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
               Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
             </h2>
             <p>
@@ -76,7 +76,7 @@ export default function ImpressumPage() {
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">Streitschlichtung</h2>
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">Streitschlichtung</h2>
             <p>
               Die Europäische Kommission stellt eine Plattform zur
               Online-Streitbeilegung (OS) bereit:{" "}

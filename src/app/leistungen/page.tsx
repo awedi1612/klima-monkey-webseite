@@ -22,6 +22,7 @@ export default function LeistungenPage() {
         <Container>
           <FadeIn>
             <SectionHeading
+              as="h1"
               eyebrow="Leistungen"
               title="Klimatechnik & Energie – ganzheitlich gedacht"
               description="Ob Klimaanlage, Wärmepumpe, Photovoltaik oder Stromspeicher: Wir planen, installieren, finanzieren und warten – abgestimmt auf Ihr Zuhause oder Ihr Gewerbe."
@@ -33,13 +34,13 @@ export default function LeistungenPage() {
               <FadeIn key={service.slug} delay={index * 0.05}>
                 <Link
                   href={`/leistungen/${service.slug}`}
-                  className="group flex h-full flex-col gap-5 rounded-3xl border border-border bg-background-card p-8 transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary hover:shadow-xl sm:flex-row sm:items-start"
+                  className="group flex h-full flex-col gap-5 rounded-3xl border border-border bg-background-card p-8 transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.15)] sm:flex-row sm:items-start"
                 >
                   <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-link">
                     <ServiceIcon name={service.icon} className="h-7 w-7" />
                   </span>
                   <div>
-                    <h2 className="font-display text-xl font-bold">{service.title}</h2>
+                    <h2 className="font-display text-xl font-semibold">{service.title}</h2>
                     <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
                       {service.summary}
                     </p>
@@ -58,7 +59,7 @@ export default function LeistungenPage() {
       <section className="bg-background-soft py-20 lg:py-28">
         <Container>
           <FadeIn className="text-center">
-            <h2 className="mx-auto max-w-xl text-balance font-display text-3xl font-bold sm:text-4xl">
+            <h2 className="mx-auto max-w-xl text-balance font-display text-3xl font-semibold sm:text-4xl">
               Nicht sicher, was zu Ihnen passt?
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-foreground-muted">

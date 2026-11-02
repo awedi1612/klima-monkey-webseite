@@ -34,7 +34,6 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "de_DE",
-    url: siteConfig.url,
     siteName: siteConfig.name,
     title: `${siteConfig.name} – ${siteConfig.tagline}`,
     description: siteConfig.description,
@@ -109,7 +108,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" suppressHydrationWarning className="h-full">
+    <html lang="de" suppressHydrationWarning className={`${inter.variable} h-full`}>
       <head>
         <script
           type="application/ld+json"
@@ -117,7 +116,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} min-h-full flex flex-col antialiased`}
+        className="min-h-full flex flex-col antialiased"
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <CookieConsentProvider>
@@ -132,8 +131,10 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
-            <WhatsAppButton />
-            <GameFloatButton />
+            <aside aria-label="Schnellkontakt">
+              <WhatsAppButton />
+              <GameFloatButton />
+            </aside>
           </CookieConsentProvider>
         </ThemeProvider>
       </body>

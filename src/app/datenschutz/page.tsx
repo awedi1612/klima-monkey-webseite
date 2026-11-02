@@ -14,13 +14,13 @@ export default function DatenschutzPage() {
   return (
     <section className="py-20 lg:py-28">
       <Container className="max-w-3xl">
-        <h1 className="font-display text-4xl font-bold tracking-tight">
+        <h1 className="hyphens-auto break-words font-display text-3xl font-semibold tracking-tight sm:text-5xl">
           Datenschutzerklärung
         </h1>
 
         <div className="mt-10 flex flex-col gap-10 text-sm leading-relaxed text-foreground-muted">
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
               1. Verantwortlicher
             </h2>
             <p>
@@ -37,7 +37,7 @@ export default function DatenschutzPage() {
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
               2. Erhebung und Speicherung personenbezogener Daten
             </h2>
             <p>
@@ -53,20 +53,40 @@ export default function DatenschutzPage() {
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">
-              3. Kontaktformular
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
+              3. Anfrage-Formular und Rückruf
             </h2>
             <p>
-              Wenn Sie uns über das Kontaktformular Anfragen zukommen lassen,
-              werden Ihre Angaben aus dem Formular inklusive der von Ihnen
-              dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und
-              für den Fall von Anschlussfragen bei uns gespeichert. Diese
-              Daten geben wir nicht ohne Ihre Einwilligung weiter.
+              Wenn Sie uns über das Anfrage-Formular („Ihre Anfrage“) oder den
+              Rückrufwunsch kontaktieren, verarbeiten wir die Angaben, die Sie dort
+              machen: Anrede, Name bzw. Firma, E-Mail-Adresse, Telefonnummer,
+              Anschrift, Ihre Auswahl im Formular (z. B. Raumgröße, Hersteller und
+              Anzahl der Geräte) sowie Ihre Nachricht.
+            </p>
+            <p className="mt-3">
+              Zweck ist die Bearbeitung Ihrer Anfrage, die Erstellung eines Angebots
+              und die Kontaktaufnahme mit Ihnen. Rechtsgrundlage ist Art. 6 Abs. 1
+              lit. b DSGVO (Durchführung vorvertraglicher Maßnahmen auf Ihre
+              Anfrage) sowie Ihre Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO, die
+              Sie jederzeit mit Wirkung für die Zukunft widerrufen können.
+            </p>
+            <p className="mt-3">
+              Ihre Angaben werden von unserem Webserver an ein von uns selbst
+              betriebenes Automatisierungssystem (n8n) und von dort in unsere
+              Warenwirtschaft (Kunden- und Angebotsverwaltung) übertragen. Die
+              Eingangsbestätigung an Sie versenden wir über unser E-Mail-Postfach bei
+              Microsoft 365. Eine Weitergabe an sonstige Dritte findet nicht statt.
+            </p>
+            <p className="mt-3">
+              Wir speichern Ihre Angaben, bis Ihre Anfrage abgeschlossen ist. Kommt
+              ein Auftrag zustande, bewahren wir die Daten nach den gesetzlichen
+              Aufbewahrungsfristen auf (in der Regel 6 bis 10 Jahre, § 147 AO,
+              § 257 HGB).
             </p>
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
               4. Cookies &amp; Cookie-Einstellungen
             </h2>
             <p>
@@ -132,7 +152,7 @@ export default function DatenschutzPage() {
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
               5. Google Maps &amp; Google-Bewertungen
             </h2>
             <p>
@@ -160,7 +180,7 @@ export default function DatenschutzPage() {
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
               6. Ihre Rechte
             </h2>
             <p>
@@ -175,7 +195,7 @@ export default function DatenschutzPage() {
           </div>
 
           <div>
-            <h2 className="mb-2 font-display text-lg font-bold text-foreground">
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
               7. Beschwerderecht bei der Aufsichtsbehörde
             </h2>
             <p>

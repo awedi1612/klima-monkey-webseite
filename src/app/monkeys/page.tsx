@@ -43,6 +43,7 @@ export default function MonkeysPage() {
         <Container>
           <FadeIn>
             <SectionHeading
+              as="h1"
               eyebrow="Monkeys"
               title="Die Köpfe hinter Klima-Monkey"
               description="Ein eingespieltes Team aus zertifizierten Technikern und Beratern – mit Leidenschaft für gutes Klima und saubere Energie."
@@ -53,11 +54,11 @@ export default function MonkeysPage() {
             {team.map((member, index) => (
               <FadeIn key={member.name + index} delay={index * 0.05}>
                 <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-background-card">
-                  <div className="flex aspect-square items-center justify-center bg-gradient-to-br from-brand-primary/15 to-brand-secondary/15">
-                    <User className="h-14 w-14 text-brand-link/40" strokeWidth={1.5} />
+                  <div className="flex aspect-square items-center justify-center bg-background-soft">
+                    <User className="h-14 w-14 text-foreground-muted/40" strokeWidth={1.5} />
                   </div>
                   <div className="p-6">
-                    <div className="font-display text-lg font-bold">{member.name}</div>
+                    <div className="font-display text-lg font-semibold">{member.name}</div>
                     <div className="text-sm font-semibold text-brand-link">
                       {member.role}
                     </div>
@@ -75,7 +76,7 @@ export default function MonkeysPage() {
       <section className="bg-background-soft py-20 lg:py-28">
         <Container className="text-center">
           <FadeIn>
-            <h2 className="mx-auto max-w-xl text-balance font-display text-3xl font-bold sm:text-4xl">
+            <h2 className="mx-auto max-w-xl text-balance font-display text-3xl font-semibold sm:text-4xl">
               Werden Sie Teil des Teams
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-foreground-muted">

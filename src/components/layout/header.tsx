@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,6 +16,14 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [leistungenOpen, setLeistungenOpen] = useState(false);
   const pathname = usePathname();
+
+  // offenes Handy-Menü: Seite dahinter nicht mitscrollen
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl backdrop-saturate-150">
@@ -54,7 +62,7 @@ export function Header() {
                         transition={{ duration: 0.15 }}
                         className="absolute left-1/2 top-full w-80 -translate-x-1/2 pt-3"
                       >
-                        <div className="grid gap-1 rounded-2xl border border-border bg-background-card p-3 shadow-2xl">
+                        <div className="grid gap-1 rounded-2xl border border-border bg-background/90 p-3 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl">
                           {item.children.map((child) => (
                             <Link
                               key={child.href}
@@ -100,7 +108,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Menü öffnen"
+            aria-label={mobileOpen ? "Menü schließen" : "Menü öffnen"}
             aria-expanded={mobileOpen}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-border cursor-pointer"
           >
@@ -116,7 +124,7 @@ export function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="overflow-hidden border-t border-border lg:hidden"
+            className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border bg-background/95 lg:hidden"
           >
             <Container className="flex flex-col gap-1 py-4">
               {navItems.map((item) => (

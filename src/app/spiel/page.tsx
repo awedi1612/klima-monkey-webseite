@@ -21,6 +21,7 @@ export default function SpielPage() {
       <Container>
         <FadeIn>
           <SectionHeading
+              as="h1"
             eyebrow="Kleine Pause?"
             title="Monkey Catch"
             description="Unser Klima-Monkey braucht Hilfe beim Kühlbleiben: Schneeflocken, Bananen und Kokosnüsse fangen, Sonne und Hitzewellen ausweichen. 45 Sekunden, so viele Punkte wie möglich."

@@ -133,7 +133,7 @@ export default function HomePage() {
               plus Langzeitmiete für Büro- und Schulcontainer. Ihr zuverlässiger
               Partner für angenehmes Klima in Heilbronn.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
               <Button href="/kontakt" size="lg">
                 Ihre Anfrage
                 <ArrowRight className="h-4 w-4" />
@@ -230,7 +230,7 @@ export default function HomePage() {
               <FadeIn key={service.slug} delay={index * 0.05}>
                 <Link
                   href={`/leistungen/${service.slug}`}
-                  className="group relative flex h-full min-h-[19rem] flex-col overflow-hidden rounded-3xl border border-border bg-background-card p-8 transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary hover:shadow-xl"
+                  className="group relative flex h-full min-h-[19rem] flex-col overflow-hidden rounded-3xl border border-border bg-background-card p-8 transition-all duration-300 hover:-translate-y-1 hover:border-brand-primary hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.15)]"
                 >
                   {"image" in service && service.image && (
                     <div className="absolute inset-0">
@@ -246,7 +246,7 @@ export default function HomePage() {
                   <div className="relative flex h-full flex-col">
                     <div className="flex items-center gap-3">
                       <ServiceIcon name={service.icon} className="h-7 w-7 shrink-0 text-brand-link" />
-                      <h3 className="font-display text-2xl font-bold">{service.title}</h3>
+                      <h3 className="font-display text-2xl font-semibold">{service.title}</h3>
                     </div>
                     <p className="mt-3 flex-1 max-w-md text-sm leading-relaxed text-foreground-muted">
                       {service.summary}
@@ -262,7 +262,7 @@ export default function HomePage() {
           </div>
 
           <FadeIn delay={0.15} className="mt-14">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground-muted">
+            <h3 className="text-xl font-semibold tracking-tight">
               Weitere Leistungen
             </h3>
           </FadeIn>
@@ -344,7 +344,7 @@ export default function HomePage() {
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {process.map((step, index) => (
               <FadeIn key={step.title} delay={index * 0.05} className="relative">
-                <div aria-hidden="true" className="text-5xl font-display font-bold text-foreground-muted/25">
+                <div aria-hidden="true" className="text-5xl font-display font-semibold text-foreground-muted/25">
                   {String(index + 1).padStart(2, "0")}
                 </div>
                 <span className="mt-3 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-link">
@@ -405,7 +405,7 @@ export default function HomePage() {
               <div className="flex items-center gap-4">
                 <span className="text-4xl">🐒</span>
                 <div>
-                  <p className="font-display text-lg font-bold">Kleine Pause? Spiel Monkey Catch</p>
+                  <p className="font-display text-lg font-semibold">Kleine Pause? Spiel Monkey Catch</p>
                   <p className="text-sm text-foreground-muted">
                     Fang Schneeflocken &amp; Kokosnüsse, weich der Hitze aus – 45 Sekunden Spaß.
                   </p>
@@ -430,16 +430,16 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="pt-10 pb-20 lg:py-28">
+      <section className="pb-20 lg:pb-28">
         <Container>
           <FadeIn>
-            <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-dark px-8 py-16 text-center sm:px-16">
+            <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-dark px-8 py-16 text-center ring-1 ring-transparent dark:ring-border sm:px-16">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-brand-primary/30 blur-[100px]"
               />
               <div className="relative">
-                <h2 className="text-balance font-display text-3xl font-bold text-white sm:text-4xl">
+                <h2 className="text-balance font-display text-3xl font-semibold text-white sm:text-4xl">
                   Bereit für Ihr optimales Wohlfühlklima?
                 </h2>
                 <p className="mx-auto mt-4 max-w-xl text-balance text-white/70">
@@ -448,7 +448,7 @@ export default function HomePage() {
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-4">
                   <Button href="/kontakt" size="lg">
-                    Kostenlos anfragen
+                    Ihre Anfrage
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </div>

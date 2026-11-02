@@ -85,12 +85,12 @@ export default async function ServiceDetailPage({
       />
 
       <section className="py-20 lg:py-28">
-        <Container className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+        <Container className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <FadeIn>
             <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-primary/10 text-brand-link">
               <ServiceIcon name={service.icon} className="h-7 w-7" />
             </span>
-            <h1 className="mt-6 text-balance font-display text-4xl font-bold tracking-tight sm:text-5xl">
+            <h1 className="mt-6 text-balance font-display text-4xl font-semibold tracking-tight sm:text-5xl">
               {service.title}
             </h1>
             <p className="mt-5 max-w-xl text-balance text-lg leading-relaxed text-foreground-muted">
@@ -120,7 +120,7 @@ export default async function ServiceDetailPage({
               </div>
             )}
             <div className="rounded-3xl border border-border bg-background-card p-8">
-              <h2 className="font-display text-lg font-bold">Das ist inklusive</h2>
+              <h2 className="font-display text-lg font-semibold">Das ist inklusive</h2>
               <ul className="mt-5 flex flex-col gap-3.5">
                 {service.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed">

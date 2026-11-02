@@ -45,11 +45,8 @@ export default function UeberUnsPage() {
       <section className="py-20 lg:py-28">
         <Container className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <FadeIn>
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background-card px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-foreground-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
-              Über uns
-            </span>
-            <h1 className="mt-6 text-balance font-display text-4xl font-bold tracking-tight sm:text-5xl">
+            <span className="text-base font-semibold text-brand-link sm:text-lg">Über uns</span>
+            <h1 className="mt-3 text-balance font-display text-4xl font-semibold tracking-tight sm:text-5xl">
               Klimatechnik mit Kopf, Herz und Werkzeug
             </h1>
             <p className="mt-6 text-balance text-lg leading-relaxed text-foreground-muted">
@@ -82,7 +79,7 @@ export default function UeberUnsPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-brand-dark/10 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-8 text-center text-white">
-                <p className="font-display text-xl font-bold">Das Klima-Monkey Team</p>
+                <p className="font-display text-xl font-semibold">Das Klima-Monkey Team</p>
                 <p className="text-sm text-white/75">
                   Zertifizierte Techniker & persönliche Beratung aus Heilbronn.
                 </p>
@@ -123,7 +120,7 @@ export default function UeberUnsPage() {
       <section className="py-20 lg:py-28">
         <Container>
           <FadeIn className="mx-auto max-w-2xl text-center">
-            <h2 className="text-balance font-display text-3xl font-bold sm:text-4xl">
+            <h2 className="text-balance font-display text-3xl font-semibold sm:text-4xl">
               Lernen Sie das Team persönlich kennen
             </h2>
             <p className="mt-4 text-foreground-muted">

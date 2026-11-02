@@ -16,7 +16,7 @@ export default function NewsletterBestaetigtPage() {
         <span className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-primary/10 text-brand-link">
           <CheckCircle2 className="h-8 w-8" />
         </span>
-        <h1 className="mt-6 font-display text-3xl font-bold tracking-tight sm:text-4xl">
+        <h1 className="mt-6 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
           Anmeldung bestätigt!
         </h1>
         <p className="mt-4 max-w-md text-balance text-foreground-muted">

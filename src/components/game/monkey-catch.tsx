@@ -397,7 +397,7 @@ export function MonkeyCatch() {
         {phase === "idle" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
             <span className="text-6xl">🐒</span>
-            <h3 className="font-display text-xl font-bold">Monkey Catch</h3>
+            <h3 className="font-display text-xl font-semibold">Monkey Catch</h3>
             <p className="max-w-xs text-sm text-foreground-muted">
               Fang Schneeflocken, Bananen &amp; Kokosnüsse – weich Hitzewellen und Sonnen aus. Die
               seltene Klimaanlage <AirVent className="inline h-3.5 w-3.5 align-[-2px]" /> bringt
@@ -423,10 +423,10 @@ export function MonkeyCatch() {
         {phase === "over" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 overflow-y-auto bg-background-card/95 p-6 text-center backdrop-blur sm:p-8">
             <span className="text-5xl">{score >= highscore && score > 0 ? "🏆" : "🐒"}</span>
-            <h3 className="font-display text-xl font-bold">
+            <h3 className="font-display text-xl font-semibold">
               {score >= highscore && score > 0 ? "Neuer Highscore!" : "Zeit abgelaufen!"}
             </h3>
-            <p className="text-3xl font-display font-bold text-brand-link">{score} Punkte</p>
+            <p className="text-3xl font-display font-semibold text-brand-link">{score} Punkte</p>
             <p className="text-xs text-foreground-muted">Highscore: {highscore}</p>
 
             {submitStatus === "done" ? (

@@ -28,19 +28,15 @@ export function Newsletter() {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-dark px-8 py-14 sm:px-14">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-24 right-[-4rem] h-72 w-72 rounded-full bg-brand-primary/25 blur-[100px]"
-      />
+    <div className="relative overflow-hidden rounded-[2.5rem] bg-background-soft px-8 py-14 sm:px-14">
       <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary/15 text-brand-primary">
+        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-primary/12 text-brand-link">
           <Mail className="h-5 w-5" />
         </span>
-        <h2 className="text-balance font-display text-2xl font-bold text-white sm:text-3xl">
+        <h2 className="text-balance font-display text-2xl font-semibold sm:text-3xl">
           Newsletter: Spartipps & Förderupdates
         </h2>
-        <p className="max-w-md text-balance text-sm text-white/70">
+        <p className="max-w-md text-balance text-sm text-foreground-muted">
           Erhalten Sie gelegentlich Infos zu neuen Förderprogrammen, Energiespartipps
           und Neuigkeiten von Klima-Monkey. Kein Spam, jederzeit abbestellbar.
         </p>
@@ -49,9 +45,9 @@ export function Newsletter() {
           <div
             role="status"
             aria-live="polite"
-            className="mt-2 flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-sm text-white"
+            className="mt-2 flex items-center gap-2 rounded-full bg-background-card px-5 py-3 text-sm"
           >
-            <CheckCircle2 className="h-4 w-4 text-brand-primary" />
+            <CheckCircle2 className="h-4 w-4 text-brand-link" />
             Danke! Bitte bestätigen Sie ggf. Ihre E-Mail-Adresse.
           </div>
         ) : (
@@ -69,7 +65,7 @@ export function Newsletter() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="ihre.email@beispiel.de"
-              className="w-full flex-1 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm text-white placeholder:text-white/40 outline-none focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
+              className="w-full flex-1 rounded-full border border-[var(--border-input)] bg-background px-5 py-3 text-sm placeholder:text-foreground-muted/70 outline-none focus-visible:border-brand-primary focus-visible:ring-2 focus-visible:ring-brand-primary"
             />
             <button
               type="submit"
@@ -85,7 +81,7 @@ export function Newsletter() {
           </form>
         )}
         {status === "error" && (
-          <p role="status" aria-live="polite" className="text-xs text-red-300">
+          <p role="status" aria-live="polite" className="text-xs text-red-700 dark:text-red-400">
             Leider ist etwas schiefgelaufen. Bitte versuchen Sie es erneut.
           </p>
         )}

@@ -1,13 +1,11 @@
 "use client";
 
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, CheckCircle2, Loader2, MessageSquareText, Snowflake, Wrench } from "lucide-react";
 
-// Anfragen gehen an n8n; n8n legt sie in Monkey-Soft an (Kunde + Angebotsentwurf) und bestätigt per Mail
-const ANFRAGE_WEBHOOK_URL =
-  process.env.NEXT_PUBLIC_N8N_ANFRAGE_WEBHOOK_URL ??
-  "https://friends.dyndns.info:8443/webhook/website-anfrage";
+// Anfragen gehen über die eigene Route /api/anfrage an n8n; n8n legt sie in Monkey-Soft an (Kunde + Angebotsentwurf)
+const ANFRAGE_URL = "/api/anfrage";
 
 type Art = "klima" | "wartung" | "sonstiges";
 
@@ -123,15 +121,29 @@ type Kontakt = {
   email: string;
   telefon: string;
   strasse: string;
+  plz: string;
   ort: string;
   nachricht: string;
 };
 
-const leererKontakt: Kontakt = { anrede: "", name: "", email: "", telefon: "", strasse: "", ort: "", nachricht: "" };
+const leererKontakt: Kontakt = { anrede: "", name: "", email: "", telefon: "", strasse: "", plz: "", ort: "", nachricht: "" };
 
 const karte = "rounded-[28px] border border-border bg-background-card p-7 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_12px_40px_-12px_rgba(0,0,0,0.12)] sm:p-10";
 const primaerKnopf =
   "inline-flex items-center justify-center gap-2 rounded-full bg-brand-primary px-7 py-3.5 text-sm font-semibold text-brand-dark transition-all hover:bg-brand-primary-hover active:scale-[0.98] disabled:opacity-70 cursor-pointer";
+const fehlerText = "mt-1 text-xs text-red-700 dark:text-red-400";
+const feldRahmen = (fehler?: string | boolean) =>
+  fehler ? "border-red-700 dark:border-red-400" : "border-[var(--border-input)] focus-visible:border-brand-primary";
+
+async function senden(daten: Record<string, string>) {
+  const antwort = await fetch(ANFRAGE_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(daten),
+    signal: AbortSignal.timeout(20000),
+  });
+  if (!antwort.ok) throw new Error(`Anfrage abgelehnt (${antwort.status})`);
+}
 
 export function AnfrageFunnel() {
   const [phase, setPhase] = useState<Phase>("start");
@@ -145,6 +157,7 @@ export function AnfrageFunnel() {
   const [einwilligung, setEinwilligung] = useState(false);
   const [einwilligungFehler, setEinwilligungFehler] = useState(false);
   const honigtopf = useRef<HTMLInputElement>(null);
+  const formular = useRef<HTMLFormElement>(null);
 
   const [rueckrufName, setRueckrufName] = useState("");
   const [rueckrufTelefon, setRueckrufTelefon] = useState("");
@@ -154,29 +167,57 @@ export function AnfrageFunnel() {
   const [rueckrufEinwilligung, setRueckrufEinwilligung] = useState(false);
   const [rueckrufEinwilligungFehler, setRueckrufEinwilligungFehler] = useState(false);
 
+  // Weiterschalten nach einer Auswahl: gesperrt, bis der nächste Schritt steht (Doppelklick überspringt sonst Fragen)
+  const weiterTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Fokus auf die Überschrift des neuen Schritts, sobald der Nutzer etwas gewählt hat (Tastatur, Screenreader)
+  const ueberschrift = useRef<HTMLHeadingElement>(null);
+  const fokusSetzen = useRef(false);
+
+  useEffect(() => () => {
+    if (weiterTimer.current) clearTimeout(weiterTimer.current);
+  }, []);
+
+  useEffect(() => {
+    if (fokusSetzen.current) ueberschrift.current?.focus({ preventScroll: true });
+  }, [phase, schritt]);
+
   const fragen = FRAGEN[art];
-  const frage = fragen[schritt];
+  const frage = fragen[Math.min(schritt, fragen.length - 1)];
   const schritteGesamt = fragen.length + 1;
   const fortschritt =
     phase === "fragen" ? Math.round(((schritt + 1) / schritteGesamt) * 100) : phase === "kontakt" ? 100 : 0;
   const adresseNoetig = art !== "sonstiges";
 
+  function wechsle(neuePhase: Phase) {
+    fokusSetzen.current = true;
+    setPhase(neuePhase);
+  }
+
   function starte(neueArt: Art) {
     setArt(neueArt);
     setSchritt(0);
     setAntworten({});
-    setPhase("fragen");
+    wechsle("fragen");
   }
 
   function waehle(key: string, wert: string) {
+    if (weiterTimer.current) return;
     setAntworten((a) => ({ ...a, [key]: wert }));
-    setTimeout(() => {
-      if (schritt < fragen.length - 1) setSchritt((s) => s + 1);
+    const naechster = schritt + 1;
+    weiterTimer.current = setTimeout(() => {
+      weiterTimer.current = null;
+      fokusSetzen.current = true;
+      if (naechster < fragen.length) setSchritt(naechster);
       else setPhase("kontakt");
     }, 220);
   }
 
   function zurueck() {
+    if (weiterTimer.current) {
+      clearTimeout(weiterTimer.current);
+      weiterTimer.current = null;
+    }
+    fokusSetzen.current = true;
     if (phase === "kontakt") setPhase("fragen");
     else if (schritt > 0) setSchritt((s) => s - 1);
     else setPhase("start");
@@ -191,33 +232,35 @@ export function AnfrageFunnel() {
     }
     if (!kontakt.telefon.trim()) f.telefon = "Bitte geben Sie Ihre Telefonnummer ein.";
     if (adresseNoetig && !kontakt.strasse.trim()) f.strasse = "Bitte geben Sie Ihre Straße ein.";
-    if (adresseNoetig && !kontakt.ort.trim()) f.ort = "Bitte geben Sie PLZ und Ort ein.";
+    if (adresseNoetig && !kontakt.plz.trim()) f.plz = "Bitte geben Sie Ihre PLZ ein.";
+    if (adresseNoetig && !kontakt.ort.trim()) f.ort = "Bitte geben Sie Ihren Ort ein.";
     if (art === "sonstiges" && !kontakt.nachricht.trim()) f.nachricht = "Bitte beschreiben Sie kurz Ihr Anliegen.";
     setFehler(f);
     setEinwilligungFehler(!einwilligung);
-    return Object.keys(f).length === 0 && einwilligung;
+    const ok = Object.keys(f).length === 0 && einwilligung;
+    if (!ok) {
+      // erstes fehlerhaftes Feld anspringen
+      requestAnimationFrame(() => formular.current?.querySelector<HTMLElement>('[data-invalid="true"], [aria-invalid="true"]')?.focus());
+    }
+    return ok;
   }
 
   async function absenden(event: FormEvent) {
     event.preventDefault();
-    if (!pruefe()) return;
+    if (sendet || !pruefe()) return;
     setSendet(true);
     setSendeFehler(false);
+    const { plz, ort, ...rest } = kontakt;
     try {
-      const antwort = await fetch(ANFRAGE_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          art,
-          ...antworten,
-          ...kontakt,
-          website: honigtopf.current?.value ?? "",
-          datenschutz: "eingewilligt",
-          quelle: "Anfrage-Funnel (Website)",
-        }),
+      await senden({
+        art,
+        ...antworten,
+        ...rest,
+        ort: `${plz.trim()} ${ort.trim()}`.trim(),
+        website: honigtopf.current?.value ?? "",
+        datenschutz: "eingewilligt",
       });
-      if (!antwort.ok) throw new Error(`Webhook antwortete mit ${antwort.status}`);
-      setPhase("danke");
+      wechsle("danke");
     } catch (error) {
       console.error("Anfrage fehlgeschlagen:", error);
       setSendeFehler(true);
@@ -228,6 +271,7 @@ export function AnfrageFunnel() {
 
   async function rueckrufAbsenden(event: FormEvent) {
     event.preventDefault();
+    if (rueckrufSendet) return;
     const f: { name?: string; telefon?: string } = {};
     if (!rueckrufName.trim()) f.name = "Bitte geben Sie Ihren Namen ein.";
     if (!rueckrufTelefon.trim()) f.telefon = "Bitte geben Sie Ihre Telefonnummer ein.";
@@ -237,13 +281,16 @@ export function AnfrageFunnel() {
     setRueckrufSendet(true);
     setRueckrufSendeFehler(false);
     try {
-      const antwort = await fetch("/api/kontakt", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: rueckrufName, telefon: rueckrufTelefon, interesse: "Rückruf gewünscht", nachricht: "Bitte um Rückruf.", datenschutz: "eingewilligt" }),
+      await senden({
+        art: "sonstiges",
+        anliegen: "Rückruf gewünscht",
+        name: rueckrufName,
+        telefon: rueckrufTelefon,
+        nachricht: "Bitte um Rückruf.",
+        website: honigtopf.current?.value ?? "",
+        datenschutz: "eingewilligt",
       });
-      if (!antwort.ok) throw new Error(`Request fehlgeschlagen (${antwort.status})`);
-      setPhase("rueckruf-danke");
+      wechsle("rueckruf-danke");
     } catch (error) {
       console.error("Rückruf-Anfrage fehlgeschlagen:", error);
       setRueckrufSendeFehler(true);
@@ -258,16 +305,20 @@ export function AnfrageFunnel() {
     exit: { opacity: 0, y: -12 },
     transition: { duration: 0.28, ease: [0.25, 0.1, 0.25, 1] as const },
   };
+  const titel = "text-balance font-display font-semibold tracking-tight outline-none";
 
   return (
-    <div className="mx-auto w-full max-w-xl" id="anfrage">
+    <div className="mx-auto w-full max-w-xl lg:max-w-none" id="anfrage">
+      {/* Honigtopf für Bots: für Menschen unsichtbar, gilt für Anfrage und Rückruf */}
+      <input ref={honigtopf} type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
+
       {(phase === "fragen" || phase === "kontakt") && (
         <div className="mb-5">
           <div className="mb-2 flex items-center justify-between text-xs font-medium text-foreground-muted">
             <span>{phase === "kontakt" ? "Letzter Schritt" : `Schritt ${schritt + 1} von ${schritteGesamt}`}</span>
             <span>{fortschritt}%</span>
           </div>
-          <div className="h-1 overflow-hidden rounded-full bg-border">
+          <div className="h-1 overflow-hidden rounded-full bg-border" aria-hidden="true">
             <motion.div className="h-full rounded-full bg-brand-primary" animate={{ width: `${fortschritt}%` }} transition={{ duration: 0.4 }} />
           </div>
         </div>
@@ -277,26 +328,26 @@ export function AnfrageFunnel() {
         {phase === "start" && (
           <motion.div key="start" {...bewegung} className={karte}>
             <p className="text-sm font-semibold text-brand-link">Kostenlos &amp; unverbindlich</p>
-            <h2 className="mt-2 text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl">Worum geht es?</h2>
+            <h2 ref={ueberschrift} tabIndex={-1} className={`mt-2 text-3xl sm:text-4xl ${titel}`}>Worum geht es?</h2>
             <p className="mt-3 text-pretty text-[15px] leading-relaxed text-foreground-muted">
               Wählen Sie aus, worum es geht – wir führen Sie in wenigen Schritten zum Ziel.
             </p>
             <div className="mt-7 flex flex-col gap-3">
-              {ARTEN.map(({ art: a, titel, text, icon: Icon }) => (
+              {ARTEN.map(({ art: a, titel: t, text, icon: Icon }) => (
                 <button
                   key={a}
                   type="button"
                   onClick={() => starte(a)}
                   className="group flex items-center gap-4 rounded-2xl border border-border bg-background px-5 py-4 text-left transition-all hover:border-brand-primary hover:shadow-sm active:scale-[0.99] cursor-pointer"
                 >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-primary/12 text-brand-link">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-primary/12 text-brand-link" aria-hidden="true">
                     <Icon className="h-5 w-5" />
                   </span>
                   <span className="flex-1">
-                    <span className="block text-base font-semibold">{titel}</span>
+                    <span className="block text-base font-semibold">{t}</span>
                     <span className="block text-sm text-foreground-muted">{text}</span>
                   </span>
-                  <span className="text-foreground-muted transition-transform group-hover:translate-x-0.5" aria-hidden>
+                  <span className="text-foreground-muted transition-transform group-hover:translate-x-0.5" aria-hidden="true">
                     →
                   </span>
                 </button>
@@ -304,7 +355,7 @@ export function AnfrageFunnel() {
             </div>
             <button
               type="button"
-              onClick={() => setPhase("rueckruf")}
+              onClick={() => wechsle("rueckruf")}
               className="mt-6 text-sm font-medium text-brand-link underline-offset-4 hover:underline cursor-pointer"
             >
               Lieber direkt einen Rückruf vereinbaren
@@ -315,7 +366,7 @@ export function AnfrageFunnel() {
         {phase === "fragen" && frage && (
           <motion.div key={`${art}-${schritt}`} {...bewegung} className={karte}>
             <p className="text-sm font-semibold text-brand-link">{ARTEN.find((x) => x.art === art)?.titel}</p>
-            <h2 className="mt-2 text-balance font-display text-2xl font-semibold tracking-tight sm:text-3xl">{frage.label}</h2>
+            <h2 ref={ueberschrift} tabIndex={-1} className={`mt-2 text-2xl sm:text-3xl ${titel}`}>{frage.label}</h2>
             <div className={`mt-7 grid gap-3 ${frage.columns === 3 ? "sm:grid-cols-3" : "grid-cols-2"}`}>
               {frage.options.map((o) => {
                 const gewaehlt = antworten[frage.key] === o.label;
@@ -329,7 +380,7 @@ export function AnfrageFunnel() {
                       gewaehlt ? "border-brand-primary bg-brand-primary/10" : "border-border bg-background hover:border-brand-primary"
                     } ${o.wide ? "col-span-2" : ""}`}
                   >
-                    {o.icon && <span className="text-3xl leading-none">{o.icon}</span>}
+                    {o.icon && <span className="text-3xl leading-none" aria-hidden="true">{o.icon}</span>}
                     <span className="text-sm font-semibold">{o.label}</span>
                     {o.hint && <span className="text-xs text-foreground-muted">{o.hint}</span>}
                   </button>
@@ -342,7 +393,7 @@ export function AnfrageFunnel() {
 
         {phase === "kontakt" && (
           <motion.div key="kontakt" {...bewegung} className={karte}>
-            <h2 className="text-balance font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+            <h2 ref={ueberschrift} tabIndex={-1} className={`text-2xl sm:text-3xl ${titel}`}>
               {art === "sonstiges" ? "Wie erreichen wir Sie?" : "Wohin dürfen wir Ihr Angebot senden?"}
             </h2>
             <p className="mt-2 text-sm text-foreground-muted">
@@ -351,31 +402,34 @@ export function AnfrageFunnel() {
                 : "Wir prüfen Ihre Angaben und senden Ihnen Ihr persönliches Angebot – in der Regel innerhalb eines Werktags."}
             </p>
 
-            <form onSubmit={absenden} noValidate className="mt-6 flex flex-col gap-4">
-              {/* Honigtopf für Bots: für Menschen unsichtbar */}
-              <input ref={honigtopf} type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
-
-              <fieldset>
-                <legend className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-foreground-muted">
+            <form ref={formular} onSubmit={absenden} noValidate className="mt-6 flex flex-col gap-4">
+              <fieldset aria-describedby={fehler.anrede ? "anrede-fehler" : undefined}>
+                <legend className="mb-1.5 block text-sm font-medium text-foreground-muted">
                   Anrede <span className="text-brand-link">*</span>
                 </legend>
-                <div className="inline-flex rounded-full border border-border bg-background p-1" role="radiogroup">
+                <div className="inline-flex rounded-full border border-[var(--border-input)] bg-background p-1">
                   {(["Frau", "Herr", "Firma"] as const).map((a) => (
-                    <button
+                    <label
                       key={a}
-                      type="button"
-                      role="radio"
-                      aria-checked={kontakt.anrede === a}
-                      onClick={() => setKontakt((k) => ({ ...k, anrede: a }))}
-                      className={`rounded-full px-5 py-2 text-sm font-medium transition-colors cursor-pointer ${
+                      className={`cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand-primary ${
                         kontakt.anrede === a ? "bg-brand-primary text-brand-dark" : "text-foreground-muted hover:text-foreground"
                       }`}
                     >
+                      <input
+                        type="radio"
+                        name="anrede"
+                        value={a}
+                        checked={kontakt.anrede === a}
+                        onChange={() => setKontakt((k) => ({ ...k, anrede: a }))}
+                        required
+                        data-invalid={fehler.anrede && a === "Frau" ? "true" : undefined}
+                        className="sr-only"
+                      />
                       {a}
-                    </button>
+                    </label>
                   ))}
                 </div>
-                {fehler.anrede && <p className="mt-1 text-xs text-red-500">{fehler.anrede}</p>}
+                {fehler.anrede && <p id="anrede-fehler" className={fehlerText}>{fehler.anrede}</p>}
               </fieldset>
 
               <Feld
@@ -385,7 +439,7 @@ export function AnfrageFunnel() {
                 error={fehler.name}
                 onChange={(v) => setKontakt((k) => ({ ...k, name: v }))}
                 placeholder={kontakt.anrede === "Firma" ? "Muster GmbH, Max Mustermann" : "Max Mustermann"}
-                autoComplete="name"
+                autoComplete={kontakt.anrede === "Firma" ? "organization" : "name"}
               />
               <div className="grid gap-4 sm:grid-cols-2">
                 <Feld label="E-Mail" type="email" required value={kontakt.email} error={fehler.email}
@@ -393,15 +447,17 @@ export function AnfrageFunnel() {
                 <Feld label="Telefon" type="tel" required value={kontakt.telefon} error={fehler.telefon}
                   onChange={(v) => setKontakt((k) => ({ ...k, telefon: v }))} placeholder="+49 …" autoComplete="tel" />
               </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <Feld label="Straße & Hausnummer" required={adresseNoetig} value={kontakt.strasse} error={fehler.strasse}
-                  onChange={(v) => setKontakt((k) => ({ ...k, strasse: v }))} placeholder="Musterstraße 12" autoComplete="street-address" />
-                <Feld label="PLZ & Ort" required={adresseNoetig} value={kontakt.ort} error={fehler.ort}
-                  onChange={(v) => setKontakt((k) => ({ ...k, ort: v }))} placeholder="74072 Heilbronn" autoComplete="postal-code" />
+              <Feld label="Straße & Hausnummer" required={adresseNoetig} value={kontakt.strasse} error={fehler.strasse}
+                onChange={(v) => setKontakt((k) => ({ ...k, strasse: v }))} placeholder="Musterstraße 12" autoComplete="address-line1" />
+              <div className="grid grid-cols-[7rem_1fr] gap-4">
+                <Feld label="PLZ" required={adresseNoetig} value={kontakt.plz} error={fehler.plz} inputMode="numeric"
+                  onChange={(v) => setKontakt((k) => ({ ...k, plz: v }))} placeholder="74072" autoComplete="postal-code" />
+                <Feld label="Ort" required={adresseNoetig} value={kontakt.ort} error={fehler.ort}
+                  onChange={(v) => setKontakt((k) => ({ ...k, ort: v }))} placeholder="Heilbronn" autoComplete="address-level2" />
               </div>
               <div>
-                <label htmlFor="anfrage-nachricht" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-foreground-muted">
-                  {art === "sonstiges" ? <>Ihr Anliegen <span className="text-brand-link">*</span></> : <>Weitere Angaben <span className="font-normal normal-case">(optional)</span></>}
+                <label htmlFor="anfrage-nachricht" className="mb-1.5 block text-sm font-medium text-foreground-muted">
+                  {art === "sonstiges" ? <>Ihr Anliegen <span className="text-brand-link">*</span></> : <>Weitere Angaben <span className="font-normal">(optional)</span></>}
                 </label>
                 <textarea
                   id="anfrage-nachricht"
@@ -410,25 +466,29 @@ export function AnfrageFunnel() {
                   onChange={(e) => setKontakt((k) => ({ ...k, nachricht: e.target.value }))}
                   placeholder={art === "sonstiges" ? "Beschreiben Sie kurz, wobei wir helfen können …" : "z. B. Gebäudeart, besondere Wünsche …"}
                   aria-invalid={!!fehler.nachricht}
-                  className={`w-full rounded-xl border bg-background px-4 py-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-primary ${
-                    fehler.nachricht ? "border-red-500" : "border-border focus-visible:border-brand-primary"
-                  }`}
+                  aria-describedby={fehler.nachricht ? "anfrage-nachricht-fehler" : undefined}
+                  className={`w-full rounded-xl border bg-background px-4 py-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-primary ${feldRahmen(fehler.nachricht)}`}
                 />
-                {fehler.nachricht && <p className="mt-1 text-xs text-red-500">{fehler.nachricht}</p>}
+                {fehler.nachricht && <p id="anfrage-nachricht-fehler" className={fehlerText}>{fehler.nachricht}</p>}
               </div>
               <Einwilligung
                 checked={einwilligung}
                 fehler={einwilligungFehler}
                 onChange={(v) => { setEinwilligung(v); if (v) setEinwilligungFehler(false); }}
               />
-              <button type="submit" disabled={sendet} className={`mt-1 ${primaerKnopf}`}>
-                {sendet ? <Loader2 className="h-4 w-4 animate-spin" /> : "Anfrage absenden"}
+              <button type="submit" disabled={sendet} aria-busy={sendet} className={`mt-1 ${primaerKnopf}`}>
+                {sendet ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                    <span className="sr-only">Wird gesendet …</span>
+                  </>
+                ) : (
+                  "Anfrage absenden"
+                )}
               </button>
-              {sendeFehler && (
-                <p role="status" aria-live="polite" className="text-center text-xs text-red-500">
-                  Leider ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns direkt an.
-                </p>
-              )}
+              <p role="alert" className="text-center text-xs text-red-700 empty:hidden dark:text-red-400">
+                {sendeFehler ? "Leider ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns direkt an." : ""}
+              </p>
             </form>
             <ZurueckKnopf onClick={zurueck} />
           </motion.div>
@@ -436,8 +496,8 @@ export function AnfrageFunnel() {
 
         {phase === "danke" && (
           <motion.div key="danke" {...bewegung} className={`${karte} text-center`}>
-            <CheckCircle2 className="mx-auto h-12 w-12 text-brand-link" />
-            <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight">Vielen Dank!</h2>
+            <CheckCircle2 className="mx-auto h-12 w-12 text-brand-link" aria-hidden="true" />
+            <h2 ref={ueberschrift} tabIndex={-1} className={`mt-4 text-3xl ${titel}`}>Vielen Dank!</h2>
             <p className="mt-3 text-[15px] leading-relaxed text-foreground-muted">
               Ihre Anfrage ist bei uns eingegangen. Eine Bestätigung ist unterwegs an{" "}
               <strong className="text-foreground">{kontakt.email}</strong>.
@@ -448,7 +508,7 @@ export function AnfrageFunnel() {
 
         {phase === "rueckruf" && (
           <motion.div key="rueckruf" {...bewegung} className={karte}>
-            <h2 className="text-balance font-display text-2xl font-semibold tracking-tight sm:text-3xl">Rückruf vereinbaren</h2>
+            <h2 ref={ueberschrift} tabIndex={-1} className={`text-2xl sm:text-3xl ${titel}`}>Rückruf vereinbaren</h2>
             <p className="mt-2 text-sm text-foreground-muted">Name und Telefonnummer genügen – wir rufen Sie zeitnah zurück.</p>
             <form onSubmit={rueckrufAbsenden} noValidate className="mt-6 flex flex-col gap-4">
               <Feld label="Ihr Name" required value={rueckrufName} error={rueckrufFehler.name} onChange={setRueckrufName} placeholder="Max Mustermann" autoComplete="name" />
@@ -458,23 +518,28 @@ export function AnfrageFunnel() {
                 fehler={rueckrufEinwilligungFehler}
                 onChange={(v) => { setRueckrufEinwilligung(v); if (v) setRueckrufEinwilligungFehler(false); }}
               />
-              <button type="submit" disabled={rueckrufSendet} className={`mt-1 ${primaerKnopf}`}>
-                {rueckrufSendet ? <Loader2 className="h-4 w-4 animate-spin" /> : "Rückruf anfordern"}
+              <button type="submit" disabled={rueckrufSendet} aria-busy={rueckrufSendet} className={`mt-1 ${primaerKnopf}`}>
+                {rueckrufSendet ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                    <span className="sr-only">Wird gesendet …</span>
+                  </>
+                ) : (
+                  "Rückruf anfordern"
+                )}
               </button>
-              {rueckrufSendeFehler && (
-                <p role="status" aria-live="polite" className="text-center text-xs text-red-500">
-                  Leider ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns direkt an.
-                </p>
-              )}
+              <p role="alert" className="text-center text-xs text-red-700 empty:hidden dark:text-red-400">
+                {rueckrufSendeFehler ? "Leider ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns direkt an." : ""}
+              </p>
             </form>
-            <ZurueckKnopf onClick={() => setPhase("start")} />
+            <ZurueckKnopf onClick={() => wechsle("start")} />
           </motion.div>
         )}
 
         {phase === "rueckruf-danke" && (
           <motion.div key="rueckruf-danke" {...bewegung} className={`${karte} text-center`}>
-            <CheckCircle2 className="mx-auto h-12 w-12 text-brand-link" />
-            <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight">Vielen Dank!</h2>
+            <CheckCircle2 className="mx-auto h-12 w-12 text-brand-link" aria-hidden="true" />
+            <h2 ref={ueberschrift} tabIndex={-1} className={`mt-4 text-3xl ${titel}`}>Vielen Dank!</h2>
             <p className="mt-3 text-[15px] leading-relaxed text-foreground-muted">
               Wir rufen Sie zeitnah unter <strong className="text-foreground">{rueckrufTelefon}</strong> zurück.
             </p>
@@ -503,14 +568,14 @@ function Einwilligung({ checked, fehler, onChange }: { checked: boolean; fehler:
         <span>
           Ich habe die{" "}
           <a href="/datenschutz" target="_blank" className="text-brand-link underline underline-offset-2">
-            Datenschutzerklärung
+            Datenschutzerklärung<span className="sr-only"> (öffnet in neuem Tab)</span>
           </a>{" "}
           gelesen und bin einverstanden, dass Klima-Monkey meine Angaben zur Bearbeitung meiner Anfrage speichert und
           verarbeitet. <span className="text-brand-link">*</span>
         </span>
       </label>
       {fehler && (
-        <p id={`${id}-fehler`} className="mt-1 text-xs text-red-500">
+        <p id={`${id}-fehler`} className={fehlerText}>
           Bitte stimmen Sie der Datenschutzerklärung zu.
         </p>
       )}
@@ -525,7 +590,7 @@ function ZurueckKnopf({ onClick }: { onClick: () => void }) {
       onClick={onClick}
       className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-foreground-muted hover:text-brand-link cursor-pointer"
     >
-      <ArrowLeft className="h-4 w-4" />
+      <ArrowLeft className="h-4 w-4" aria-hidden="true" />
       Zurück
     </button>
   );
@@ -540,6 +605,7 @@ function Feld({
   required,
   placeholder,
   autoComplete,
+  inputMode,
 }: {
   label: string;
   value: string;
@@ -549,11 +615,12 @@ function Feld({
   required?: boolean;
   placeholder?: string;
   autoComplete?: string;
+  inputMode?: "numeric" | "text";
 }) {
   const id = useId();
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-foreground-muted">
+      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-foreground-muted">
         {label} {required && <span className="text-brand-link">*</span>}
       </label>
       <input
@@ -564,14 +631,13 @@ function Feld({
         placeholder={placeholder}
         required={required}
         autoComplete={autoComplete}
+        inputMode={inputMode}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-fehler` : undefined}
-        className={`w-full rounded-xl border bg-background px-4 py-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-primary ${
-          error ? "border-red-500" : "border-border focus-visible:border-brand-primary"
-        }`}
+        className={`w-full rounded-xl border bg-background px-4 py-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-brand-primary ${feldRahmen(error)}`}
       />
       {error && (
-        <p id={`${id}-fehler`} className="mt-1 text-xs text-red-500">
+        <p id={`${id}-fehler`} className={fehlerText}>
           {error}
         </p>
       )}

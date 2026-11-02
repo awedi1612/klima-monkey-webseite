@@ -11,7 +11,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Kontakt",
   description:
-    "Kostenlose Beratung zu Klimaanlagen-Kauf, -Installation, -Wartung, -Reparatur und Langzeitmiete von Klima-Monkey in Heilbronn – in 3 Minuten zum persönlichen Angebot.",
+    "Klimaanlage, Wartung oder Rückruf – in wenigen Schritten zur kostenlosen Anfrage bei Klima-Monkey in Heilbronn.",
   alternates: { canonical: "/kontakt" },
 };
 
@@ -22,6 +22,7 @@ export default function KontaktPage() {
         <Container>
           <FadeIn>
             <SectionHeading
+              as="h1"
               eyebrow="Kontakt"
               title="Ihre Anfrage"
               description="Klimaanlage, Wartung oder ein anderes Anliegen – in wenigen Schritten zu Ihrem persönlichen Angebot."

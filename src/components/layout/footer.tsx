@@ -25,8 +25,8 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border bg-background-soft">
-      <Container className="grid gap-12 py-16 md:grid-cols-4">
-        <div className="md:col-span-1">
+      <Container className="grid grid-cols-2 gap-x-6 gap-y-12 py-16 md:grid-cols-4">
+        <div className="col-span-2 md:col-span-1">
           <Logo />
           <p className="mt-4 text-sm leading-relaxed text-foreground-muted">
             {siteConfig.tagline} – Ihr Partner für Klimaanlagen, Wärmepumpen und
@@ -76,7 +76,7 @@ export function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="col-span-2 md:col-span-1">
           <div className="text-sm font-semibold">Kontakt</div>
           <ul className="mt-4 flex flex-col gap-3 text-sm text-foreground-muted">
             <li className="flex items-start gap-2.5">

@@ -17,7 +17,7 @@ export default function ShopPage() {
       <Container className="flex flex-col items-center text-center">
         <UnderConstruction />
 
-        <h1 className="mt-10 text-balance font-display text-4xl font-bold tracking-tight sm:text-5xl">
+        <h1 className="mt-10 text-balance font-display text-4xl font-semibold tracking-tight sm:text-5xl">
           Unser Shop ist im Bau
         </h1>
         <p className="mt-5 max-w-md text-balance leading-relaxed text-foreground-muted">

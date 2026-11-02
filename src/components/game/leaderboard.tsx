@@ -57,7 +57,7 @@ export function Leaderboard({
 
   return (
     <div className={cn("text-left", compact ? "mt-3" : "mt-0")}>
-      <p className="mb-2 flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-foreground-muted">
+      <p className="mb-2 flex items-center justify-center gap-1.5 text-sm font-semibold text-foreground-muted">
         <Trophy className="h-3.5 w-3.5 text-brand-link" />
         Bestenliste
       </p>

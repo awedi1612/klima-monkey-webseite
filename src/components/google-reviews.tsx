@@ -106,7 +106,7 @@ export function GoogleReviews() {
               <GoogleLogo />
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-display text-2xl font-bold">
+                  <span className="font-display text-2xl font-semibold">
                     {place.rating.toFixed(1)}
                   </span>
                   <Stars rating={place.rating} size="h-4 w-4" />
