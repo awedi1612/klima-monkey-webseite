@@ -119,32 +119,23 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-40 right-[-10%] h-[36rem] w-[36rem] rounded-full bg-brand-primary/20 blur-[120px]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-[-10rem] left-[-10%] h-[28rem] w-[28rem] rounded-full bg-brand-secondary/20 blur-[120px]"
-        />
-        <Container className="relative grid gap-12 py-20 lg:grid-cols-2 lg:items-center lg:py-28">
+        <Container className="relative grid gap-14 py-20 lg:grid-cols-2 lg:items-center lg:py-32">
           <FadeIn>
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background-card px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-foreground-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
+            <span className="text-base font-semibold text-brand-link sm:text-lg">
               Klimaanlagen · Heilbronn
             </span>
-            <h1 className="mt-6 text-balance font-display text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="mt-3 text-balance font-display text-5xl font-semibold leading-[1.04] tracking-[-0.035em] sm:text-6xl lg:text-7xl">
               Ihr Klima ist{" "}
               <span className="text-brand-link">unsere Mission</span>
             </h1>
-            <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-foreground-muted">
+            <p className="mt-6 max-w-xl text-balance text-xl leading-relaxed text-foreground-muted">
               Verkauf, Installation, Wartung und Reparatur von Klimaanlagen –
               plus Langzeitmiete für Büro- und Schulcontainer. Ihr zuverlässiger
               Partner für angenehmes Klima in Heilbronn.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Button href="/kontakt" size="lg">
-                Kostenlos anfragen
+                Ihre Anfrage
                 <ArrowRight className="h-4 w-4" />
               </Button>
               <Button href="/leistungen/klimaanlagen" variant="secondary" size="lg">

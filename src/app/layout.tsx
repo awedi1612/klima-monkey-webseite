@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Space_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header";
@@ -9,14 +9,9 @@ import { GameFloatButton } from "@/components/game/game-float-button";
 import { CookieConsentProvider } from "@/components/cookie-consent";
 import { siteConfig, services } from "@/lib/site-config";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+// Inter: ruhige, klare Grotesk im Stil von Apples SF Pro, für Fließtext und Überschriften
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -122,7 +117,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${manrope.variable} ${spaceGrotesk.variable} min-h-full flex flex-col antialiased`}
+        className={`${inter.variable} min-h-full flex flex-col antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <CookieConsentProvider>

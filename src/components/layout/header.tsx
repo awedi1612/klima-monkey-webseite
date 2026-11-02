@@ -18,8 +18,8 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/80 bg-background/85 backdrop-blur-lg">
-      <Container className="flex h-20 items-center justify-between">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl backdrop-saturate-150">
+      <Container className="flex h-16 items-center justify-between">
         <Logo />
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Hauptnavigation">
@@ -38,8 +38,8 @@ export function Header() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-colors hover:text-brand-link",
-                      isActive ? "text-brand-link" : "text-foreground-muted"
+                      "flex items-center gap-1 rounded-full px-3.5 py-2 text-[13px] transition-colors hover:text-foreground",
+                      isActive ? "text-foreground font-medium" : "text-foreground/70"
                     )}
                   >
                     {item.label}
@@ -80,8 +80,8 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-full px-4 py-2 text-sm font-medium transition-colors hover:text-brand-link",
-                  isActive ? "text-brand-link" : "text-foreground-muted"
+                  "rounded-full px-3.5 py-2 text-[13px] transition-colors hover:text-foreground",
+                  isActive ? "text-foreground font-medium" : "text-foreground/70"
                 )}
               >
                 {item.label}
@@ -92,7 +92,7 @@ export function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
-          <Button href="/kontakt">Ihre Anfrage</Button>
+          <Button href="/kontakt" className="px-4 py-1.5 text-[13px]">Ihre Anfrage</Button>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">

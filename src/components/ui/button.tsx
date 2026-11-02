@@ -19,16 +19,15 @@ type ButtonAsButton = BaseProps &
   };
 
 const variantStyles = {
-  primary:
-    "bg-brand-primary text-brand-dark hover:bg-brand-primary-hover shadow-md shadow-black/10",
+  primary: "bg-brand-primary text-brand-dark hover:bg-brand-primary-hover",
   secondary:
-    "bg-transparent border border-border text-foreground hover:border-brand-primary hover:text-brand-link",
+    "bg-transparent border border-brand-link/40 text-brand-link hover:bg-brand-link/5 hover:border-brand-link",
   ghost: "bg-transparent text-foreground hover:text-brand-link",
 };
 
 const sizeStyles = {
-  md: "px-5 py-2.5 text-sm",
-  lg: "px-7 py-3.5 text-base",
+  md: "px-5 py-2 text-sm",
+  lg: "px-7 py-3 text-[17px]",
 };
 
 export function Button(props: ButtonAsLink | ButtonAsButton) {
@@ -42,7 +41,7 @@ export function Button(props: ButtonAsLink | ButtonAsButton) {
   } = props;
 
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap",
+    "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 active:scale-[0.98] cursor-pointer whitespace-nowrap",
     variantStyles[variant],
     sizeStyles[size],
     className
