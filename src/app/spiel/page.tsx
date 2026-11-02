@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   title: "Monkey Catch – das Klima-Monkey Spiel",
   description:
     "Kleine Pause gefällig? Spiel Monkey Catch: Fang Schneeflocken und Kokosnüsse, weich Hitzewellen aus – powered by Klima-Monkey Heilbronn.",
-  robots: { index: false, follow: true },
   alternates: { canonical: "/spiel" },
 };
 
