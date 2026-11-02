@@ -142,6 +142,8 @@ export function AnfrageFunnel() {
   const [fehler, setFehler] = useState<Partial<Record<keyof Kontakt, string>>>({});
   const [sendet, setSendet] = useState(false);
   const [sendeFehler, setSendeFehler] = useState(false);
+  const [einwilligung, setEinwilligung] = useState(false);
+  const [einwilligungFehler, setEinwilligungFehler] = useState(false);
   const honigtopf = useRef<HTMLInputElement>(null);
 
   const [rueckrufName, setRueckrufName] = useState("");
@@ -149,6 +151,8 @@ export function AnfrageFunnel() {
   const [rueckrufFehler, setRueckrufFehler] = useState<{ name?: string; telefon?: string }>({});
   const [rueckrufSendet, setRueckrufSendet] = useState(false);
   const [rueckrufSendeFehler, setRueckrufSendeFehler] = useState(false);
+  const [rueckrufEinwilligung, setRueckrufEinwilligung] = useState(false);
+  const [rueckrufEinwilligungFehler, setRueckrufEinwilligungFehler] = useState(false);
 
   const fragen = FRAGEN[art];
   const frage = fragen[schritt];
@@ -190,7 +194,8 @@ export function AnfrageFunnel() {
     if (adresseNoetig && !kontakt.ort.trim()) f.ort = "Bitte geben Sie PLZ und Ort ein.";
     if (art === "sonstiges" && !kontakt.nachricht.trim()) f.nachricht = "Bitte beschreiben Sie kurz Ihr Anliegen.";
     setFehler(f);
-    return Object.keys(f).length === 0;
+    setEinwilligungFehler(!einwilligung);
+    return Object.keys(f).length === 0 && einwilligung;
   }
 
   async function absenden(event: FormEvent) {
@@ -207,6 +212,7 @@ export function AnfrageFunnel() {
           ...antworten,
           ...kontakt,
           website: honigtopf.current?.value ?? "",
+          datenschutz: "eingewilligt",
           quelle: "Anfrage-Funnel (Website)",
         }),
       });
@@ -226,14 +232,15 @@ export function AnfrageFunnel() {
     if (!rueckrufName.trim()) f.name = "Bitte geben Sie Ihren Namen ein.";
     if (!rueckrufTelefon.trim()) f.telefon = "Bitte geben Sie Ihre Telefonnummer ein.";
     setRueckrufFehler(f);
-    if (Object.keys(f).length) return;
+    setRueckrufEinwilligungFehler(!rueckrufEinwilligung);
+    if (Object.keys(f).length || !rueckrufEinwilligung) return;
     setRueckrufSendet(true);
     setRueckrufSendeFehler(false);
     try {
       const antwort = await fetch("/api/kontakt", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: rueckrufName, telefon: rueckrufTelefon, interesse: "Rückruf gewünscht", nachricht: "Bitte um Rückruf." }),
+        body: JSON.stringify({ name: rueckrufName, telefon: rueckrufTelefon, interesse: "Rückruf gewünscht", nachricht: "Bitte um Rückruf.", datenschutz: "eingewilligt" }),
       });
       if (!antwort.ok) throw new Error(`Request fehlgeschlagen (${antwort.status})`);
       setPhase("rueckruf-danke");
@@ -409,6 +416,11 @@ export function AnfrageFunnel() {
                 />
                 {fehler.nachricht && <p className="mt-1 text-xs text-red-500">{fehler.nachricht}</p>}
               </div>
+              <Einwilligung
+                checked={einwilligung}
+                fehler={einwilligungFehler}
+                onChange={(v) => { setEinwilligung(v); if (v) setEinwilligungFehler(false); }}
+              />
               <button type="submit" disabled={sendet} className={`mt-1 ${primaerKnopf}`}>
                 {sendet ? <Loader2 className="h-4 w-4 animate-spin" /> : "Anfrage absenden"}
               </button>
@@ -417,10 +429,6 @@ export function AnfrageFunnel() {
                   Leider ist etwas schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns direkt an.
                 </p>
               )}
-              <p className="text-center text-xs text-foreground-muted">
-                Ihre Daten verwenden wir nur zur Bearbeitung Ihrer Anfrage. Mehr in unserer{" "}
-                <a href="/datenschutz" className="text-brand-link underline underline-offset-2">Datenschutzerklärung</a>.
-              </p>
             </form>
             <ZurueckKnopf onClick={zurueck} />
           </motion.div>
@@ -445,6 +453,11 @@ export function AnfrageFunnel() {
             <form onSubmit={rueckrufAbsenden} noValidate className="mt-6 flex flex-col gap-4">
               <Feld label="Ihr Name" required value={rueckrufName} error={rueckrufFehler.name} onChange={setRueckrufName} placeholder="Max Mustermann" autoComplete="name" />
               <Feld label="Telefon" type="tel" required value={rueckrufTelefon} error={rueckrufFehler.telefon} onChange={setRueckrufTelefon} placeholder="+49 …" autoComplete="tel" />
+              <Einwilligung
+                checked={rueckrufEinwilligung}
+                fehler={rueckrufEinwilligungFehler}
+                onChange={(v) => { setRueckrufEinwilligung(v); if (v) setRueckrufEinwilligungFehler(false); }}
+              />
               <button type="submit" disabled={rueckrufSendet} className={`mt-1 ${primaerKnopf}`}>
                 {rueckrufSendet ? <Loader2 className="h-4 w-4 animate-spin" /> : "Rückruf anfordern"}
               </button>
@@ -468,6 +481,39 @@ export function AnfrageFunnel() {
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
+
+function Einwilligung({ checked, fehler, onChange }: { checked: boolean; fehler: boolean; onChange: (v: boolean) => void }) {
+  const id = useId();
+  return (
+    <div>
+      <label htmlFor={id} className="flex cursor-pointer items-start gap-3 text-sm leading-snug text-foreground-muted">
+        <input
+          id={id}
+          type="checkbox"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          required
+          aria-invalid={fehler}
+          aria-describedby={fehler ? `${id}-fehler` : undefined}
+          className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded accent-[var(--brand-primary)]"
+        />
+        <span>
+          Ich habe die{" "}
+          <a href="/datenschutz" target="_blank" className="text-brand-link underline underline-offset-2">
+            Datenschutzerklärung
+          </a>{" "}
+          gelesen und bin einverstanden, dass Klima-Monkey meine Angaben zur Bearbeitung meiner Anfrage speichert und
+          verarbeitet. <span className="text-brand-link">*</span>
+        </span>
+      </label>
+      {fehler && (
+        <p id={`${id}-fehler`} className="mt-1 text-xs text-red-500">
+          Bitte stimmen Sie der Datenschutzerklärung zu.
+        </p>
+      )}
     </div>
   );
 }
