@@ -31,14 +31,29 @@ export const ratgeber: RatgeberArtikel[] = [
   {
     slug: "klimaanlage-kosten",
     parent: "klimaanlagen",
-    title: "Was kostet eine Klimaanlage? Kosten für Gerät, Montage und Betrieb",
+    title: "Klimaanlage kaufen: Was sie kostet und worauf es ankommt",
     linkLabel: "Klimaanlage Kosten",
-    metaTitle: "Klimaanlage Kosten: Gerät, Montage und Stromverbrauch",
+    metaTitle: "Klimaanlage kaufen: Kosten, Leistung und Montage",
     metaDescription:
-      "Klimaanlage mit Montage ab 2.200 €: Preisbeispiele für Single-, Duo- und Multisplit, was den Preis bestimmt und welche laufenden Kosten anfallen.",
+      "Klimaanlage kaufen: Split oder Monoblock, welche Leistung Sie brauchen und was die Montage kostet. Preisbeispiele ab 2.200 € inkl. Montage.",
     intro:
       "Die Frage nach dem Preis kommt in fast jedem Beratungsgespräch zuerst. Eine Single-Split-Klimaanlage für einen Raum bekommen Sie bei uns ab 2.200 € inklusive Montage. Wie viel es am Ende genau wird, hängt von Ihren Räumen ab. Hier sehen Sie, wovon die Kosten abhängen und was typische Anlagen kosten.",
     sections: [
+      {
+        heading: "Split-Klimaanlage oder mobiles Monoblock-Gerät?",
+        paragraphs: [
+          "Bei einer Split-Klimaanlage sind Innen- und Außengerät getrennt. Der laute Verdichter steht draußen, deshalb ist sie im Raum leise, arbeitet deutlich effizienter und hält auch lange Hitzeperioden im Dauerbetrieb durch. Dafür braucht sie eine Montage durch einen Fachbetrieb.",
+          "Ein mobiles Monoblock-Gerät steht komplett im Raum und bläst die warme Abluft über einen Schlauch durchs gekippte Fenster. Es ist ohne Montage sofort einsatzbereit, aber laut, verbraucht mehr Strom und kommt an heißen Tagen kaum gegen die Hitze an.",
+          "Unsere Empfehlung: Wer ernsthaft kühlen möchte, ist mit einer Split-Klimaanlage besser beraten – auch auf längere Sicht gerechnet.",
+        ],
+      },
+      {
+        heading: "Welche Leistung brauche ich?",
+        paragraphs: [
+          "Als grobe Faustregel rechnet man mit 60 bis 100 Watt Kühlleistung pro Quadratmeter. Für ein Schlafzimmer mit 20 m² reicht meist ein Gerät mit 2 bis 2,5 kW, ein Wohnzimmer mit 50 m² braucht eher 3,5 bis 5 kW.",
+          "Wo Sie in dieser Spanne liegen, hängt von Sonneneinstrahlung, Fensterflächen, Raumhöhe, Dämmung und der Zahl der Personen im Raum ab. Ein Dachgeschoss mit Südfenstern braucht mehr als ein Raum im Erdgeschoss mit Nordseite. Bei der Besichtigung berechnen wir die Leistung genau. Ein zu kleines Gerät läuft ständig am Limit, ein zu großes taktet unnötig.",
+        ],
+      },
       {
         heading: "Woraus sich der Preis zusammensetzt",
         paragraphs: [
@@ -66,6 +81,17 @@ export const ratgeber: RatgeberArtikel[] = [
         paragraphs: [
           "Moderne Split-Geräte arbeiten mit Inverter-Technik und passen ihre Leistung dem Bedarf an. Der Stromverbrauch hängt davon ab, wie viele Stunden die Anlage läuft, wie groß der Raum ist und welche Temperatur Sie einstellen. Wer eine Photovoltaikanlage hat, kühlt im Sommer zu einem großen Teil mit eigenem Solarstrom, weil Kühlbedarf und Sonnenstunden zusammenfallen.",
           "Dazu kommt die jährliche Wartung. Sie hält die Anlage hygienisch und sparsam und verlängert ihre Lebensdauer.",
+        ],
+      },
+      {
+        heading: "Worauf es beim Kauf wirklich ankommt",
+        paragraphs: ["Wenn Sie Angebote vergleichen, achten Sie auf diese Punkte:"],
+        bullets: [
+          "Die Leistung passt zum Raum – nicht zu klein und nicht zu groß.",
+          "Das Gerät hat Inverter-Technik und eine gute Energieeffizienzklasse.",
+          "Montage und Inbetriebnahme übernimmt ein zertifizierter Kältefachbetrieb.",
+          "Hersteller mit gutem Service und Ersatzteilversorgung, zum Beispiel Bosch, Daikin oder Mitsubishi.",
+          "Im Angebot stehen Material, Leitungslänge und Inbetriebnahme klar drin.",
         ],
       },
       {
@@ -239,6 +265,62 @@ export const ratgeber: RatgeberArtikel[] = [
         question: "Bis zu welcher Außentemperatur heizt eine Klimaanlage?",
         answer:
           "Viele Geräte heizen laut Hersteller auch bei zweistelligen Minusgraden, nur eben mit sinkender Leistung und Effizienz. Den Einsatzbereich nennen wir Ihnen für das jeweilige Gerät.",
+      },
+    ],
+  },
+  {
+    slug: "pv-und-klimaanlage",
+    parent: "photovoltaik",
+    title: "Photovoltaik und Klimaanlage: Mit Solarstrom kühlen",
+    linkLabel: "PV und Klimaanlage",
+    metaTitle: "Photovoltaik mit Klimaanlage kombinieren",
+    metaDescription:
+      "Solarstrom und Klimaanlage passen ideal zusammen: Gekühlt wird, wenn die Sonne scheint. So kombinieren Sie PV, Klimaanlage und Stromspeicher sinnvoll.",
+    intro:
+      "Eine Klimaanlage läuft vor allem dann, wenn die Sonne am stärksten scheint – also genau dann, wenn Ihre Photovoltaikanlage am meisten Strom erzeugt. Kaum ein anderer Verbraucher im Haus passt so gut zum eigenen Solarstrom.",
+    sections: [
+      {
+        heading: "Warum die Kombination so gut funktioniert",
+        paragraphs: [
+          "Den eingespeisten Solarstrom vergütet der Netzbetreiber nur noch gering. Wirtschaftlich lohnt sich eine PV-Anlage deshalb vor allem über den Eigenverbrauch: Jede Kilowattstunde, die Sie selbst nutzen, müssen Sie nicht teuer einkaufen.",
+          "An heißen Sommertagen erzeugt schon eine typische PV-Anlage auf dem Einfamilienhaus deutlich mehr Strom, als eine Split-Klimaanlage für ein oder zwei Räume braucht. Ein großer Teil der Kühlung läuft dann mit eigenem Strom vom Dach.",
+        ],
+      },
+      {
+        heading: "Stromspeicher für den Abend",
+        paragraphs: [
+          "Abends und nachts liefert die PV-Anlage keinen Strom mehr, die Schlafzimmer sind aber oft noch warm. Mit einem Stromspeicher nutzen Sie den Solarstrom vom Tag auch für die Klimaanlage am Abend oder für eine Wärmepumpe.",
+          "Ob sich ein Speicher für Sie rechnet, hängt von Verbrauch, Anlagengröße und Strompreis ab. Das berechnen wir in der Beratung für Ihr Haus.",
+        ],
+      },
+      {
+        heading: "Auch im Winter ein Gewinn",
+        paragraphs: [
+          "Split-Klimaanlagen heizen als Luft-Luft-Wärmepumpe. In der Übergangszeit im Frühjahr und Herbst, wenn die PV-Anlage tagsüber noch ordentlich Strom liefert, heizen Sie einzelne Räume damit sparsam zu und entlasten die Gas- oder Ölheizung.",
+        ],
+      },
+      {
+        heading: "Alles aus einer Hand",
+        paragraphs: [
+          "Wir planen und installieren Klimaanlage, Photovoltaik und Stromspeicher aufeinander abgestimmt. Dabei prüfen wir, welche Förderprogramme für Ihr Projekt infrage kommen, und rechnen sie mit ein.",
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "Kann ich eine bestehende Klimaanlage mit meiner PV-Anlage betreiben?",
+        answer:
+          "Ja. Die Klimaanlage hängt ganz normal am Hausstromnetz und nutzt automatisch den Solarstrom, der gerade erzeugt wird. Ein extra Anschluss ist dafür nicht nötig.",
+      },
+      {
+        question: "Wie groß muss die PV-Anlage für eine Klimaanlage sein?",
+        answer:
+          "Eine eigene PV-Anlage nur für die Klimaanlage braucht es nicht. Entscheidend ist der Gesamtverbrauch im Haus. Wir legen die Anlage so aus, dass sie zu Ihrem Verbrauch inklusive Klimaanlage passt.",
+      },
+      {
+        question: "Gibt es eine Förderung für die Kombination?",
+        answer:
+          "Für Photovoltaik, Stromspeicher und Wärmepumpen gibt es je nach Programm Förderungen oder günstige Kredite. Reine Klimaanlagen werden in der Regel nicht gefördert. Wir prüfen, was für Ihr Vorhaben aktuell gilt.",
       },
     ],
   },

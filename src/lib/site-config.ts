@@ -158,8 +158,10 @@ export const services = [
       "Reinigung von Filtern, Wärmetauscher und Lüfterwalze",
       "Desinfektion des Innengeräts gegen Keime und Gerüche",
       "Prüfung von Kondensatablauf und Kondensatwanne",
-      "Kontrolle von Kältekreis, Drücken und Temperaturen",
-      "Sichtprüfung des Außengeräts und der Leitungen",
+      "Kontrolle von Kältekreis, Dichtheit, Drücken und Temperaturen",
+      "Messung von Kühlleistung und Temperaturdifferenz",
+      "Prüfung von elektrischen Anschlüssen und Steuerung",
+      "Sichtprüfung des Außengeräts auf Verschmutzung und Schäden",
       "Wartungsvertrag: 169 € pro Innengerät und Wartung",
     ],
     specialConditions: {
@@ -190,6 +192,16 @@ export const services = [
         question: "Wie oft sollte eine Klimaanlage gewartet werden?",
         answer:
           "Bei häufiger Nutzung empfehlen wir eine Wartung einmal im Jahr, am besten vor Beginn der Kühlsaison im Frühjahr. Läuft die Anlage nur selten, reicht oft ein längeres Intervall. Im Wartungsvertrag legen wir das Intervall nach dem Zustand Ihrer Anlage fest.",
+      },
+      {
+        question: "Was passiert, wenn ich die Klimaanlage nicht warten lasse?",
+        answer:
+          "Verstopfte Filter und ein verschmutzter Wärmetauscher lassen die Anlage mehr Strom verbrauchen und schwächer kühlen. Im feuchten Innengerät können sich Keime bilden. Kleine Undichtigkeiten bleiben unbemerkt, bis die Kühlleistung nachlässt oder der Verdichter Schaden nimmt – oft genau in der Hitzewelle, wenn alle Fachbetriebe ausgebucht sind.",
+      },
+      {
+        question: "Ist die Wartung einer Klimaanlage Pflicht?",
+        answer:
+          "Für Anlagen ab einer bestimmten Kältemittelmenge schreibt die EU-F-Gase-Verordnung regelmäßige Dichtheitsprüfungen vor. Viele kleine Split-Geräte im Wohnhaus liegen darunter. Trotzdem setzen Hersteller für die Garantie teils eine regelmäßige Wartung voraus. Wir sagen Ihnen, was für Ihre Anlage gilt.",
       },
       {
         question: "Meine Klimaanlage stinkt – woran liegt das?",
@@ -453,6 +465,11 @@ export const services = [
         question: "Wie lange dauert die Installation einer PV-Anlage?",
         answer:
           "Je nach Anlagengröße dauert die reine Montage in der Regel ein bis drei Tage. Planung, Anmeldung und Netzanschluss werden von uns koordiniert.",
+      },
+      {
+        question: "Kann ich meine Klimaanlage mit Solarstrom betreiben?",
+        answer:
+          "Ja, und das passt besonders gut: Die Klimaanlage läuft vor allem dann, wenn die Sonne scheint und die PV-Anlage viel Strom erzeugt. So kühlen Sie an Sommertagen zu einem großen Teil mit eigenem Strom vom Dach.",
       },
       {
         question: "Übernimmt Klima-Monkey die Anmeldung der Anlage?",

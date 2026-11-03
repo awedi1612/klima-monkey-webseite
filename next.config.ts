@@ -20,7 +20,7 @@ const alteAdressen: Record<string, string> = {
   "/fachbeitraege-kopie.html": "/leistungen/klimaanlagen",
   "/news-details.html": "/leistungen/klimaanlagen",
   "/news-details/klimaanlage-kaufen-ratgeber.html": "/leistungen/klimaanlagen/klimaanlage-kosten",
-  "/news-details/photovoltaik-klimaanlage-kombination.html": "/leistungen/photovoltaik",
+  "/news-details/photovoltaik-klimaanlage-kombination.html": "/leistungen/photovoltaik/pv-und-klimaanlage",
   "/news-details/klimaanlage-wartung-heilbronn.html": "/leistungen/wartung-klimaanlagen",
 };
 
