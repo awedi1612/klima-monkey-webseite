@@ -11,7 +11,7 @@ import { services } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Leistungen",
   description:
-    "Klimaanlagen, Photovoltaik, Stromspeicher, Finanzierung und Förderung – alle Leistungen von Klima-Monkey in Heilbronn auf einen Blick.",
+    "Klimaanlagen, Wartung, dezentrale Lüftung, Photovoltaik, Stromspeicher, Finanzierung und Förderung – alle Leistungen von Klima-Monkey in Heilbronn auf einen Blick.",
   alternates: { canonical: "/leistungen" },
 };
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   BadgePercent,
+  Car,
   CheckCircle2,
   FileText,
   Handshake,
@@ -19,6 +20,9 @@ import { ServiceIcon } from "@/components/service-icon";
 import { FadeIn } from "@/components/fade-in";
 import { Faq } from "@/components/faq";
 import { services, siteConfig } from "@/lib/site-config";
+import { ratgeberFuer } from "@/lib/ratgeber";
+import { standorte } from "@/lib/standorte";
+import { referenzen } from "@/lib/referenzen";
 
 const conditionIcons: Record<string, LucideIcon> = {
   TrendingDown,
@@ -26,6 +30,7 @@ const conditionIcons: Record<string, LucideIcon> = {
   ShieldCheck,
   Handshake,
   BadgePercent,
+  Car,
 };
 
 export function generateStaticParams() {
@@ -42,12 +47,12 @@ export async function generateMetadata({
   if (!service) return {};
 
   return {
-    title: service.title,
-    description: service.summary,
+    title: service.metaTitle,
+    description: service.metaDescription,
     alternates: { canonical: `/leistungen/${service.slug}` },
     openGraph: {
-      title: `${service.title} | ${siteConfig.name}`,
-      description: service.summary,
+      title: `${service.metaTitle} | ${siteConfig.name}`,
+      description: service.metaDescription,
     },
   };
 }
@@ -62,6 +67,8 @@ export default async function ServiceDetailPage({
   if (!service) notFound();
 
   const otherServices = services.filter((s) => s.slug !== slug);
+  const artikel = ratgeberFuer(service.slug);
+  const zeigeStandorte = service.slug === "klimaanlagen" || service.slug === "wartung-klimaanlagen";
 
   const serviceSchema = {
     "@context": "https://schema.org",
@@ -181,6 +188,101 @@ export default async function ServiceDetailPage({
             </FadeIn>
             <FadeIn delay={0.1}>
               <Faq items={[...service.faq]} />
+            </FadeIn>
+          </Container>
+        </section>
+      )}
+
+      {artikel.length > 0 && (
+        <section className="py-20 lg:py-28">
+          <Container>
+            <FadeIn>
+              <SectionHeading
+                eyebrow="Ratgeber"
+                title={`Gut zu wissen: ${service.shortTitle}`}
+              />
+            </FadeIn>
+            <div className="mt-10 grid gap-5 md:grid-cols-3">
+              {artikel.map((eintrag, index) => (
+                <FadeIn key={eintrag.slug} delay={index * 0.05}>
+                  <Link
+                    href={`/leistungen/${service.slug}/${eintrag.slug}`}
+                    className="group flex h-full flex-col rounded-3xl border border-border bg-background-card p-7 transition-all hover:-translate-y-1 hover:border-brand-primary"
+                  >
+                    <h3 className="font-semibold leading-snug">{eintrag.title}</h3>
+                    <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-foreground-muted">
+                      {eintrag.intro}
+                    </p>
+                    <span className="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold text-brand-link">
+                      Weiterlesen <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                  </Link>
+                </FadeIn>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {service.slug === "klimaanlagen" && (
+        <section className="py-20 lg:py-28">
+          <Container>
+            <FadeIn className="flex flex-wrap items-end justify-between gap-6">
+              <SectionHeading
+                eyebrow="Referenzen"
+                title="Aus unseren Projekten"
+                description="Ein kleiner Ausschnitt aus unseren Projekten in der Region."
+              />
+              <Button href="/referenzen" variant="secondary">
+                Alle Referenzen
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </FadeIn>
+            <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+              {referenzen.slice(0, 4).map((referenz, index) => (
+                <FadeIn key={referenz.bild} delay={index * 0.05}>
+                  <figure className="overflow-hidden rounded-2xl border border-border bg-background-card">
+                    <div className="relative aspect-[4/5] w-full">
+                      <Image
+                        src={referenz.bild}
+                        alt={referenz.alt}
+                        fill
+                        sizes="(min-width: 1024px) 18rem, 45vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <figcaption className="px-4 py-3 text-sm">
+                      <span className="font-medium">{referenz.titel}</span>
+                      {referenz.ort && (
+                        <span className="block text-xs text-foreground-muted">{referenz.ort}</span>
+                      )}
+                    </figcaption>
+                  </figure>
+                </FadeIn>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {zeigeStandorte && (
+        <section className="bg-background-soft py-16 lg:py-20">
+          <Container>
+            <FadeIn>
+              <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+                {service.shortTitle} in Ihrer Region
+              </h2>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {standorte.map((standort) => (
+                  <Link
+                    key={standort.slug}
+                    href={`/standorte/${standort.slug}`}
+                    className="rounded-full border border-border bg-background-card px-4 py-2 text-sm font-medium transition-colors hover:border-brand-primary hover:text-brand-link"
+                  >
+                    Klimaanlagen {standort.ort}
+                  </Link>
+                ))}
+              </div>
             </FadeIn>
           </Container>
         </section>

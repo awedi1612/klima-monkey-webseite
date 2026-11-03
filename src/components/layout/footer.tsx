@@ -11,6 +11,7 @@ import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/logo";
 import { CookieSettingsLink } from "@/components/cookie-settings-link";
 import { navItems, siteConfig } from "@/lib/site-config";
+import { standorte } from "@/lib/standorte";
 
 const socialLinks = [
   { href: siteConfig.social.facebook, label: "Facebook", Icon: FacebookIcon },
@@ -25,7 +26,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border bg-background-soft">
-      <Container className="grid grid-cols-2 gap-x-6 gap-y-12 py-16 md:grid-cols-4">
+      <Container className="grid grid-cols-2 gap-x-6 gap-y-12 py-16 md:grid-cols-3 lg:grid-cols-5">
         <div className="col-span-2 md:col-span-1">
           <Logo />
           <p className="mt-4 text-sm leading-relaxed text-foreground-muted">
@@ -73,6 +74,26 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+          </ul>
+        </div>
+
+        <div>
+          <div className="text-sm font-semibold">
+            <Link href="/standorte" className="transition-colors hover:text-brand-link">
+              Standorte
+            </Link>
+          </div>
+          <ul className="mt-4 flex flex-col gap-2.5 text-sm text-foreground-muted">
+            {standorte.map((standort) => (
+              <li key={standort.slug}>
+                <Link
+                  href={`/standorte/${standort.slug}`}
+                  className="transition-colors hover:text-brand-link"
+                >
+                  Klimaanlagen {standort.ort}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 

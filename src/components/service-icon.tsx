@@ -1,6 +1,7 @@
-import { Snowflake, Sun, BatteryCharging, HandCoins, BadgePercent, CalendarClock, Wind, type LucideIcon } from "lucide-react";
+import { Snowflake, Sun, BatteryCharging, HandCoins, BadgePercent, CalendarClock, Wind, Wrench, type LucideIcon } from "lucide-react";
 
 const icons: Record<string, LucideIcon> = {
+  Wrench,
   Snowflake,
   Sun,
   BatteryCharging,

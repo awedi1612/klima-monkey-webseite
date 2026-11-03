@@ -1,22 +1,28 @@
 import type { MetadataRoute } from "next";
 import { services, siteConfig } from "@/lib/site-config";
+import { ratgeber } from "@/lib/ratgeber";
+import { standorte } from "@/lib/standorte";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/ueber-uns", "/leistungen", "/monkeys", "/kontakt", "/spiel"].map(
-    (path) => ({
-      url: `${siteConfig.url}${path}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: path === "" ? 1 : 0.8,
-    })
-  );
-
-  const serviceRoutes = services.map((service) => ({
-    url: `${siteConfig.url}/leistungen/${service.slug}`,
+  const eintrag = (path: string, priority: number) => ({
+    url: `${siteConfig.url}${path}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+    priority,
+  });
 
-  return [...staticRoutes, ...serviceRoutes];
+  const staticRoutes = ["", "/ueber-uns", "/leistungen", "/referenzen", "/standorte", "/monkeys", "/kontakt", "/spiel"].map(
+    (path) => eintrag(path, path === "" ? 1 : 0.8)
+  );
+
+  const serviceRoutes = services.map((service) => eintrag(`/leistungen/${service.slug}`, 0.7));
+
+  const ratgeberRoutes = ratgeber.map((artikel) =>
+    eintrag(`/leistungen/${artikel.parent}/${artikel.slug}`, 0.6)
+  );
+
+  // Standortseiten sind Verkaufsseiten und bekommen Vorrang vor den Ratgebern
+  const standortRoutes = standorte.map((standort) => eintrag(`/standorte/${standort.slug}`, 0.8));
+
+  return [...staticRoutes, ...serviceRoutes, ...standortRoutes, ...ratgeberRoutes];
 }

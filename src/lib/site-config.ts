@@ -19,9 +19,12 @@ export const siteConfig = {
   serviceArea: [
     "Heilbronn",
     "Neckarsulm",
+    "Flein",
     "Bad Friedrichshall",
     "Bad Rappenau",
     "Lauffen am Neckar",
+    "Ludwigsburg",
+    "Chemnitz",
     "Region Heilbronn-Franken",
   ],
   social: {
@@ -50,6 +53,11 @@ export const navItems: NavItem[] = [
         label: "Klimaanlagen",
         href: "/leistungen/klimaanlagen",
         description: "Verkauf, Installation, Wartung & Reparatur",
+      },
+      {
+        label: "Wartung & Reinigung",
+        href: "/leistungen/wartung-klimaanlagen",
+        description: "Wartung, Reinigung und Wartungsvertrag",
       },
       {
         label: "Vermietung",
@@ -83,6 +91,7 @@ export const navItems: NavItem[] = [
       },
     ],
   },
+  { label: "Referenzen", href: "/referenzen" },
   { label: "Monkeys", href: "/monkeys" },
   { label: "Shop", href: "/shop" },
   { label: "Kontakt", href: "/kontakt" },
@@ -96,6 +105,9 @@ export const services = [
     icon: "Snowflake",
     featured: true,
     image: "/images/klimaanlage-hero.jpg",
+    metaTitle: "Klimaanlagen kaufen und installieren lassen",
+    metaDescription:
+      "Split- und Multisplit-Klimaanlagen von Bosch, Daikin und Mitsubishi: kostenlose Vor-Ort-Beratung und Montage durch zertifizierte Kältetechniker im Raum Heilbronn.",
     summary:
       "Verkauf, Installation, Wartung und Reparatur von Split- und Multisplit-Klimaanlagen – unser Kerngeschäft, professionell aus einer Hand.",
     heroText:
@@ -111,7 +123,7 @@ export const services = [
       {
         question: "Was kostet eine Klimaanlage von Klima-Monkey?",
         answer:
-          "Die Kosten hängen von Raumgröße, Gerätetyp und Anzahl der Innengeräte ab. Nach einer kostenlosen Vor-Ort-Beratung erhalten Sie ein transparentes, individuelles Angebot.",
+          "Eine Single-Split-Klimaanlage für einen Raum gibt es bei uns ab 2.200 € inklusive Montage, eine Duo-Split-Anlage für zwei Räume ab 4.500 €. Der genaue Preis hängt von Raumgröße, Gerät und Leitungsweg ab. Nach einer kostenlosen Vor-Ort-Beratung erhalten Sie ein verbindliches Angebot.",
       },
       {
         question: "Bietet Klima-Monkey auch Wartung und Reparatur an?",
@@ -131,12 +143,91 @@ export const services = [
     ],
   },
   {
+    slug: "wartung-klimaanlagen",
+    title: "Wartung & Reinigung von Klimaanlagen",
+    shortTitle: "Wartung",
+    icon: "Wrench",
+    metaTitle: "Klimaanlagen Wartung und Reinigung",
+    metaDescription:
+      "Klimaanlage warten und reinigen lassen im Raum Heilbronn: Wartungsvertrag für 169 € pro Innengerät inkl. MwSt., Reinigung, Desinfektion und Prüfung des Kältekreises.",
+    summary:
+      "Regelmäßige Wartung und hygienische Reinigung Ihrer Klimaanlage – für saubere Luft, volle Leistung und eine lange Lebensdauer.",
+    heroText:
+      "Eine Klimaanlage arbeitet nur dann sparsam und hygienisch, wenn sie regelmäßig gewartet wird. Wir reinigen und prüfen Split- und Multisplit-Anlagen aller gängigen Hersteller – auch Geräte, die wir nicht selbst eingebaut haben.",
+    features: [
+      "Reinigung von Filtern, Wärmetauscher und Lüfterwalze",
+      "Desinfektion des Innengeräts gegen Keime und Gerüche",
+      "Prüfung von Kondensatablauf und Kondensatwanne",
+      "Kontrolle von Kältekreis, Drücken und Temperaturen",
+      "Sichtprüfung des Außengeräts und der Leitungen",
+      "Wartungsvertrag: 169 € pro Innengerät und Wartung",
+    ],
+    specialConditions: {
+      eyebrow: "Wartungsvertrag",
+      title: "Wartungsvertrag für Privatkunden",
+      intro:
+        "Mit dem Wartungsvertrag kümmern wir uns um den Termin: einmal im Jahr, wenn Ihre Anlage es braucht, sonst in einem längeren Intervall. So bleibt sie sauber und sparsam, und Sie zahlen keine Wartung, die nicht nötig ist. Alle Preise inkl. MwSt.",
+      items: [
+        {
+          icon: "BadgePercent",
+          title: "169 € pro Innengerät",
+          text: "Sie zahlen pro Innengerät und Wartung. Reinigung, Desinfektion und alle Prüfungen der Wartung sind enthalten.",
+        },
+        {
+          icon: "Car",
+          title: "Anfahrt ab 39 €",
+          text: "39 € im Umkreis von 25 km um Heilbronn sowie in und um Chemnitz, 69 € für weiter entfernte Orte in unserem Einsatzgebiet. Die Anfahrt fällt einmal pro Wartung an, egal wie viele Innengeräte gewartet werden.",
+        },
+        {
+          icon: "ShieldCheck",
+          title: "Auch für fremd eingebaute Anlagen",
+          text: "Wir warten Split- und Multisplit-Anlagen der gängigen Hersteller, auch wenn ein anderer Betrieb sie installiert hat.",
+        },
+      ],
+    },
+    faq: [
+      {
+        question: "Wie oft sollte eine Klimaanlage gewartet werden?",
+        answer:
+          "Bei häufiger Nutzung empfehlen wir eine Wartung einmal im Jahr, am besten vor Beginn der Kühlsaison im Frühjahr. Läuft die Anlage nur selten, reicht oft ein längeres Intervall. Im Wartungsvertrag legen wir das Intervall nach dem Zustand Ihrer Anlage fest.",
+      },
+      {
+        question: "Meine Klimaanlage stinkt – woran liegt das?",
+        answer:
+          "Muffiger Geruch entsteht meist durch Keime und Schimmel am feuchten Wärmetauscher oder in der Lüfterwalze, manchmal auch durch einen verstopften Kondensatablauf. Eine gründliche Reinigung mit Desinfektion beseitigt die Ursache. Bitte nicht nur Duftspray verwenden, das überdeckt das Problem nur.",
+      },
+      {
+        question: "Meine Klimaanlage kühlt nicht mehr richtig. Was kann ich tun?",
+        answer:
+          "Prüfen Sie zuerst, ob die Filter im Innengerät verstaubt sind, und reinigen Sie sie. Bringt das nichts, kann der Wärmetauscher verschmutzt sein oder Kältemittel fehlen. Das gehört in die Hände eines zertifizierten Kältetechnikers. Wir finden die Ursache und beheben sie.",
+      },
+      {
+        question: "Kann ich die Klimaanlage selbst reinigen?",
+        answer:
+          "Die Filter im Innengerät können Sie selbst ausbauen, absaugen oder auswaschen, je nach Nutzung alle zwei bis vier Wochen. Wärmetauscher, Lüfterwalze und Kältekreis sollten Sie dagegen dem Fachbetrieb überlassen.",
+      },
+      {
+        question: "Gibt es einen Wartungsvertrag für Privatkunden?",
+        answer:
+          "Ja. Der Wartungsvertrag kostet 169 € pro Innengerät und Wartung inkl. MwSt. Dazu kommt einmal pro Wartung die Anfahrt: 39 € im Umkreis von 25 km um Heilbronn sowie in und um Chemnitz, 69 € für weiter entfernte Orte in unserem Einsatzgebiet. Bei zwei Innengeräten in Heilbronn sind das zum Beispiel 377 € pro Wartung. Gewartet wird einmal im Jahr, wenn es nötig ist, sonst in einem längeren Intervall.",
+      },
+      {
+        question: "Wartet ihr auch Klimaanlagen, die andere Firmen eingebaut haben?",
+        answer:
+          "Ja, wir warten Split- und Multisplit-Anlagen der gängigen Hersteller, unabhängig davon, wer sie installiert hat.",
+      },
+    ],
+  },
+  {
     slug: "vermietung",
     title: "Vermietung",
     shortTitle: "Vermietung",
     icon: "CalendarClock",
     featured: true,
     image: "/images/waermepumpe.jpg",
+    metaTitle: "Klimaanlagen mieten für Büro- und Schulcontainer",
+    metaDescription:
+      "Langzeitmiete von Klimaanlagen für Bürocontainer, Schulcontainer und temporäre Gebäude: inklusive Installation, Wartung und Rückbau. Sonderkonditionen für Kommunen.",
     summary:
       "Langzeitmiete von Klimaanlagen für Bürocontainer, Schulcontainer und temporäre Gebäude – schnell einsatzbereit, ohne Investition.",
     heroText:
@@ -210,6 +301,9 @@ export const services = [
     shortTitle: "Lüftung",
     icon: "Wind",
     image: "/images/lueftung-teaser.png",
+    metaTitle: "Dezentrale Lüftungsanlage kaufen und installieren",
+    metaDescription:
+      "Dezentrale Lüftung mit Wärmerückgewinnung: frische Luft ohne Fensterlüften, weniger Feuchtigkeit und Schimmelrisiko. Beratung und Einbau im Raum Heilbronn.",
     summary:
       "Verkauf und Installation dezentraler Lüftungssysteme für automatischen Luftaustausch mit Wärmerückgewinnung – ganz ohne Lüften per Hand.",
     heroText:
@@ -239,6 +333,9 @@ export const services = [
     title: "Finanzierung",
     shortTitle: "Finanzierung",
     icon: "HandCoins",
+    metaTitle: "Finanzierung für Klimaanlage, Wärmepumpe und Photovoltaik",
+    metaDescription:
+      "Klimaanlage, Wärmepumpe oder Photovoltaik in Raten bezahlen: Wir vermitteln passende Finanzierungen und rechnen mögliche Förderungen direkt mit ein.",
     summary:
       "Flexible Finanzierungslösungen, damit Ihr Projekt nicht am Budget scheitert.",
     heroText:
@@ -300,6 +397,9 @@ export const services = [
     title: "Förderung",
     shortTitle: "Förderung",
     icon: "BadgePercent",
+    metaTitle: "Förderung für Wärmepumpe, Klimaanlage und Photovoltaik",
+    metaDescription:
+      "Welche Förderung gibt es für Ihr Projekt? Wir prüfen BAFA- und KfW-Programme, unterstützen beim Antrag und kombinieren Förderung mit Finanzierung.",
     summary:
       "Wir kennen die aktuellen Förderprogramme und sichern Ihnen die maximal mögliche Unterstützung.",
     heroText:
@@ -329,6 +429,9 @@ export const services = [
     shortTitle: "Photovoltaik",
     icon: "Sun",
     image: "/images/photovoltaik-hero.jpg",
+    metaTitle: "Photovoltaik kaufen und installieren lassen",
+    metaDescription:
+      "Photovoltaik im Raum Heilbronn: Ertragsberechnung für Ihr Dach, Montage, Anmeldung beim Netzbetreiber und Kombination mit Klimaanlage oder Wärmepumpe.",
     summary:
       "Solaranlagen, die Ihre Energiekosten senken und Sie unabhängiger vom Strommarkt machen.",
     heroText:
@@ -363,6 +466,9 @@ export const services = [
     title: "Stromspeicher",
     shortTitle: "Stromspeicher",
     icon: "BatteryCharging",
+    metaTitle: "Stromspeicher für Photovoltaik kaufen und nachrüsten",
+    metaDescription:
+      "Batteriespeicher für Ihre PV-Anlage: Solarstrom abends und nachts nutzen, Speichergröße passend zum Verbrauch, Nachrüstung und optional Notstrom.",
     summary:
       "Batteriespeicher, mit denen Sie selbst erzeugten Solarstrom auch abends und nachts nutzen.",
     heroText:

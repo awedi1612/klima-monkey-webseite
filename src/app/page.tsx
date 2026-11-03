@@ -21,7 +21,8 @@ import { Newsletter } from "@/components/newsletter";
 import { services, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} – ${siteConfig.tagline}`,
+  // absolute: verhindert, dass das Layout-Template "| Klima-Monkey" ein zweites Mal anhängt
+  title: { absolute: "Klima-Monkey – Klimaanlagen, Lüftung & Photovoltaik aus Heilbronn" },
   description: siteConfig.description,
   alternates: { canonical: "/" },
 };
@@ -266,7 +267,7 @@ export default function HomePage() {
               Weitere Leistungen
             </h3>
           </FadeIn>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {secondaryServices.map((service, index) => (
               <FadeIn key={service.slug} delay={index * 0.05}>
                 <Link
