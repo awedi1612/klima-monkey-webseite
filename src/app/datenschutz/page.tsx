@@ -181,7 +181,42 @@ export default function DatenschutzPage() {
 
           <div>
             <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
-              6. Ihre Rechte
+              6. Mitarbeiterportal monkey-software.de
+            </h2>
+            <p>
+              Unter monkey-software.de betreiben wir den Zugang zu unserer internen
+              Betriebssoftware „Monkey-Soft“ (Warenwirtschaft für das Büro und
+              Baustellen-App). Das Portal richtet sich ausschließlich an unsere
+              Beschäftigten; eine Nutzung durch Kunden oder sonstige Besucher ist nicht
+              vorgesehen. Der Server steht in einem Rechenzentrum der Alfahosting GmbH
+              in Deutschland. Alle Verbindungen sind per HTTPS verschlüsselt.
+            </p>
+            <p className="mt-3">
+              Beim Aufruf speichert der Webserver automatisch Server-Logfiles
+              (IP-Adresse, Datum und Uhrzeit, aufgerufene Adresse, übertragene
+              Datenmenge, Browserkennung). Zweck ist der sichere und störungsfreie
+              Betrieb, insbesondere das Erkennen und Abwehren von Angriffen.
+              Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes
+              Interesse liegt in der Sicherheit unserer Systeme. Die Logfiles werden
+              nach 14 Tagen automatisch gelöscht.
+            </p>
+            <p className="mt-3">
+              Die Startseite des Portals setzt keine Cookies. Erst nach der Anmeldung
+              werden technisch notwendige Sitzungs-Cookies gespeichert, die Sie als
+              angemeldet ausweisen (§ 25 Abs. 2 Nr. 2 TDDDG). Sie werden mit dem
+              Abmelden ungültig, im Büro-Bereich spätestens nach 8 Stunden ohne
+              Aktivität, in der Baustellen-App spätestens nach 30 Tagen.
+            </p>
+            <p className="mt-3">
+              Über die Verarbeitung von Beschäftigtendaten in der Software selbst
+              (z. B. Zeiterfassung, Arbeitsberichte) informieren wir unsere
+              Mitarbeiterinnen und Mitarbeiter gesondert.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
+              7. Ihre Rechte
             </h2>
             <p>
               Sie haben jederzeit das Recht auf unentgeltliche Auskunft über
@@ -196,7 +231,7 @@ export default function DatenschutzPage() {
 
           <div>
             <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
-              7. Beschwerderecht bei der Aufsichtsbehörde
+              8. Beschwerderecht bei der Aufsichtsbehörde
             </h2>
             <p>
               Ihnen steht zudem ein Beschwerderecht bei der zuständigen
