@@ -187,8 +187,8 @@ export default function DatenschutzPage() {
               Unter monkey-software.de betreiben wir den Zugang zu unserer internen
               Betriebssoftware „Monkey-Soft“ (Warenwirtschaft für das Büro und
               Baustellen-App). Das Portal richtet sich ausschließlich an unsere
-              Beschäftigten; eine Nutzung durch Kunden oder sonstige Besucher ist nicht
-              vorgesehen. Der Server steht in einem Rechenzentrum der Alfahosting GmbH
+              Beschäftigten und an Subunternehmer, die für uns tätig sind; eine Nutzung
+              durch Kunden oder sonstige Besucher ist nicht vorgesehen. Der Server steht in einem Rechenzentrum der Alfahosting GmbH
               in Deutschland. Alle Verbindungen sind per HTTPS verschlüsselt.
             </p>
             <p className="mt-3">
@@ -210,7 +210,7 @@ export default function DatenschutzPage() {
             <p className="mt-3">
               Über die Verarbeitung von Beschäftigtendaten in der Software selbst
               (z. B. Zeiterfassung, Arbeitsberichte) informieren wir unsere
-              Mitarbeiterinnen und Mitarbeiter gesondert.
+              Mitarbeiterinnen und Mitarbeiter sowie Subunternehmer gesondert.
             </p>
           </div>
 

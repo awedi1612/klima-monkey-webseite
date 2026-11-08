@@ -144,6 +144,10 @@ export function Footer() {
               Datenschutz
             </Link>
             <CookieSettingsLink />
+            {/* Mitarbeiterportal (Büro-Software und Baustellen-App), Datenschutz Abschnitt 6 */}
+            <a href="https://monkey-software.de" rel="nofollow" className="hover:text-brand-link">
+              Mitarbeiter-Login
+            </a>
           </div>
         </Container>
       </div>
