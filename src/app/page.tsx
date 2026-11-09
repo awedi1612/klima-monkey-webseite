@@ -17,6 +17,7 @@ import { FadeIn } from "@/components/fade-in";
 import { Faq } from "@/components/faq";
 import { GoogleReviews } from "@/components/google-reviews";
 import { GoogleConsentGate } from "@/components/google-consent-gate";
+import { GoogleRatingBadge } from "@/components/google-rating-badge";
 import { Newsletter } from "@/components/newsletter";
 import { services, siteConfig } from "@/lib/site-config";
 
@@ -153,6 +154,7 @@ export default function HomePage() {
                 )
               )}
             </div>
+            <GoogleRatingBadge className="mt-8" />
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-border bg-background-card px-4 py-3 sm:w-fit sm:justify-start">
               <span className="rounded-lg bg-white px-3 py-1.5">
                 <Image
@@ -369,10 +371,11 @@ export default function HomePage() {
               eyebrow="Kundenstimmen"
               title="Das sagen unsere Kunden"
               align="center"
-              className="mx-auto mb-12"
+              className="mx-auto mb-8"
             />
           </FadeIn>
-          <GoogleConsentGate label="Die Google-Bewertungen">
+          <GoogleRatingBadge className="mb-10 flex justify-center" />
+          <GoogleConsentGate label="Die Übersicht der Google-Bewertungen">
             <GoogleReviews />
           </GoogleConsentGate>
         </Container>
