@@ -10,7 +10,7 @@ import { referenzen } from "@/lib/referenzen";
 export const metadata: Metadata = {
   title: "Referenzen – Klimaanlagen aus unseren Projekten",
   description:
-    "Echte Montagefotos von Klima-Monkey: ein kleiner Ausschnitt aus unseren Projekten in Leingarten, Neckarsulm, Lauffen, Großbottwar und Umgebung.",
+    "Echte Montagefotos von Klima-Monkey: ein kleiner Ausschnitt aus unseren Projekten in Heilbronn, Neckarsulm, Eppingen, Flein und Umgebung.",
   alternates: { canonical: "/referenzen" },
 };
 
@@ -54,7 +54,11 @@ export default function ReferenzenPage() {
                 </figure>
               </FadeIn>
             ))}
-            <FadeIn delay={0.1} className="sm:col-span-1 lg:col-span-2">
+            {/* Kasten füllt die letzte Reihe im 3er-Raster: 2 freie Felder → 2 Spalten, sonst 1 */}
+            <FadeIn
+              delay={0.1}
+              className={referenzen.length % 3 === 1 ? "sm:col-span-1 lg:col-span-2" : "sm:col-span-1"}
+            >
               <div className="flex h-full flex-col justify-center rounded-3xl bg-background-soft p-8 sm:p-10">
                 <h2 className="text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl">
                   So eine Anlage für Ihr Zuhause?
