@@ -4,6 +4,27 @@ import { NextResponse } from "next/server";
 // So braucht der Browser keinen Zugriff auf den n8n-Server (kein CORS, Adresse und Besucher-IP bleiben intern).
 const WEBHOOK =
   process.env.N8N_ANFRAGE_WEBHOOK_URL ?? "https://friends.dyndns.info:8443/webhook/website-anfrage";
+// Schlüssel für den n8n-Webhook (Header-Auth „X-Webhook-Token“ im Webhook-Knoten). Ohne ihn lehnt n8n ab,
+// damit niemand an der Webseite vorbei direkt Anfragen (und Bestätigungsmails an beliebige Adressen) auslösen kann.
+const WEBHOOK_TOKEN = process.env.N8N_ANFRAGE_TOKEN ?? "";
+
+// Grenze je IP-Adresse (im Speicher dieses Servers; reicht gegen einfache Bots)
+const GRENZE = 5;
+const FENSTER_MS = 10 * 60 * 1000;
+const versuche = new Map<string, number[]>();
+
+function zuViele(ip: string): boolean {
+  const jetzt = Date.now();
+  const liste = (versuche.get(ip) ?? []).filter((t) => jetzt - t < FENSTER_MS);
+  liste.push(jetzt);
+  versuche.set(ip, liste);
+  if (versuche.size > 5000) {
+    for (const [schluessel, zeiten] of versuche) {
+      if (zeiten.every((t) => jetzt - t >= FENSTER_MS)) versuche.delete(schluessel);
+    }
+  }
+  return liste.length > GRENZE;
+}
 
 // Nur diese Felder werden weitergegeben (Länge begrenzt)
 const FELDER: Record<string, number> = {
@@ -13,6 +34,13 @@ const FELDER: Record<string, number> = {
 };
 
 export async function POST(request: Request) {
+  const ip = (request.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || request.headers.get("x-real-ip") || "?";
+  if (zuViele(ip)) {
+    return NextResponse.json(
+      { error: "Zu viele Anfragen. Bitte versuchen Sie es in einigen Minuten erneut oder rufen Sie uns an." },
+      { status: 429 }
+    );
+  }
   let daten: unknown;
   try {
     daten = await request.json();
@@ -41,7 +69,7 @@ export async function POST(request: Request) {
   try {
     const antwort = await fetch(WEBHOOK, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...(WEBHOOK_TOKEN ? { "X-Webhook-Token": WEBHOOK_TOKEN } : {}) },
       body: JSON.stringify({ ...anfrage, datenschutz: "eingewilligt", website: "" }),
       signal: AbortSignal.timeout(15000),
     });
