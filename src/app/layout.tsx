@@ -73,6 +73,7 @@ const localBusinessSchema = {
   address: {
     "@type": "PostalAddress",
     streetAddress: siteConfig.legal.street,
+    postalCode: siteConfig.legal.zipCity.split(" ")[0],
     addressLocality: "Heilbronn",
     addressCountry: "DE",
   },

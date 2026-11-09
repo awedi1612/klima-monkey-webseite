@@ -2,8 +2,8 @@ import { siteConfig } from "@/lib/site-config";
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
 
-// Adresstext statt place_id: die Place-ID löst bei diesem Google-Eintrag nur
-// auf Stadtteil-Ebene (Rosenberg) auf, nicht auf die exakte Hausnummer.
+// Adresstext statt place_id: die Karte soll die genaue Hausnummer zeigen,
+// die Place-ID des Google-Eintrags löste früher nur auf Stadtteil-Ebene auf.
 const QUERY = `${siteConfig.legal.street}, ${siteConfig.legal.zipCity}`;
 
 export function LocationMap() {

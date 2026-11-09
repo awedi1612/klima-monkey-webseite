@@ -6,8 +6,8 @@ export const siteConfig = {
   url: "https://www.klima-monkey.de",
   legal: {
     fullName: "Klima-Monkey UG (haftungsbeschränkt)",
-    street: "Rosenbergstraße 31",
-    zipCity: "74072 Heilbronn",
+    street: "Salzstraße 81",
+    zipCity: "74076 Heilbronn",
     phone: "+49 7131 640 69 53",
     mobile: "+49 1525 601 69 90",
     email: "info@klima-monkey.de",

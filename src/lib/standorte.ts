@@ -22,7 +22,7 @@ export const standorte: Standort[] = [
     metaDescription:
       "Klimaanlage in Heilbronn kaufen und installieren lassen: kostenlose Beratung vor Ort, Montage durch zertifizierte Kältetechniker, Wartung und Reparatur aus Heilbronn.",
     intro:
-      "Unser Betrieb sitzt in der Rosenbergstraße in Heilbronn. Von hier aus beraten wir, liefern und montieren Klimaanlagen in allen Stadtteilen, von der Altbauwohnung in der Innenstadt bis zum Einfamilienhaus in Böckingen oder Sontheim.",
+      "Unser Betrieb sitzt in der Salzstraße in Heilbronn. Von hier aus beraten wir, liefern und montieren Klimaanlagen in allen Stadtteilen, von der Altbauwohnung in der Innenstadt bis zum Einfamilienhaus in Böckingen oder Sontheim.",
     abschnitte: [
       {
         heading: "Warum in Heilbronn immer mehr Häuser eine Klimaanlage bekommen",
