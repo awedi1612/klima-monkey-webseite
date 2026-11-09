@@ -4,6 +4,7 @@ import {
   FacebookIcon,
   InstagramIcon,
   TikTokIcon,
+  YouTubeIcon,
   GoogleIcon,
   ElevenEightEightZeroIcon,
 } from "@/components/social-icons";
@@ -17,6 +18,7 @@ const socialLinks = [
   { href: siteConfig.social.facebook, label: "Facebook", Icon: FacebookIcon },
   { href: siteConfig.social.instagram, label: "Instagram", Icon: InstagramIcon },
   { href: siteConfig.social.tiktok, label: "TikTok", Icon: TikTokIcon },
+  { href: siteConfig.social.youtube, label: "YouTube", Icon: YouTubeIcon },
   { href: siteConfig.social.google, label: "Google", Icon: GoogleIcon },
   { href: siteConfig.social.elf1880, label: "11880", Icon: ElevenEightEightZeroIcon },
 ];

@@ -84,6 +84,7 @@ const localBusinessSchema = {
     siteConfig.social.facebook,
     siteConfig.social.instagram,
     siteConfig.social.tiktok,
+    siteConfig.social.youtube,
     siteConfig.social.google,
     siteConfig.social.elf1880,
   ],

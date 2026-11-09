@@ -31,6 +31,7 @@ export const siteConfig = {
     facebook: "https://www.facebook.com/klimamonkey",
     instagram: "https://www.instagram.com/klimamonkey",
     tiktok: "https://www.tiktok.com/@klimamonkey",
+    youtube: "https://www.youtube.com/@klima-monkey",
     google: "https://www.google.com/maps/place/?q=place_id:ChIJVes0_kEvmEcRo6it2iMIerw",
     elf1880: "https://www.11880.com/branchenbuch/heilbronn-neckar/061356614B114008665/klima-monkey-ug.html",
   },
