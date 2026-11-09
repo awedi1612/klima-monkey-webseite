@@ -15,8 +15,6 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { ServiceIcon } from "@/components/service-icon";
 import { FadeIn } from "@/components/fade-in";
 import { Faq } from "@/components/faq";
-import { GoogleReviews } from "@/components/google-reviews";
-import { GoogleConsentGate } from "@/components/google-consent-gate";
 import { GoogleRatingBadge } from "@/components/google-rating-badge";
 import { Newsletter } from "@/components/newsletter";
 import { services, siteConfig } from "@/lib/site-config";
@@ -360,24 +358,6 @@ export default function HomePage() {
               </FadeIn>
             ))}
           </div>
-        </Container>
-      </section>
-
-      {/* Google Reviews */}
-      <section className="bg-background-soft py-20 lg:py-28">
-        <Container>
-          <FadeIn>
-            <SectionHeading
-              eyebrow="Kundenstimmen"
-              title="Das sagen unsere Kunden"
-              align="center"
-              className="mx-auto mb-8"
-            />
-          </FadeIn>
-          <GoogleRatingBadge className="mb-10 flex justify-center" />
-          <GoogleConsentGate label="Die Übersicht der Google-Bewertungen">
-            <GoogleReviews />
-          </GoogleConsentGate>
         </Container>
       </section>
 

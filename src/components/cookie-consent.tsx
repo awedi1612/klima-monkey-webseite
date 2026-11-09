@@ -115,8 +115,7 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
                   <Cookie className="mt-0.5 h-5 w-5 shrink-0 text-brand-link" />
                   <p className="text-sm text-foreground-muted">
                     Wir nutzen technisch notwendige Funktionen sowie optional{" "}
-                    <strong className="text-foreground">Google-Dienste</strong> (Standortkarte &amp;
-                    Google-Bewertungen), die eigene Cookies setzen. Details in unserer{" "}
+                    <strong className="text-foreground">Google-Dienste</strong> (Standortkarte), die eigene Cookies setzen. Details in unserer{" "}
                     <a href="/datenschutz" className="text-brand-link underline">
                       Datenschutzerklärung
                     </a>

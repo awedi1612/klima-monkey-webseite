@@ -105,7 +105,7 @@ export default function DatenschutzPage() {
             </p>
             <p className="mt-3">
               Zum anderen binden wir optionale Inhalte von Google ein
-              (Standortkarte und Google-Bewertungen, siehe Abschnitt 5), die
+              (Standortkarte, siehe Abschnitt 5), die
               erst nach Ihrer aktiven Zustimmung geladen werden und dabei
               eigene Cookies setzen können. Ihre Auswahl können Sie jederzeit
               über den Link „Cookie-Einstellungen&quot; im Footer der Website
@@ -142,7 +142,7 @@ export default function DatenschutzPage() {
                     <td className="px-4 py-3">Google Ireland Ltd.</td>
                     <td className="px-4 py-3">
                       Funktion &amp; Reichweitenmessung der eingebundenen
-                      Karte/Bewertungen, nur nach Zustimmung aktiv
+                      Karte, nur nach Zustimmung aktiv
                     </td>
                     <td className="px-4 py-3">gemäß Google, bis zu 24 Monate</td>
                   </tr>
@@ -153,13 +153,12 @@ export default function DatenschutzPage() {
 
           <div>
             <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
-              5. Google Maps &amp; Google-Bewertungen
+              5. Google Maps
             </h2>
             <p>
-              Auf unserer Kontaktseite binden wir eine Standortkarte und auf
-              unserer Startseite Google-Bewertungen ein, die von Google
+              Auf unserer Kontaktseite binden wir eine Standortkarte ein, die von Google
               Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland
-              bereitgestellt werden. Diese Inhalte werden erst geladen, wenn
+              bereitgestellt wird. Die Karte wird erst geladen, wenn
               Sie der Nutzung von Google-Diensten in unserem
               Cookie-Consent-Banner zustimmen. Mit dem Laden kann Google Ihre
               IP-Adresse verarbeiten und Cookies auf Ihrem Endgerät setzen.
