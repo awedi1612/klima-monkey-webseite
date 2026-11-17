@@ -75,8 +75,9 @@ export async function POST(request: Request) {
       signal: AbortSignal.timeout(20000),
     });
     if (!antwort.ok) {
-      console.error(`Bewerbungs-Webhook antwortete mit ${antwort.status}`);
-      return fehler("Die Bewerbung konnte nicht übermittelt werden.", 502);
+      console.error(`Bewerbungs-Webhook antwortete mit ${antwort.status}: ${(await antwort.text()).slice(0, 500)}`);
+      // Code mit ausgeben: 403 = Zugang im n8n-Webhook falsch, 500 = Fehler im Workflow
+      return fehler(`Die Bewerbung konnte nicht übermittelt werden (Fehler ${antwort.status}). Bitte ruf uns an.`, 502);
     }
   } catch (error) {
     console.error("Bewerbungs-Webhook nicht erreichbar:", error);
