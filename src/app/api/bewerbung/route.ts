@@ -77,11 +77,7 @@ export async function POST(request: Request) {
     if (!antwort.ok) {
       console.error(`Bewerbungs-Webhook antwortete mit ${antwort.status}: ${(await antwort.text()).slice(0, 500)}`);
       // Code mit ausgeben: 403 = Zugang im n8n-Webhook falsch, 500 = Fehler im Workflow
-      // VORÜBERGEHEND zur Fehlersuche: nur ob/wie lang, nie den Schlüssel selbst
-      const info = WEBHOOK_TOKEN
-        ? `Schlüssel ${WEBHOOK_TOKEN.length} Zeichen${WEBHOOK_TOKEN.trim().length !== WEBHOOK_TOKEN.length ? ", mit Leerzeichen/Umbruch am Rand" : ""}${/^["']|["']$/.test(WEBHOOK_TOKEN.trim()) ? ", mit Anführungszeichen" : ""}`
-        : "kein Schlüssel gesetzt";
-      return fehler(`Die Bewerbung konnte nicht übermittelt werden (Fehler ${antwort.status}, ${info}). Bitte ruf uns an.`, 502);
+      return fehler(`Die Bewerbung konnte nicht übermittelt werden (Fehler ${antwort.status}). Bitte ruf uns an.`, 502);
     }
   } catch (error) {
     console.error("Bewerbungs-Webhook nicht erreichbar:", error);
