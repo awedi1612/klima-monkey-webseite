@@ -61,6 +61,11 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/karriere" className="transition-colors hover:text-brand-link">
+                Karriere
+              </Link>
+            </li>
           </ul>
         </div>
 

@@ -85,6 +85,37 @@ export default function DatenschutzPage() {
             </p>
           </div>
 
+          <div id="bewerbung" className="scroll-mt-24">
+            <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
+              3a. Bewerbungen
+            </h2>
+            <p>
+              Wenn Sie sich über das Bewerbungsformular auf unserer Karriereseite
+              bewerben, verarbeiten wir die Angaben, die Sie dort machen: gewünschte
+              Stelle, Name, E-Mail-Adresse, Telefonnummer, Wohnort, frühester
+              Eintrittstermin, Ihre Nachricht und, falls Sie ihn hochladen, Ihren
+              Lebenslauf.
+            </p>
+            <p className="mt-3">
+              Zweck ist ausschließlich die Durchführung des Bewerbungsverfahrens.
+              Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines
+              Beschäftigungsverhältnisses). Ihre Angaben werden von unserem Webserver
+              an unser selbst betriebenes Automatisierungssystem (n8n) übertragen und
+              von dort per E-Mail an unser Postfach bei Microsoft 365 weitergeleitet.
+              Zugriff haben nur die Personen bei uns, die über die Einstellung
+              entscheiden. Eine Weitergabe an sonstige Dritte findet nicht statt.
+            </p>
+            <p className="mt-3">
+              Kommt ein Arbeitsverhältnis zustande, übernehmen wir die Unterlagen in
+              die Personalakte. Andernfalls löschen wir Ihre Bewerbung spätestens
+              sechs Monate nach Abschluss des Verfahrens. So lange bewahren wir sie
+              auf, um uns gegen mögliche Ansprüche, etwa nach dem Allgemeinen
+              Gleichbehandlungsgesetz, verteidigen zu können (Art. 6 Abs. 1 lit. f
+              DSGVO). Möchten wir Ihre Unterlagen länger für spätere Stellen
+              aufheben, fragen wir Sie vorher.
+            </p>
+          </div>
+
           <div>
             <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
               4. Cookies &amp; Cookie-Einstellungen

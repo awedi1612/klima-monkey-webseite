@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { services, siteConfig } from "@/lib/site-config";
 import { ratgeber } from "@/lib/ratgeber";
 import { standorte } from "@/lib/standorte";
+import { stellen } from "@/lib/stellen";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const eintrag = (path: string, priority: number) => ({
@@ -11,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority,
   });
 
-  const staticRoutes = ["", "/ueber-uns", "/leistungen", "/referenzen", "/standorte", "/monkeys", "/kontakt", "/spiel"].map(
+  const staticRoutes = ["", "/ueber-uns", "/leistungen", "/referenzen", "/standorte", "/monkeys", "/kontakt", "/karriere", "/spiel"].map(
     (path) => eintrag(path, path === "" ? 1 : 0.8)
   );
 
@@ -24,5 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Standortseiten sind Verkaufsseiten und bekommen Vorrang vor den Ratgebern
   const standortRoutes = standorte.map((standort) => eintrag(`/standorte/${standort.slug}`, 0.8));
 
-  return [...staticRoutes, ...serviceRoutes, ...standortRoutes, ...ratgeberRoutes];
+  const stellenRoutes = stellen.map((stelle) => eintrag(`/karriere/${stelle.slug}`, 0.7));
+
+  return [...staticRoutes, ...serviceRoutes, ...standortRoutes, ...stellenRoutes, ...ratgeberRoutes];
 }
