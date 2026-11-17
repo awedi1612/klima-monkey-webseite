@@ -159,6 +159,35 @@ export default async function ServiceDetailPage({
         </section>
       )}
 
+      {service.slug === "klimaanlagen" && (
+        <section className="pb-4">
+          <Container>
+            <FadeIn>
+              <div className="flex flex-col gap-6 rounded-3xl border border-border bg-background-soft p-8 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-start gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-link">
+                    <BadgePercent className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h2 className="font-display text-xl font-semibold">
+                      KfW-Zuschuss für Ihre Klimaanlage
+                    </h2>
+                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-foreground-muted">
+                      Klimaanlagen mit Heizfunktion gelten als Wärmepumpe und werden von der KfW gefördert.
+                      Mit unserem Förderrechner sehen Sie in zwei Minuten, wie viel Sie bekommen.
+                    </p>
+                  </div>
+                </div>
+                <Button href="/leistungen/foerderung#foerderrechner" className="shrink-0">
+                  Förderung berechnen
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </FadeIn>
+          </Container>
+        </section>
+      )}
+
       {"specialConditions" in service && service.specialConditions && (
         <section className="py-20 lg:py-28">
           <Container>

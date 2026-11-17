@@ -141,6 +141,11 @@ export const services = [
         answer:
           "Ja, moderne Split-Klimaanlagen arbeiten als Luft-Luft-Wärmepumpe und können im Winter zusätzlich effizient heizen.",
       },
+      {
+        question: "Wird eine Klimaanlage gefördert?",
+        answer:
+          "Ja, wenn sie auch heizt: Dann gilt sie als Luft-Luft-Wärmepumpe und kann über die KfW (Programm 458) bezuschusst werden. Reine Kühlgeräte werden nicht gefördert. Wie viel Sie bekommen, zeigt unser Förderrechner auf der Seite Förderung.",
+      },
     ],
   },
   {
