@@ -138,7 +138,7 @@ export const ratgeber: RatgeberArtikel[] = [
       {
         question: "Gibt es eine Förderung für Klimaanlagen?",
         answer:
-          "Reine Klimaanlagen zum Kühlen werden in der Regel nicht gefördert. Bei Wärmepumpen sieht das anders aus. Wir prüfen für Ihr Vorhaben, welche Programme aktuell gelten.",
+          "Ja, wenn die Klimaanlage auch heizt. Als Luft-Luft-Wärmepumpe ist sie in der KfW-Heizungsförderung (Programm 458) förderfähig: 30 % Grundförderung, mit Boni bis zu 70 %. Klimaanlagen, die nur kühlen, werden in Wohnhäusern nicht gefördert. Mit unserem Förderrechner sehen Sie in zwei Minuten, was für Ihr Vorhaben möglich ist.",
       },
       {
         question: "Was kostet die Wartung einer Klimaanlage?",
@@ -246,7 +246,7 @@ export const ratgeber: RatgeberArtikel[] = [
         heading: "Klimaanlage oder Wärmepumpe?",
         paragraphs: [
           "Wenn Sie das ganze Haus inklusive Warmwasser heizen möchten, ist eine Luft-Wasser-Wärmepumpe die passende Lösung. Sie speist die Wärme in Heizkörper oder Fußbodenheizung ein. Wenn Sie vor allem im Sommer kühlen und in der Übergangszeit zuheizen möchten, ist die Split-Klimaanlage die einfachere und günstigere Wahl.",
-          "Luft-Luft-Wärmepumpen sind in der Heizungsförderung des Bundes in der Regel nicht förderfähig. Wir prüfen für Ihr Vorhaben, was aktuell gilt.",
+          "Auch eine Split-Klimaanlage mit Heizfunktion gilt als Luft-Luft-Wärmepumpe und kann über die KfW-Heizungsförderung bezuschusst werden. Voraussetzung ist, dass sie einen wesentlichen Teil der Heizung übernimmt und die Effizienzanforderungen erfüllt. Mit unserem Förderrechner sehen Sie in zwei Minuten, was für Ihr Vorhaben möglich ist.",
         ],
       },
     ],
@@ -320,7 +320,7 @@ export const ratgeber: RatgeberArtikel[] = [
       {
         question: "Gibt es eine Förderung für die Kombination?",
         answer:
-          "Für Photovoltaik, Stromspeicher und Wärmepumpen gibt es je nach Programm Förderungen oder günstige Kredite. Reine Klimaanlagen werden in der Regel nicht gefördert. Wir prüfen, was für Ihr Vorhaben aktuell gilt.",
+          "Für Photovoltaik, Stromspeicher und Wärmepumpen gibt es je nach Programm Förderungen oder günstige Kredite. Klimaanlagen werden gefördert, wenn sie auch heizen; reine Kühlgeräte nicht. Wir prüfen, was für Ihr Vorhaben aktuell gilt.",
       },
     ],
   },

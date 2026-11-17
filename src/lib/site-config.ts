@@ -410,29 +410,39 @@ export const services = [
     title: "Förderung",
     shortTitle: "Förderung",
     icon: "BadgePercent",
-    metaTitle: "Förderung für Wärmepumpe, Klimaanlage und Photovoltaik",
+    metaTitle: "Förderung für Klimaanlage und Wärmepumpe – mit Förderrechner",
     metaDescription:
-      "Welche Förderung gibt es für Ihr Projekt? Wir prüfen BAFA- und KfW-Programme, unterstützen beim Antrag und kombinieren Förderung mit Finanzierung.",
+      "Klimaanlagen mit Heizfunktion fördert die KfW mit 30 bis 70 %. Mit unserem Förderrechner sehen Sie in zwei Minuten, welcher Zuschuss für Sie möglich ist.",
     summary:
       "Wir kennen die aktuellen Förderprogramme und sichern Ihnen die maximal mögliche Unterstützung.",
     heroText:
-      "Fördermittel-Dschungel? Nicht mit uns. Wir prüfen für Sie, welche staatlichen Förderungen für Ihr Projekt infrage kommen.",
+      "Eine Klimaanlage, die auch heizt, gilt als Luft-Luft-Wärmepumpe und wird von der KfW bezuschusst. Rechnen Sie unten aus, was für Sie drin ist – den Rest übernehmen wir.",
     features: [
-      "Prüfung aller relevanten Förderprogramme (u. a. BAFA, KfW)",
-      "Unterstützung bei Anträgen & Nachweisen",
-      "Kombination mehrerer Förderungen möglich",
-      "Maximale Ersparnis durch korrekte Beantragung",
+      "Förderrechner für Ihre Ersteinschätzung",
+      "Bestätigung zum Antrag (BzA) durch uns als Fachbetrieb",
+      "Förderfähige Geräte (A++/A+++, BAFA-Liste) und Heizlastberechnung",
+      "Angebot mit Förder-Vorbehalt, damit der Zuschuss sicher bleibt",
     ],
     faq: [
       {
-        question: "Welche Förderungen gibt es für Wärmepumpen und Klimaanlagen?",
+        question: "Wird eine Klimaanlage gefördert?",
         answer:
-          "Je nach Gerät und Einsatzzweck kommen u. a. BAFA-Förderungen für effiziente Heiztechnik infrage. Wir prüfen für Sie individuell, welche Programme aktuell gelten.",
+          "Ja, wenn sie auch heizt. Eine Split-Klimaanlage mit Heizfunktion gilt als Luft-Luft-Wärmepumpe und ist in der KfW-Heizungsförderung (Programm 458) förderfähig. Die Grundförderung beträgt 30 %, mit Klimageschwindigkeits- und Einkommens-Bonus bis zu 70 % (bei niedrigem Einkommen bis 80 %). Geräte, die nur kühlen, werden in Wohnhäusern nicht gefördert.",
+      },
+      {
+        question: "Welche Voraussetzungen muss die Anlage erfüllen?",
+        answer:
+          "Die Kombination aus Außen- und Innengerät muss mindestens die Effizienzklasse A++ erreichen und das Außengerät in der Liste förderfähiger Wärmepumpen des BAFA stehen. Die Anlage muss einen wesentlichen Teil der Heizung übernehmen, das Gebäude mindestens fünf Jahre alt sein. Ab 2028 werden nur noch Geräte mit natürlichem Kältemittel wie R290 gefördert.",
+      },
+      {
+        question: "Wann muss ich den Antrag stellen?",
+        answer:
+          "Vor Beginn der Arbeiten. Sie unterschreiben unser Angebot mit Förder-Vorbehalt, wir stellen die Bestätigung zum Antrag (BzA) aus, und Sie reichen den Antrag im Portal „Meine KfW“ ein. Erst danach wird montiert. Ab Anfang 2027 sinkt die Grundförderung für Wärmepumpen voraussichtlich auf 15 %.",
       },
       {
         question: "Übernimmt Klima-Monkey die Antragstellung?",
         answer:
-          "Ja, wir unterstützen Sie bei der Zusammenstellung der Unterlagen und der Antragstellung, damit Sie die maximale Förderung erhalten.",
+          "Den Antrag stellen Sie selbst im KfW-Portal, das ist Vorgabe der KfW. Wir erstellen die Bestätigung zum Antrag, liefern alle Gerätedaten und Nachweise und erklären Ihnen jeden Schritt.",
       },
     ],
   },

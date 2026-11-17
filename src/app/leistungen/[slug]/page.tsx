@@ -19,6 +19,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { ServiceIcon } from "@/components/service-icon";
 import { FadeIn } from "@/components/fade-in";
 import { Faq } from "@/components/faq";
+import { Foerderrechner } from "@/components/foerderrechner";
 import { services, siteConfig } from "@/lib/site-config";
 import { ratgeberFuer } from "@/lib/ratgeber";
 import { standorte } from "@/lib/standorte";
@@ -140,6 +141,23 @@ export default async function ServiceDetailPage({
           </FadeIn>
         </Container>
       </section>
+
+      {service.slug === "foerderung" && (
+        <section id="foerderrechner" className="scroll-mt-24 bg-background-soft/50 py-20 lg:py-28">
+          <Container>
+            <FadeIn>
+              <SectionHeading
+                eyebrow="Förderrechner"
+                title="Wie viel Zuschuss bekommen Sie für Ihre Klimaanlage?"
+                description="Beantworten Sie ein paar Fragen. Der Rechner zeigt sofort, ob und wie viel die KfW bezuschusst – nach den Förderbedingungen, die aktuell gelten."
+              />
+            </FadeIn>
+            <div className="mt-10">
+              <Foerderrechner />
+            </div>
+          </Container>
+        </section>
+      )}
 
       {"specialConditions" in service && service.specialConditions && (
         <section className="py-20 lg:py-28">
