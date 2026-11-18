@@ -211,15 +211,40 @@ export default function DatenschutzPage() {
 
           <div>
             <h2 className="mb-2 font-display text-lg font-semibold text-foreground">
-              6. Mitarbeiterportal monkey-software.de
+              6. Betriebssoftware und Kundenlinks auf monkey-software.de
             </h2>
             <p>
-              Unter monkey-software.de betreiben wir den Zugang zu unserer internen
-              Betriebssoftware „Monkey-Soft“ (Warenwirtschaft für das Büro und
-              Baustellen-App). Das Portal richtet sich ausschließlich an unsere
-              Beschäftigten und an Subunternehmer, die für uns tätig sind; eine Nutzung
-              durch Kunden oder sonstige Besucher ist nicht vorgesehen. Der Server steht in einem Rechenzentrum der Alfahosting GmbH
-              in Deutschland. Alle Verbindungen sind per HTTPS verschlüsselt.
+              Unter monkey-software.de betreiben wir unsere Betriebssoftware
+              „Monkey-Soft“ (Warenwirtschaft für das Büro und Baustellen-App). Der
+              Server steht in einem Rechenzentrum der Alfahosting GmbH in Deutschland.
+              Alle Verbindungen sind per HTTPS verschlüsselt.
+            </p>
+            <p className="mt-3">
+              <strong>Mitarbeiterbereich:</strong> Die Anmeldung richtet sich
+              ausschließlich an unsere Beschäftigten und an Subunternehmer, die für
+              uns tätig sind.
+            </p>
+            <p className="mt-3">
+              <strong>Kundenlinks:</strong> Unseren Kundinnen und Kunden schicken wir
+              persönliche Links, z. B. als QR-Code in einem Angebot oder in einer
+              E-Mail. Darüber können Sie ein Angebot ansehen und online beauftragen,
+              in Ihrem Kundenportal Ihre Angebote, Aufträge, Rechnungen, Anlagen und
+              Wartungsprotokolle abrufen und einen Wunschtermin für eine Wartung
+              wählen. Die Links sind gegen Veränderung gesichert und funktionieren ohne
+              Anmeldung; wer den Link kennt, sieht die zugehörigen Unterlagen. Geben
+              Sie ihn deshalb bitte nicht weiter. Auf Wunsch sperren wir einen Link
+              sofort und schicken Ihnen einen neuen.
+            </p>
+            <p className="mt-3">
+              Dabei speichern wir, wann und wie oft ein Angebot aufgerufen wurde, bei
+              einer Beauftragung den angegebenen Namen, den Zeitpunkt und eine
+              eventuelle Nachricht sowie bei einem Terminwunsch den gewählten Tag
+              (Vor- oder Nachmittag), die betroffenen Anlagen, eine angegebene
+              Telefonnummer und Nachricht. Zweck ist die Anbahnung und Durchführung
+              des Auftrags; Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Die Daten
+              werden zusammen mit dem Angebot bzw. Auftrag gespeichert; eine
+              Beauftragung bewahren wir als Teil der Vertragsunterlagen nach den
+              handels- und steuerrechtlichen Fristen (bis zu zehn Jahre) auf.
             </p>
             <p className="mt-3">
               Beim Aufruf speichert der Webserver automatisch Server-Logfiles
@@ -231,7 +256,8 @@ export default function DatenschutzPage() {
               nach 14 Tagen automatisch gelöscht.
             </p>
             <p className="mt-3">
-              Die Startseite des Portals setzt keine Cookies. Erst nach der Anmeldung
+              Die Startseite und die Kundenlinks setzen keine Cookies. Erst nach der Anmeldung
+              im Mitarbeiterbereich
               werden technisch notwendige Sitzungs-Cookies gespeichert, die Sie als
               angemeldet ausweisen (§ 25 Abs. 2 Nr. 2 TDDDG). Sie werden mit dem
               Abmelden ungültig, im Büro-Bereich spätestens nach 8 Stunden ohne
