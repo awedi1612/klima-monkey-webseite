@@ -120,7 +120,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <Container className="relative grid gap-14 py-20 lg:grid-cols-2 lg:items-center lg:py-32">
-          <FadeIn>
+          <FadeIn sofort>
             <span className="text-base font-semibold text-brand-link sm:text-lg">
               Klimaanlagen · Heilbronn
             </span>
@@ -184,7 +184,7 @@ export default function HomePage() {
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.15}>
+          <FadeIn sofort delay={0.15}>
             <div className="relative mx-auto aspect-square w-full max-w-md">
               <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] shadow-lg">
                 <Image

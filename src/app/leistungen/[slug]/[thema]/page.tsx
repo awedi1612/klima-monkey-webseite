@@ -97,7 +97,7 @@ export default async function RatgeberPage({
       <article>
         <section className="pt-16 pb-12 lg:pt-24">
           <Container className="max-w-3xl">
-            <FadeIn>
+            <FadeIn sofort>
               <nav aria-label="Brotkrümel" className="flex flex-wrap items-center gap-1 text-sm text-foreground-muted">
                 <Link href="/leistungen" className="hover:text-brand-link">
                   Leistungen

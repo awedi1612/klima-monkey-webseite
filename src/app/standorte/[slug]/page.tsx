@@ -94,7 +94,7 @@ export default async function StandortPage({
 
       <section className="py-16 lg:py-24">
         <Container className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <FadeIn>
+          <FadeIn sofort>
             <nav aria-label="Brotkrümel" className="flex items-center gap-1 text-sm text-foreground-muted">
               <Link href="/standorte" className="hover:text-brand-link">
                 Standorte
@@ -120,7 +120,7 @@ export default async function StandortPage({
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.1}>
+          <FadeIn sofort delay={0.1}>
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-border">
               <Image
                 src="/images/klimaanlage-hero.jpg"

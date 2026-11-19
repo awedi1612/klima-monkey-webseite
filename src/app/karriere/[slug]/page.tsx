@@ -85,7 +85,7 @@ export default async function StellePage({ params }: { params: Promise<{ slug: s
       <section className="py-20 lg:py-28">
         <Container className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <div className="min-w-0">
-            <FadeIn>
+            <FadeIn sofort>
               <Link href="/karriere" className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground-muted hover:text-brand-link">
                 <ArrowLeft className="h-4 w-4" /> Alle Stellen
               </Link>

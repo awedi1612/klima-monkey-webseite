@@ -44,7 +44,7 @@ export default function UeberUnsPage() {
     <>
       <section className="py-20 lg:py-28">
         <Container className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <FadeIn>
+          <FadeIn sofort>
             <span className="text-base font-semibold text-brand-link sm:text-lg">Über uns</span>
             <h1 className="mt-3 text-balance font-display text-4xl font-semibold tracking-tight sm:text-5xl">
               Klimatechnik mit Kopf, Herz und Werkzeug
@@ -68,7 +68,7 @@ export default function UeberUnsPage() {
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.15}>
+          <FadeIn sofort delay={0.15}>
             <div className="relative aspect-[4/5] w-full max-w-md justify-self-center overflow-hidden rounded-[2.5rem] border border-border">
               <Image
                 src="/images/waermepumpe.jpg"

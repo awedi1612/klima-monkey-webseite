@@ -41,7 +41,7 @@ export default function MonkeysPage() {
     <>
       <section className="py-20 lg:py-28">
         <Container>
-          <FadeIn>
+          <FadeIn sofort>
             <SectionHeading
               as="h1"
               eyebrow="Monkeys"

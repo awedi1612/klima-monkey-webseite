@@ -19,7 +19,7 @@ export default function ReferenzenPage() {
     <>
       <section className="py-20 lg:py-28">
         <Container>
-          <FadeIn>
+          <FadeIn sofort>
             <SectionHeading
               as="h1"
               eyebrow="Referenzen"

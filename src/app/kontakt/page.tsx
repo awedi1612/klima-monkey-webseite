@@ -20,7 +20,7 @@ export default function KontaktPage() {
     <>
       <section className="pb-16 pt-20 lg:pt-28">
         <Container>
-          <FadeIn>
+          <FadeIn sofort>
             <SectionHeading
               as="h1"
               eyebrow="Kontakt"
