@@ -15,7 +15,7 @@ export async function GET() {
   }
 
   try {
-    const webhookResponse = await fetch(webhookUrl, { cache: "no-store" });
+    const webhookResponse = await fetch(webhookUrl, { cache: "no-store", signal: AbortSignal.timeout(8000) });
 
     if (!webhookResponse.ok) {
       const body = await webhookResponse.text().catch(() => "");
@@ -71,6 +71,7 @@ export async function POST(request: Request) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, score, source: "website" }),
+      signal: AbortSignal.timeout(8000),
     });
 
     if (!webhookResponse.ok) {

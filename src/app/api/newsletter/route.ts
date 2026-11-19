@@ -19,6 +19,7 @@ export async function POST(request: Request) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: data.email, source: "website" }),
+      signal: AbortSignal.timeout(8000),
     });
 
     if (!webhookResponse.ok) {

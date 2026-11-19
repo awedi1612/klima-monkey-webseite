@@ -14,6 +14,7 @@ export async function getGoogleRating(): Promise<GoogleRating | null> {
     const res = await fetch(`https://places.googleapis.com/v1/places/${PLACE_ID}`, {
       headers: { "X-Goog-Api-Key": SERVER_KEY, "X-Goog-FieldMask": "rating,userRatingCount" },
       next: { revalidate: 86400 }, // einmal am Tag neu abrufen
+      signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) return null;
     const data = (await res.json()) as { rating?: number; userRatingCount?: number };
