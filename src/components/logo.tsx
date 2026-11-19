@@ -14,8 +14,8 @@ export function Logo({ className }: { className?: string }) {
   // Dunkles Theme -> weiße Schrift, helles Theme -> graue Schrift
   const src =
     mounted && resolvedTheme === "dark"
-      ? "/images/logo-white-text.svg"
-      : "/images/logo-gray-text.svg";
+      ? "/images/logo-white-text.png"
+      : "/images/logo-gray-text.png";
 
   return (
     <Link href="/" className={className} aria-label="Klima-Monkey Startseite">
