@@ -126,6 +126,8 @@ export default async function StandortPage({
                 src="/images/klimaanlage-hero.jpg"
                 alt={`Klimaanlage – Montage in ${standort.ort}`}
                 fill
+                loading="eager"
+                fetchPriority="high"
                 sizes="(min-width: 1024px) 32rem, 90vw"
                 className="object-cover"
               />

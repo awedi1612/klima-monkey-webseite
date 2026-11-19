@@ -122,6 +122,8 @@ export default async function ServiceDetailPage({
                   src={service.image}
                   alt={service.title}
                   fill
+                  loading="eager"
+                  fetchPriority="high"
                   sizes="(min-width: 1024px) 32rem, 90vw"
                   className="object-cover"
                 />

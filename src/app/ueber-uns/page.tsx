@@ -74,6 +74,8 @@ export default function UeberUnsPage() {
                 src="/images/waermepumpe.jpg"
                 alt="Wärmepumpen-Installation von Klima-Monkey"
                 fill
+                loading="eager"
+                fetchPriority="high"
                 sizes="(min-width: 1024px) 28rem, 90vw"
                 className="object-cover"
               />
