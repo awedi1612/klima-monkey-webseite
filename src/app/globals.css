@@ -100,6 +100,41 @@
   .einblenden {
     animation: einblenden 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) both;
   }
+
+  /* Einblenden beim Scrollen (FadeIn), Klasse ist-sichtbar setzt ein IntersectionObserver */
+  .beim-scrollen {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .beim-scrollen.ist-sichtbar {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Cookie-Hinweis von unten, Schritte im Anfrage-Formular */
+  .banner-rein {
+    animation: banner-rein 0.3s ease-out both;
+  }
+  .schritt-rein {
+    animation: schritt-rein 0.28s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  }
+
+  /* Spiel: Punkte steigen auf und verblassen */
+  .punkte-steigen {
+    animation: punkte-steigen 0.7s ease-out forwards;
+  }
+
+  /* Seite im Aufbau (Shop) */
+  .wackeln-schweben {
+    animation: wackeln-schweben 2.4s ease-in-out infinite;
+  }
+  .wackeln {
+    animation: wackeln 1.4s ease-in-out infinite;
+  }
+  .balken-fuellen {
+    animation: balken-fuellen 1.4s ease-out both;
+  }
 }
 
 @keyframes einblenden {
@@ -107,6 +142,36 @@
   to { opacity: 1; transform: none; }
 }
 
+@keyframes banner-rein {
+  from { opacity: 0; translate: 0 100px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@keyframes schritt-rein {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes punkte-steigen {
+  from { opacity: 1; transform: translate(-50%, -50%); }
+  to { opacity: 0; transform: translate(-50%, calc(-50% - 36px)); }
+}
+
+@keyframes wackeln-schweben {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-10px) rotate(6deg); }
+}
+
+@keyframes wackeln {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+}
+
+@keyframes balken-fuellen {
+  from { width: 0%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .einblenden { animation: none; }
+  .einblenden, .banner-rein, .schritt-rein, .wackeln-schweben, .wackeln, .balken-fuellen { animation: none; }
+  .beim-scrollen { transform: none; transition: opacity 0.3s; }
 }

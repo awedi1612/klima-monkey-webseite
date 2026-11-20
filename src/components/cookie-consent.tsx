@@ -1,9 +1,9 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Cookie } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type Consent = "all" | "necessary";
 
@@ -99,39 +99,35 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
     <ConsentContext.Provider value={value}>
       {children}
       {mounted && (
-        <AnimatePresence>
-          {bannerOpen && (
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background-card/98 backdrop-blur"
-              role="dialog"
-              aria-label="Cookie-Einstellungen"
-            >
-              <div className="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-                <div className="flex items-start gap-3">
-                  <Cookie className="mt-0.5 h-5 w-5 shrink-0 text-brand-link" />
-                  <p className="text-sm text-foreground-muted">
-                    Wir nutzen technisch notwendige Funktionen sowie optional{" "}
-                    <strong className="text-foreground">Google-Dienste</strong> (Standortkarte), die eigene Cookies setzen. Details in unserer{" "}
-                    <a href="/datenschutz" className="text-brand-link underline">
-                      Datenschutzerklärung
-                    </a>
-                    .
-                  </p>
-                </div>
-                <div className="flex shrink-0 gap-3">
-                  <Button variant="secondary" onClick={() => persist("necessary")}>
-                    Nur notwendige
-                  </Button>
-                  <Button onClick={() => persist("all")}>Alle akzeptieren</Button>
-                </div>
-              </div>
-            </motion.div>
+        <div
+          className={cn(
+            "fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background-card/98 backdrop-blur transition-[opacity,translate,visibility] duration-300 ease-out",
+            bannerOpen ? "banner-rein" : "invisible translate-y-[100px] opacity-0"
           )}
-        </AnimatePresence>
+          role="dialog"
+          aria-label="Cookie-Einstellungen"
+          aria-hidden={!bannerOpen}
+        >
+          <div className="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+            <div className="flex items-start gap-3">
+              <Cookie className="mt-0.5 h-5 w-5 shrink-0 text-brand-link" />
+              <p className="text-sm text-foreground-muted">
+                Wir nutzen technisch notwendige Funktionen sowie optional{" "}
+                <strong className="text-foreground">Google-Dienste</strong> (Standortkarte), die eigene Cookies setzen. Details in unserer{" "}
+                <a href="/datenschutz" className="text-brand-link underline">
+                  Datenschutzerklärung
+                </a>
+                .
+              </p>
+            </div>
+            <div className="flex shrink-0 gap-3">
+              <Button variant="secondary" onClick={() => persist("necessary")}>
+                Nur notwendige
+              </Button>
+              <Button onClick={() => persist("all")}>Alle akzeptieren</Button>
+            </div>
+          </div>
+        </div>
       )}
     </ConsentContext.Provider>
   );

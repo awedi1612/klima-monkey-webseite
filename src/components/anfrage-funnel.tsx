@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, CheckCircle2, Loader2, MessageSquareText, Snowflake, Wrench } from "lucide-react";
 
 // Anfragen gehen über die eigene Route /api/anfrage an n8n; n8n legt sie in Monkey-Soft an (Kunde + Angebotsentwurf)
@@ -299,12 +298,6 @@ export function AnfrageFunnel() {
     }
   }
 
-  const bewegung = {
-    initial: { opacity: 0, y: 12 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -12 },
-    transition: { duration: 0.28, ease: [0.25, 0.1, 0.25, 1] as const },
-  };
   const titel = "text-balance font-display font-semibold tracking-tight outline-none";
 
   return (
@@ -319,14 +312,14 @@ export function AnfrageFunnel() {
             <span>{fortschritt}%</span>
           </div>
           <div className="h-1 overflow-hidden rounded-full bg-border" aria-hidden="true">
-            <motion.div className="h-full rounded-full bg-brand-primary" animate={{ width: `${fortschritt}%` }} transition={{ duration: 0.4 }} />
+            <div className="h-full rounded-full bg-brand-primary transition-[width] duration-400" style={{ width: `${fortschritt}%` }} />
           </div>
         </div>
       )}
 
-      <AnimatePresence mode="wait">
+      {/* neuer key je Schritt: Karte wird neu eingesetzt und blendet per CSS ein */}
         {phase === "start" && (
-          <motion.div key="start" {...bewegung} className={karte}>
+          <div key="start" className={`${karte} schritt-rein`}>
             <p className="text-sm font-semibold text-brand-link">Kostenlos &amp; unverbindlich</p>
             <h2 ref={ueberschrift} tabIndex={-1} className={`mt-2 text-3xl sm:text-4xl ${titel}`}>Worum geht es?</h2>
             <p className="mt-3 text-pretty text-[15px] leading-relaxed text-foreground-muted">
@@ -360,11 +353,11 @@ export function AnfrageFunnel() {
             >
               Lieber direkt einen Rückruf vereinbaren
             </button>
-          </motion.div>
+          </div>
         )}
 
         {phase === "fragen" && frage && (
-          <motion.div key={`${art}-${schritt}`} {...bewegung} className={karte}>
+          <div key={`${art}-${schritt}`} className={`${karte} schritt-rein`}>
             <p className="text-sm font-semibold text-brand-link">{ARTEN.find((x) => x.art === art)?.titel}</p>
             <h2 ref={ueberschrift} tabIndex={-1} className={`mt-2 text-2xl sm:text-3xl ${titel}`}>{frage.label}</h2>
             <div className={`mt-7 grid gap-3 ${frage.columns === 3 ? "sm:grid-cols-3" : "grid-cols-2"}`}>
@@ -388,11 +381,11 @@ export function AnfrageFunnel() {
               })}
             </div>
             <ZurueckKnopf onClick={zurueck} />
-          </motion.div>
+          </div>
         )}
 
         {phase === "kontakt" && (
-          <motion.div key="kontakt" {...bewegung} className={karte}>
+          <div key="kontakt" className={`${karte} schritt-rein`}>
             <h2 ref={ueberschrift} tabIndex={-1} className={`text-2xl sm:text-3xl ${titel}`}>
               {art === "sonstiges" ? "Wie erreichen wir Sie?" : "Wohin dürfen wir Ihr Angebot senden?"}
             </h2>
@@ -491,11 +484,11 @@ export function AnfrageFunnel() {
               </p>
             </form>
             <ZurueckKnopf onClick={zurueck} />
-          </motion.div>
+          </div>
         )}
 
         {phase === "danke" && (
-          <motion.div key="danke" {...bewegung} className={`${karte} text-center`}>
+          <div key="danke" className={`${karte} schritt-rein text-center`}>
             <CheckCircle2 className="mx-auto h-12 w-12 text-brand-link" aria-hidden="true" />
             <h2 ref={ueberschrift} tabIndex={-1} className={`mt-4 text-3xl ${titel}`}>Vielen Dank!</h2>
             <p className="mt-3 text-[15px] leading-relaxed text-foreground-muted">
@@ -503,11 +496,11 @@ export function AnfrageFunnel() {
               <strong className="text-foreground">{kontakt.email}</strong>.
               {art === "sonstiges" ? " Wir melden uns so schnell wie möglich." : " Ihr persönliches Angebot folgt in der Regel innerhalb eines Werktags."}
             </p>
-          </motion.div>
+          </div>
         )}
 
         {phase === "rueckruf" && (
-          <motion.div key="rueckruf" {...bewegung} className={karte}>
+          <div key="rueckruf" className={`${karte} schritt-rein`}>
             <h2 ref={ueberschrift} tabIndex={-1} className={`text-2xl sm:text-3xl ${titel}`}>Rückruf vereinbaren</h2>
             <p className="mt-2 text-sm text-foreground-muted">Name und Telefonnummer genügen – wir rufen Sie zeitnah zurück.</p>
             <form onSubmit={rueckrufAbsenden} noValidate className="mt-6 flex flex-col gap-4">
@@ -533,19 +526,18 @@ export function AnfrageFunnel() {
               </p>
             </form>
             <ZurueckKnopf onClick={() => wechsle("start")} />
-          </motion.div>
+          </div>
         )}
 
         {phase === "rueckruf-danke" && (
-          <motion.div key="rueckruf-danke" {...bewegung} className={`${karte} text-center`}>
+          <div key="rueckruf-danke" className={`${karte} schritt-rein text-center`}>
             <CheckCircle2 className="mx-auto h-12 w-12 text-brand-link" aria-hidden="true" />
             <h2 ref={ueberschrift} tabIndex={-1} className={`mt-4 text-3xl ${titel}`}>Vielen Dank!</h2>
             <p className="mt-3 text-[15px] leading-relaxed text-foreground-muted">
               Wir rufen Sie zeitnah unter <strong className="text-foreground">{rueckrufTelefon}</strong> zurück.
             </p>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { AirVent, RotateCcw, Send, Share2, Trophy, Volume2, VolumeX } from "lucide-react";
 import { Leaderboard } from "@/components/game/leaderboard";
 import { WhatsAppIcon } from "@/components/whatsapp-button";
@@ -331,23 +330,17 @@ export function MonkeyCatch() {
         </button>
 
         {/* Points popups */}
-        <AnimatePresence>
-          {popups.map((popup) => (
-            <motion.span
-              key={popup.id}
-              initial={{ opacity: 1, y: 0 }}
-              animate={{ opacity: 0, y: -36 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              className={`pointer-events-none absolute z-10 text-lg font-bold ${
-                popup.bad ? "text-red-500" : "text-brand-link"
-              }`}
-              style={{ left: `${popup.x}%`, top: `${CATCH_LINE_PCT}%`, transform: "translate(-50%, -50%)" }}
-            >
-              {popup.text}
-            </motion.span>
-          ))}
-        </AnimatePresence>
+        {popups.map((popup) => (
+          <span
+            key={popup.id}
+            className={`punkte-steigen pointer-events-none absolute z-10 text-lg font-bold ${
+              popup.bad ? "text-red-500" : "text-brand-link"
+            }`}
+            style={{ left: `${popup.x}%`, top: `${CATCH_LINE_PCT}%` }}
+          >
+            {popup.text}
+          </span>
+        ))}
 
         {/* HUD */}
         {phase === "playing" && (

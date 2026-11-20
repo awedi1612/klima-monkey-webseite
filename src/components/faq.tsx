@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -51,21 +50,20 @@ export function Faq({ items }: { items: FaqItem[] }) {
                   )}
                 />
               </button>
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="overflow-hidden"
-                  >
-                    <p className="max-w-[65ch] px-5 pb-5 text-sm leading-relaxed text-foreground-muted">
-                      {item.answer}
-                    </p>
-                  </motion.div>
+              {/* Antwort bleibt im HTML, die Höhe wird per CSS-Grid auf- und zugeklappt */}
+              <div
+                inert={!isOpen}
+                className={cn(
+                  "grid transition-[grid-template-rows,opacity] duration-200",
+                  isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                 )}
-              </AnimatePresence>
+              >
+                <div className="min-h-0 overflow-hidden">
+                  <p className="max-w-[65ch] px-5 pb-5 text-sm leading-relaxed text-foreground-muted">
+                    {item.answer}
+                  </p>
+                </div>
+              </div>
             </div>
           );
         })}

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -53,32 +52,27 @@ export function Header() {
                     {item.label}
                     <ChevronDown className="h-3.5 w-3.5" />
                   </Link>
-                  <AnimatePresence>
-                    {leistungenOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 8 }}
-                        transition={{ duration: 0.15 }}
-                        className="absolute left-1/2 top-full w-80 -translate-x-1/2 pt-3"
-                      >
-                        <div className="grid gap-1 rounded-2xl border border-border bg-background/90 p-3 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl">
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              className="rounded-xl px-3 py-2.5 transition-colors hover:bg-background-soft"
-                            >
-                              <div className="text-sm font-semibold">{child.label}</div>
-                              <div className="text-xs text-foreground-muted">
-                                {child.description}
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
+                  <div
+                    className={cn(
+                      "absolute left-1/2 top-full w-80 -translate-x-1/2 pt-3 transition-[opacity,translate,visibility] duration-150",
+                      leistungenOpen ? "opacity-100 translate-y-0" : "invisible opacity-0 translate-y-2"
                     )}
-                  </AnimatePresence>
+                  >
+                    <div className="grid gap-1 rounded-2xl border border-border bg-background/90 p-3 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className="rounded-xl px-3 py-2.5 transition-colors hover:bg-background-soft"
+                        >
+                          <div className="text-sm font-semibold">{child.label}</div>
+                          <div className="text-xs text-foreground-muted">
+                            {child.description}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               );
             }
@@ -117,48 +111,46 @@ export function Header() {
         </div>
       </Container>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border bg-background/95 lg:hidden"
-          >
-            <Container className="flex flex-col gap-1 py-4">
-              {navItems.map((item) => (
-                <div key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="block rounded-lg px-3 py-2.5 text-sm font-medium"
-                  >
-                    {item.label}
-                  </Link>
-                  {item.children && (
-                    <div className="ml-3 flex flex-col gap-0.5 border-l border-border pl-3">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="rounded-lg px-3 py-2 text-sm text-foreground-muted"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-              <Button href="/kontakt" className="mt-3">
-                Ihre Anfrage
-              </Button>
-            </Container>
-          </motion.div>
+      <div
+        inert={!mobileOpen}
+        className={cn(
+          "grid bg-background/95 transition-[grid-template-rows,opacity,visibility] duration-200 lg:hidden",
+          mobileOpen ? "grid-rows-[1fr] border-t border-border opacity-100" : "invisible grid-rows-[0fr] opacity-0"
         )}
-      </AnimatePresence>
+      >
+        <div className="max-h-[calc(100dvh-4rem)] min-h-0 overflow-y-auto">
+          <Container className="flex flex-col gap-1 py-4">
+            {navItems.map((item) => (
+              <div key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block rounded-lg px-3 py-2.5 text-sm font-medium"
+                >
+                  {item.label}
+                </Link>
+                {item.children && (
+                  <div className="ml-3 flex flex-col gap-0.5 border-l border-border pl-3">
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="rounded-lg px-3 py-2 text-sm text-foreground-muted"
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+            <Button href="/kontakt" className="mt-3">
+              Ihre Anfrage
+            </Button>
+          </Container>
+        </div>
+      </div>
     </header>
   );
 }

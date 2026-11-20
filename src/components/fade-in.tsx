@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
-// sofort: für den Kopfbereich ganz oben. Der Inhalt steht direkt im HTML und blendet per CSS ein,
-// statt unsichtbar zu warten, bis JavaScript geladen ist (sonst erscheint der wichtigste Inhalt erst nach ~3 s).
+// Blendet Inhalt ein, sobald er beim Scrollen in den Sichtbereich kommt (CSS-Übergang, Klassen in globals.css).
+// sofort: für den Kopfbereich ganz oben. Der Inhalt steht direkt im HTML und blendet per CSS-Animation ein,
+// statt unsichtbar zu warten, bis JavaScript geladen ist.
 export function FadeIn({
   children,
   delay = 0,
@@ -15,25 +16,30 @@ export function FadeIn({
   className?: string;
   sofort?: boolean;
 }) {
-  if (sofort) {
-    return (
-      <div
-        className={className ? `einblenden ${className}` : "einblenden"}
-        style={delay ? { animationDelay: `${delay}s` } : undefined}
-      >
-        {children}
-      </div>
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (sofort || !el) return;
+    const beobachter = new IntersectionObserver(
+      (eintraege) => {
+        if (eintraege.some((e) => e.isIntersecting)) {
+          el.classList.add("ist-sichtbar");
+          beobachter.disconnect();
+        }
+      },
+      { rootMargin: "-60px" }
     );
-  }
+    beobachter.observe(el);
+    return () => beobachter.disconnect();
+  }, [sofort]);
+
+  const art = sofort ? "einblenden" : "beim-scrollen";
+  const stil = delay ? (sofort ? { animationDelay: `${delay}s` } : { transitionDelay: `${delay}s` }) : undefined;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.8, delay, ease: [0.25, 0.1, 0.25, 1] }}
-      className={className}
-    >
+    <div ref={ref} className={className ? `${art} ${className}` : art} style={stil}>
       {children}
-    </motion.div>
+    </div>
   );
 }
